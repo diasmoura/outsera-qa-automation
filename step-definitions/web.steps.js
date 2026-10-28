@@ -45,3 +45,28 @@ Then('devo visualizar o formulário de login', async function () {
     throw new Error('O formulário de login não está visível.');
   }
 });
+
+
+When('tento entrar com credenciais inválidas', async function () {
+  this.authPage = new AuthPage(this.page);
+
+  await this.authPage.login(
+    'qa-inexistente-automacao@example.com',
+    'SenhaIncorreta123!'
+  );
+});
+
+Then(
+  'devo visualizar uma mensagem de erro de autenticação',
+  async function () {
+    const mensagem = await this.authPage.getErrorMessage();
+
+    if (!/incorrect|invalid|incorreto|inválid|error/i.test(mensagem)) {
+      throw new Error(
+        `Mensagem de erro de autenticação não encontrada. ` +
+        `Mensagem recebida: "${mensagem}"`
+      );
+    }
+  }
+);
+

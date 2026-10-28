@@ -12,7 +12,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 188262000
+              "duration": 157585200
             },
             "keyword": "Before",
             "hidden": true
@@ -20,7 +20,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 2405512999
+              "duration": 2854015500
             },
             "arguments": [],
             "keyword": "Dado ",
@@ -33,7 +33,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 914849899
+              "duration": 922400499
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -46,7 +46,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1517457500
+              "duration": 1566282200
             },
             "arguments": [],
             "keyword": "E ",
@@ -59,7 +59,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 563790399
+              "duration": 584048899
             },
             "arguments": [],
             "keyword": "Então ",
@@ -72,7 +72,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 74517499
+              "duration": 78932900
             },
             "keyword": "After",
             "hidden": true
@@ -80,7 +80,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 175799
+              "duration": 165700
             },
             "keyword": "After",
             "hidden": true
@@ -88,7 +88,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 141700
+              "duration": 92499
             },
             "keyword": "After",
             "hidden": true
@@ -118,7 +118,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 141369400
+              "duration": 145202800
             },
             "keyword": "Before",
             "hidden": true
@@ -126,7 +126,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 2428903800
+              "duration": 2135330500
             },
             "arguments": [],
             "keyword": "Dado ",
@@ -139,7 +139,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 909602200
+              "duration": 1018595900
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -152,7 +152,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 237929799
+              "duration": 139034099
             },
             "arguments": [],
             "keyword": "Então ",
@@ -165,7 +165,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 73211699
+              "duration": 72829999
             },
             "keyword": "After",
             "hidden": true
@@ -173,7 +173,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 44799
+              "duration": 50900
             },
             "keyword": "After",
             "hidden": true
@@ -181,7 +181,102 @@
           {
             "result": {
               "status": "passed",
-              "duration": 28000
+              "duration": 26599
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "login-no-e-commerce;tentar-login-com-credenciais-inválidas",
+        "keyword": "Cenário",
+        "line": 15,
+        "name": "Tentar login com credenciais inválidas",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 140122400
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 2178547500
+            },
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 16,
+            "name": "que acesso a página inicial do e-commerce",
+            "match": {
+              "location": "step-definitions\\web.steps.js:8"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 916888899
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 17,
+            "name": "acesso a opção de login",
+            "match": {
+              "location": "step-definitions\\web.steps.js:34"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 381343100
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 18,
+            "name": "tento entrar com credenciais inválidas",
+            "match": {
+              "location": "step-definitions\\web.steps.js:50"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 21499200
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 19,
+            "name": "devo visualizar uma mensagem de erro de autenticação",
+            "match": {
+              "location": "step-definitions\\web.steps.js:59"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 59545800
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 61200
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 24799
             },
             "keyword": "After",
             "hidden": true
@@ -211,7 +306,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 140330500
+              "duration": 141564899
             },
             "keyword": "Before",
             "hidden": true
@@ -219,7 +314,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 236238400
+              "duration": 225257299
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -232,7 +327,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1558100
+              "duration": 2988900
             },
             "arguments": [],
             "keyword": "Então ",
@@ -245,7 +340,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 532499
+              "duration": 872500
             },
             "arguments": [],
             "keyword": "E ",
@@ -258,7 +353,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 331900
+              "duration": 413399
             },
             "arguments": [],
             "keyword": "E ",
@@ -271,7 +366,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 39740100
+              "duration": 61958599
             },
             "keyword": "After",
             "hidden": true
@@ -279,7 +374,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 70500
+              "duration": 40100
             },
             "keyword": "After",
             "hidden": true
@@ -287,7 +382,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1878800
+              "duration": 887399
             },
             "keyword": "After",
             "hidden": true
@@ -306,7 +401,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 148052999
+              "duration": 155502199
             },
             "keyword": "Before",
             "hidden": true
@@ -314,7 +409,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 486454400
+              "duration": 225804799
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -327,7 +422,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 361499
+              "duration": 589599
             },
             "arguments": [],
             "keyword": "Então ",
@@ -340,7 +435,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 403200
+              "duration": 550100
             },
             "arguments": [],
             "keyword": "E ",
@@ -353,7 +448,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 218500
+              "duration": 456099
             },
             "arguments": [],
             "keyword": "E ",
@@ -366,7 +461,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 35952799
+              "duration": 50254000
             },
             "keyword": "After",
             "hidden": true
@@ -374,7 +469,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 58699
+              "duration": 56599
             },
             "keyword": "After",
             "hidden": true
@@ -382,7 +477,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 656200
+              "duration": 732400
             },
             "keyword": "After",
             "hidden": true
@@ -401,7 +496,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 139866500
+              "duration": 148966899
             },
             "keyword": "Before",
             "hidden": true
@@ -409,7 +504,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 196968899
+              "duration": 212611499
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -422,7 +517,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 519900
+              "duration": 366300
             },
             "arguments": [],
             "keyword": "Então ",
@@ -435,7 +530,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 50295599
+              "duration": 52623100
             },
             "keyword": "After",
             "hidden": true
@@ -443,7 +538,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 41900
+              "duration": 56399
             },
             "keyword": "After",
             "hidden": true
@@ -451,7 +546,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 749400
+              "duration": 704599
             },
             "keyword": "After",
             "hidden": true
@@ -481,7 +576,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 142001299
+              "duration": 144066600
             },
             "keyword": "Before",
             "hidden": true
@@ -489,7 +584,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 73170600
+              "duration": 70506400
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -502,7 +597,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 558100
+              "duration": 676300
             },
             "arguments": [],
             "keyword": "Então ",
@@ -515,7 +610,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 486699
+              "duration": 574199
             },
             "arguments": [],
             "keyword": "E ",
@@ -528,7 +623,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 3154999
+              "duration": 1835900
             },
             "arguments": [],
             "keyword": "E ",
@@ -541,7 +636,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 51925299
+              "duration": 54380499
             },
             "keyword": "After",
             "hidden": true
@@ -549,7 +644,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 772600
+              "duration": 916400
             },
             "keyword": "After",
             "hidden": true
@@ -557,7 +652,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 56899
+              "duration": 64600
             },
             "keyword": "After",
             "hidden": true
@@ -576,7 +671,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 147285099
+              "duration": 144861300
             },
             "keyword": "Before",
             "hidden": true
@@ -584,7 +679,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 68717000
+              "duration": 74870600
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -597,7 +692,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 645599
+              "duration": 507600
             },
             "arguments": [],
             "keyword": "Então ",
@@ -610,7 +705,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 56637099
+              "duration": 57382200
             },
             "keyword": "After",
             "hidden": true
@@ -618,7 +713,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 728300
+              "duration": 690899
             },
             "keyword": "After",
             "hidden": true
@@ -626,7 +721,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 28400
+              "duration": 45599
             },
             "keyword": "After",
             "hidden": true
