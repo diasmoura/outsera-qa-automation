@@ -56,7 +56,7 @@ outsera-qa-automation/
 Clone o repositório e acesse a pasta do projeto:
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/diasmoura/outsera-qa-automation.git
 cd outsera-qa-automation
 ```
 
