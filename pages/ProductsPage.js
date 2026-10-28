@@ -2,9 +2,14 @@
 class ProductsPage {
   constructor(page) {
     this.page = page;
-    this.firstProduct = page.locator('.product-image-wrapper').first();
-    this.addedModal = page.locator('.modal-content')
-      .filter({ has: page.locator('.modal-title', { hasText: 'Added!' }) });
+
+    this.firstProduct = page
+      .locator('.product-image-wrapper')
+      .first();
+
+    // Seleciona o modal específico, evitando encontrar
+    // elementos de confirmação ocultos de outros modais.
+    this.addedModal = page.locator('#cartModal');
   }
 
   async addFirstProductToCart() {
@@ -13,7 +18,7 @@ class ProductsPage {
     try {
       await this.firstProduct.waitFor({
         state: 'visible',
-        timeout: 8000
+        timeout: 10000
       });
 
       const addToCartButton = this.firstProduct
@@ -21,24 +26,43 @@ class ProductsPage {
         .first();
 
       etapa = 'posicionando o mouse sobre o produto';
-      await this.firstProduct.hover({ timeout: 5000 });
 
-      etapa = 'aguardando o botão de adicionar ao carrinho';
-      await addToCartButton.waitFor({
-        state: 'visible',
-        timeout: 5000
+      await this.firstProduct.hover({
+        timeout: 10000
       });
 
-      etapa = 'clicando em adicionar ao carrinho';
-      await addToCartButton.click({ timeout: 5000 });
+      etapa = 'aguardando o botão de adicionar ao carrinho';
 
-      etapa = 'aguardando o modal de confirmação';
-      await this.addedModal.waitFor({
+      await addToCartButton.waitFor({
         state: 'visible',
         timeout: 10000
       });
 
-      console.log('Confirmação de inclusão do produto exibida.');
+      etapa = 'clicando em adicionar ao carrinho';
+
+      await addToCartButton.click({
+        timeout: 10000
+      });
+
+      etapa = 'aguardando o modal de confirmação';
+
+      await this.addedModal.waitFor({
+        state: 'visible',
+        timeout: 15000
+      });
+
+      etapa = 'validando a mensagem de confirmação';
+
+      await this.addedModal
+        .getByText('Added!', { exact: true })
+        .waitFor({
+          state: 'visible',
+          timeout: 5000
+        });
+
+      console.log(
+        'Confirmação de inclusão do produto exibida.'
+      );
     } catch (error) {
       throw new Error(
         `Falha ao adicionar produto ao carrinho. ` +
@@ -49,16 +73,17 @@ class ProductsPage {
   }
 
   async openCartFromConfirmation() {
-    const viewCartButton = this.page
-      .getByRole('link', { name: 'View Cart' })
-      .first();
+    const viewCartButton = this.addedModal
+      .getByRole('link', { name: 'View Cart' });
 
     await viewCartButton.waitFor({
       state: 'visible',
       timeout: 10000
     });
 
-    await viewCartButton.click({ timeout: 5000 });
+    await viewCartButton.click({
+      timeout: 5000
+    });
   }
 
   async isProductVisibleInCart() {
