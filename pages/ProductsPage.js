@@ -7,8 +7,6 @@ class ProductsPage {
       .locator('.product-image-wrapper')
       .first();
 
-    // Seleciona o modal específico, evitando encontrar
-    // elementos de confirmação ocultos de outros modais.
     this.addedModal = page.locator('#cartModal');
   }
 
@@ -18,8 +16,10 @@ class ProductsPage {
     try {
       await this.firstProduct.waitFor({
         state: 'visible',
-        timeout: 10000
+        timeout: 15000
       });
+
+      await this.firstProduct.scrollIntoViewIfNeeded();
 
       const addToCartButton = this.firstProduct
         .locator('a.add-to-cart')
@@ -37,6 +37,8 @@ class ProductsPage {
         state: 'visible',
         timeout: 10000
       });
+
+      await addToCartButton.scrollIntoViewIfNeeded();
 
       etapa = 'clicando em adicionar ao carrinho';
 
