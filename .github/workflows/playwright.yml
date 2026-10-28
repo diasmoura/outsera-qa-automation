@@ -1,0 +1,58 @@
+
+name: QA Automation Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    name: BDD, API e Web
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Instalar navegadores do Playwright
+        run: npx playwright install --with-deps
+
+      - name: Executar testes BDD
+        run: npm run test:bdd
+
+      - name: Executar testes API e Web
+        run: npx playwright test
+
+      - name: Publicar relatório Cucumber
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-report
+          path: |
+            reports/cucumber-report.json
+            reports/html/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Publicar relatório Playwright
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: warn
+          retention-days: 30
