@@ -35,6 +35,15 @@ jobs:
       - name: Executar testes API e Web
         run: npx playwright test
 
+      - name: Gerar relatório HTML do Cucumber
+        if: ${{ always() }}
+        run: |
+          if [ -f reports/cucumber-report.json ]; then
+            npm run report
+          else
+            echo "Arquivo JSON do Cucumber não foi gerado."
+          fi
+
       - name: Publicar relatório Cucumber
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
