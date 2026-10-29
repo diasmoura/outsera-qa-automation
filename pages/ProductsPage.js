@@ -1,4 +1,3 @@
-
 class ProductsPage {
   constructor(page) {
     this.page = page;
@@ -31,8 +30,6 @@ class ProductsPage {
         timeout: 10000
       });
 
-      etapa = 'aguardando o botão de adicionar ao carrinho';
-
       await addToCartButton.waitFor({
         state: 'visible',
         timeout: 10000
@@ -46,12 +43,42 @@ class ProductsPage {
         timeout: 10000
       });
 
-      etapa = 'aguardando o modal de confirmação';
+      etapa = 'verificando o resultado do clique';
 
-      await this.addedModal.waitFor({
-        state: 'visible',
-        timeout: 15000
-      });
+      // Aguarda a resposta do site sem presumir que o modal abriu.
+      await this.page.waitForTimeout(1500);
+
+      const modalVisivel = await this.addedModal.isVisible();
+
+      if (!modalVisivel) {
+        const botaoVisivel = await addToCartButton.isVisible().catch(() => false);
+
+        const diagnostico = await this.page.evaluate(() => {
+          const modal = document.querySelector('#cartModal');
+          const botoes = Array.from(
+            document.querySelectorAll('a.add-to-cart')
+          );
+
+          return {
+            url: window.location.href,
+            modalExiste: Boolean(modal),
+            modalClasses: modal?.className ?? null,
+            botoesAdicionar: botoes.length,
+            mensagem: document.body.innerText
+              .split('\n')
+              .filter(texto =>
+                /added|cart|success|adicionado|carrinho/i.test(texto)
+              )
+              .slice(0, 15)
+          };
+        });
+
+        throw new Error(
+          `O modal de confirmação não apareceu. ` +
+          `Botão visível após clique: ${botaoVisivel}. ` +
+          `Diagnóstico: ${JSON.stringify(diagnostico)}`
+        );
+      }
 
       etapa = 'validando a mensagem de confirmação';
 
@@ -62,9 +89,7 @@ class ProductsPage {
           timeout: 5000
         });
 
-      console.log(
-        'Confirmação de inclusão do produto exibida.'
-      );
+      console.log('Confirmação de inclusão do produto exibida.');
     } catch (error) {
       throw new Error(
         `Falha ao adicionar produto ao carrinho. ` +
