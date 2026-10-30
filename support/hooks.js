@@ -2,68 +2,82 @@
 const {
   Before,
   After,
-  setDefaultTimeout,
-  Status
+  setDefaultTimeout
 } = require('@cucumber/cucumber');
 
-const { chromium } = require('@playwright/test');
-const fs = require('fs');
-const path = require('path');
+const { chromium } = require('playwright');
 
 setDefaultTimeout(30000);
 
-Before(async function () {
-  this.browser = await chromium.launch({ headless: true });
+// ==================================================
+// IDENTIFICAÇÃO DOS CENÁRIOS WEB
+// ==================================================
 
-  this.context = await this.browser.newContext({
-    viewport: { width: 1366, height: 768 }
+function isWebScenario(pickle) {
+  const featurePath = (pickle.uri || '').replace(/\\/g, '/');
+
+  return /features\/WEB\//i.test(featurePath);
+}
+
+// ==================================================
+// INICIALIZAÇÃO DO NAVEGADOR
+// Somente para cenários WEB
+// ==================================================
+
+Before(async function ({ pickle }) {
+  this.isWebScenario = isWebScenario(pickle);
+
+  if (!this.isWebScenario) {
+    console.log('[HOOK] Cenário API: navegador não será iniciado');
+    return;
+  }
+
+  this.browser = await chromium.launch({
+    headless: true
   });
 
-  // Bloqueia requisições de anúncios para reduzir interferências.
-  await this.context.route(
-    /googleads|doubleclick|googlesyndication|pagead/,
-    route => route.abort()
-  );
+  this.context = await this.browser.newContext();
 
   this.page = await this.context.newPage();
+
+  console.log('[HOOK] Navegador iniciado para cenário WEB');
 });
 
+// ==================================================
+// FINALIZAÇÃO E EVIDÊNCIAS
+// ==================================================
+
 After(async function (scenario) {
-  if (scenario.result?.status === Status.FAILED && this.page) {
-    const evidenceDir = path.resolve(__dirname, '../reports/evidences');
-
-    fs.mkdirSync(evidenceDir, { recursive: true });
-
-    const scenarioName = scenario.pickle.name
-      .replace(/[^a-zA-Z0-9-_]/g, '_');
-
-    const screenshotPath = path.join(
-      evidenceDir,
-      `${scenarioName}-${Date.now()}.png`
-    );
-
-    try {
+  try {
+    if (
+      this.isWebScenario &&
+      scenario.result?.status === 'FAILED' &&
+      this.page
+    ) {
       const screenshot = await this.page.screenshot({
         fullPage: true
       });
 
-      fs.writeFileSync(screenshotPath, screenshot);
-      this.attach(screenshot, 'image/png');
+      await this.attach(screenshot, 'image/png');
 
-      console.log(`Screenshot salvo em: ${screenshotPath}`);
-    } catch (error) {
-      console.error(
-        'Não foi possível salvar a screenshot:',
-        error.message
-      );
+      console.log('[HOOK] Screenshot anexado ao relatório');
     }
-  }
+  } catch (error) {
+    console.error(
+      '[HOOK] Erro ao capturar screenshot:',
+      error.message
+    );
+  } finally {
+    if (this.context) {
+      await this.context.close();
+    }
 
-  if (this.context) {
-    await this.context.close();
-  }
+    if (this.browser) {
+      await this.browser.close();
+    }
 
-  if (this.browser) {
-    await this.browser.close();
+    if (this.isWebScenario) {
+      console.log('[HOOK] Navegador encerrado');
+    }
   }
 });

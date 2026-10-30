@@ -1,0 +1,447 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "consulta-de-usuários;consultar-um-usuário-existente",
+        "keyword": "Cenário",
+        "line": 6,
+        "name": "Consultar um usuário existente",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1777899
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 121857300
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 7,
+            "name": "consultar o usuário de ID 1",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:17"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 3508399
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 8,
+            "name": "a resposta da API deve ter status 200",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:29"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 983300
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 9,
+            "name": "o header Content-Type da consulta deve indicar JSON",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:42"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1653399
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 10,
+            "name": "o nome do usuário deve estar preenchido",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:36"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 220699
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 189399
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 5321599
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "consulta-de-usuários;consultar-um-usuário-inexistente",
+        "keyword": "Cenário",
+        "line": 12,
+        "name": "Consultar um usuário inexistente",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 548600
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 83217200
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 13,
+            "name": "consultar o usuário de ID 999",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:17"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 880400
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 14,
+            "name": "a resposta da API deve ter status 404",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:29"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 163900
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 130599
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1793599
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "consulta-de-usuários",
+    "line": 4,
+    "keyword": "Funcionalidade",
+    "name": "Consulta de usuários",
+    "tags": [],
+    "uri": "features\\API\\api-consulta-users.feature"
+  },
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "gerenciamento-de-usuários;criar-um-usuário-com-dados-válidos",
+        "keyword": "Cenário",
+        "line": 6,
+        "name": "Criar um usuário com dados válidos",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 368000
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 209289400
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 7,
+            "name": "enviar uma requisição POST para criar um usuário",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:17"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 853200
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 8,
+            "name": "a resposta CRUD da API deve ter status 201",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:86"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 804899
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 9,
+            "name": "o header Content-Type deve indicar JSON",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:78"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 897699
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 10,
+            "name": "o nome do usuário retornado deve ser \"Lucas QA\"",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:71"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 109600
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 2331100
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 103400
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "gerenciamento-de-usuários;atualizar-um-usuário-existente",
+        "keyword": "Cenário",
+        "line": 12,
+        "name": "Atualizar um usuário existente",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 332499
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 472927199
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 13,
+            "name": "enviar uma requisição PUT para atualizar o usuário de ID 1",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:35"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 803899
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 14,
+            "name": "a resposta CRUD da API deve ter status 200",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:86"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 852199
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 15,
+            "name": "o header Content-Type deve indicar JSON",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:78"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 989900
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 16,
+            "name": "o nome do usuário retornado deve ser \"Lucas QA Atualizado\"",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:71"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 117999
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 2269999
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 114399
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "gerenciamento-de-usuários;excluir-um-usuário-existente",
+        "keyword": "Cenário",
+        "line": 18,
+        "name": "Excluir um usuário existente",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 369400
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 205828600
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 19,
+            "name": "enviar uma requisição DELETE para o usuário de ID 1",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:57"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1240699
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 20,
+            "name": "a resposta CRUD da API deve ter status 200",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:86"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 185100
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1635800
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 70699
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "gerenciamento-de-usuários",
+    "line": 4,
+    "keyword": "Funcionalidade",
+    "name": "Gerenciamento de usuários",
+    "tags": [],
+    "uri": "features\\API\\api-users.feature"
+  }
+]

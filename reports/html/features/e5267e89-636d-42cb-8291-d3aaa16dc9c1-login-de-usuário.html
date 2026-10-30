@@ -81,8 +81,14 @@
       <div class="p-4 md:p-6 flex flex-col lg:flex-row lg:items-start justify-between gap-6">
         <div class="space-y-4 flex-1">
           <div class="space-y-2">
-            <h2 class="text-xl md:text-2xl font-bold text-foreground leading-tight">Consulta de usuários</h2>
+            <h2 class="text-xl md:text-2xl font-bold text-foreground leading-tight">Login de usuário</h2>
             
+            
+              <div class="mt-4 text-sm text-muted-foreground whitespace-pre-line bg-muted/20 p-3 rounded-lg border border-border/50">
+                Como usuário do e-commerce
+  Quero acessar minha conta
+  Para visualizar as funcionalidades disponíveis
+              </div>
             
           </div>
 
@@ -151,9 +157,9 @@
 
   <div class="w-full my-2"></div>
   
-    <span class="flex items-center gap-1.5 min-w-0 max-w-full" title="features\API\api-consulta-users.feature">
+    <span class="flex items-center gap-1.5 min-w-0 max-w-full" title="features\WEB\login.feature">
       <i class="fa-solid fa-file-code text-primary text-base shrink-0"></i>
-      <span class="text-xs font-mono text-muted-foreground truncate">features\API\api-consulta-users.feature</span>
+      <span class="text-xs font-mono text-muted-foreground truncate">features\WEB\login.feature</span>
     </span>
   
   
@@ -185,7 +191,7 @@
         <div class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-3 md:gap-4 shrink-0 lg:ml-6 w-full sm:w-auto">
           <div class="flex flex-col items-center justify-center bg-status-passed/10 rounded-xl py-3 px-3 border border-status-passed/20 w-full">
             <div class="text-xl md:text-2xl font-bold text-status-passed leading-none">
-              2
+              4
             </div>
             <div class="text-[9px] md:text-[10px] uppercase font-bold text-status-passed/70 dark:text-status-passed/30 mt-1 tracking-wider">
               Passed
@@ -374,10 +380,18 @@
 
 
 
+  
+    
+  
+
+  
+    
+  
+
 <div
   class="rounded-xl border bg-card text-card-foreground shadow overflow-hidden scenario-card"
   data-status="passed"
-  data-tags=""
+  data-tags="@positivo,@login"
 >
   <button
     class="w-full text-left px-4 md:px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
@@ -389,13 +403,21 @@
       
 
       <div class="truncate">
-        <h4 class="font-bold text-sm md:text-base truncate">Consultar um usuário existente</h4>
+        <h4 class="font-bold text-sm md:text-base truncate">Realizar login com credenciais válidas</h4>
+        
+          <div class="flex flex-wrap gap-1 mt-0.5">
+            
+              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@positivo</span>
+            
+              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@login</span>
+            
+          </div>
         
         
       </div>
     </div>
     <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.130</span>
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:04.543</span>
       <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
       </svg>
@@ -447,11 +469,47 @@
             
             <div class="w-full">
               <p class="text-sm">
-                <span class="font-bold text-foreground">Quando </span>
-                <span>consultar o usuário de ID 1</span>
+                <span class="font-bold text-foreground">Dado </span>
+                <span>que acesso a página de login</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.120</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:02.803</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Quando </span>
+                <span>realizo login com credenciais cadastradas</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:01.565</p>
 
               
 
@@ -484,82 +542,10 @@
             <div class="w-full">
               <p class="text-sm">
                 <span class="font-bold text-foreground">Então </span>
-                <span>a resposta da API deve ter status 200</span>
+                <span>devo acessar minha conta com sucesso</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.004</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">E </span>
-                <span>o header Content-Type da consulta deve indicar JSON</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.001</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">E </span>
-                <span>o nome do usuário deve estar preenchido</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.002</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.174</p>
 
               
 
@@ -694,10 +680,18 @@
 
 
 
+  
+    
+  
+
+  
+    
+  
+
 <div
   class="rounded-xl border bg-card text-card-foreground shadow overflow-hidden scenario-card"
   data-status="passed"
-  data-tags=""
+  data-tags="@negativo,@login"
 >
   <button
     class="w-full text-left px-4 md:px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
@@ -709,13 +703,21 @@
       
 
       <div class="truncate">
-        <h4 class="font-bold text-sm md:text-base truncate">Consultar um usuário inexistente</h4>
+        <h4 class="font-bold text-sm md:text-base truncate">Realizar login com senha incorreta</h4>
+        
+          <div class="flex flex-wrap gap-1 mt-0.5">
+            
+              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@negativo</span>
+            
+              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@login</span>
+            
+          </div>
         
         
       </div>
     </div>
     <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.088</span>
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:03.100</span>
       <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
       </svg>
@@ -767,11 +769,119 @@
             
             <div class="w-full">
               <p class="text-sm">
-                <span class="font-bold text-foreground">Quando </span>
-                <span>consultar o usuário de ID 999</span>
+                <span class="font-bold text-foreground">Dado </span>
+                <span>que acesso a página de login</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.087</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:02.541</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Quando </span>
+                <span>informo um e-mail cadastrado</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.010</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">E </span>
+                <span>informo uma senha incorreta</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.006</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">E </span>
+                <span>solicito o login</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.460</p>
 
               
 
@@ -804,10 +914,718 @@
             <div class="w-full">
               <p class="text-sm">
                 <span class="font-bold text-foreground">Então </span>
-                <span>a resposta da API deve ter status 404</span>
+                <span>devo visualizar uma mensagem de erro de autenticação</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.001</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.082</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">After</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">After</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">After</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+        
+          
+
+
+
+
+  
+    
+  
+
+  
+    
+  
+
+<div
+  class="rounded-xl border bg-card text-card-foreground shadow overflow-hidden scenario-card"
+  data-status="passed"
+  data-tags="@negativo,@login"
+>
+  <button
+    class="w-full text-left px-4 md:px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
+    onclick="this.nextElementSibling.classList.toggle('hidden')"
+  >
+    <div class="flex items-center gap-3 overflow-hidden">
+      
+        <i class="fa-solid fa-circle-check text-xl md:text-2xl shrink-0 text-status-passed"></i>
+      
+
+      <div class="truncate">
+        <h4 class="font-bold text-sm md:text-base truncate">Realizar login com usuário inexistente</h4>
+        
+          <div class="flex flex-wrap gap-1 mt-0.5">
+            
+              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@negativo</span>
+            
+              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@login</span>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+    <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:03.271</span>
+      <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+  </button>
+  <div class="hidden border-t divide-y divide-border">
+    
+
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Before</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Dado </span>
+                <span>que acesso a página de login</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:02.772</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Quando </span>
+                <span>informo um e-mail não cadastrado</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.012</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">E </span>
+                <span>informo uma senha qualquer</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.008</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">E </span>
+                <span>solicito o login</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.353</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Então </span>
+                <span>devo visualizar uma mensagem de usuário não encontrado</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.125</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">After</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">After</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">After</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+        
+          
+
+
+
+
+  
+    
+  
+
+  
+    
+  
+
+<div
+  class="rounded-xl border bg-card text-card-foreground shadow overflow-hidden scenario-card"
+  data-status="passed"
+  data-tags="@negativo,@login"
+>
+  <button
+    class="w-full text-left px-4 md:px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
+    onclick="this.nextElementSibling.classList.toggle('hidden')"
+  >
+    <div class="flex items-center gap-3 overflow-hidden">
+      
+        <i class="fa-solid fa-circle-check text-xl md:text-2xl shrink-0 text-status-passed"></i>
+      
+
+      <div class="truncate">
+        <h4 class="font-bold text-sm md:text-base truncate">Tentar realizar login com os campos obrigatórios em branco</h4>
+        
+          <div class="flex flex-wrap gap-1 mt-0.5">
+            
+              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@negativo</span>
+            
+              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@login</span>
+            
+          </div>
+        
+        
+      </div>
+    </div>
+    <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:02.729</span>
+      <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+  </button>
+  <div class="hidden border-t divide-y divide-border">
+    
+
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Before</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Dado </span>
+                <span>que acesso a página de login</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:02.605</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Quando </span>
+                <span>deixo o e-mail e a senha em branco</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.021</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">E </span>
+                <span>solicito o login</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.058</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Então </span>
+                <span>devo visualizar as validações dos campos obrigatórios</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.043</p>
 
               
 
@@ -956,7 +1774,7 @@
 
     // Embedded data for charts (status/duration/tags only — never embeddings,
     // which would make this inline blob scale with attachment size)
-    const featureData = {"description":"","elements":[{"description":"","id":"consulta-de-usuários;consultar-um-usuário-existente","keyword":"Cenário","line":6,"name":"Consultar um usuário existente","steps":[{"result":{"status":"passed","duration":166249699},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5120812299},"arguments":[],"keyword":"Quando ","line":7,"name":"consultar o usuário de ID 1","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:05.120"},{"result":{"status":"passed","duration":4857499},"arguments":[],"keyword":"Então ","line":8,"name":"a resposta da API deve ter status 200","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.004"},{"result":{"status":"passed","duration":1700700},"arguments":[],"keyword":"E ","line":9,"name":"o header Content-Type da consulta deve indicar JSON","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:42"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":2671000},"arguments":[],"keyword":"E ","line":10,"name":"o nome do usuário deve estar preenchido","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:36"},"time":"00:00:00.002"},{"result":{"status":"passed","duration":62732799},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":142499},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":1831700},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.130041498,"time":"00:00:05.130","passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"consulta-de-usuários;consultar-um-usuário-inexistente","keyword":"Cenário","line":12,"name":"Consultar um usuário inexistente","steps":[{"result":{"status":"passed","duration":149176199},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5087250699},"arguments":[],"keyword":"Quando ","line":13,"name":"consultar o usuário de ID 999","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:05.087"},{"result":{"status":"passed","duration":1036700},"arguments":[],"keyword":"Então ","line":14,"name":"a resposta da API deve ter status 404","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":64771399},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":89800},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":741799},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.0882873989999995,"time":"00:00:05.088","passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0}],"id":"21233fc0-98dc-47ec-b877-3d045ee3f3a2-consulta-de-usuários","line":4,"keyword":"Funcionalidade","name":"Consulta de usuários","tags":[],"uri":"features\\API\\api-consulta-users.feature","metadata":{"browser":{"name":"Chrome","version":"156"},"executionPlatform":"local","username":"Máquina000088","device":"Máquina local","platform":{"name":"Windows","version":"10/11"},"nodeVersion":"v24.22.1","reportVersion":"4.5.0","hostname":"DESKTOP-V8H127K","architecture":"x64"},"scenarios":{"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"passedPercentage":"100.00","failedPercentage":"0.00","notDefinedPercentage":"0.00","skippedPercentage":"0.00","pendingPercentage":"0.00","ambiguousPercentage":"0.00","total":2},"duration":10218328897,"time":"00:00:10.218","isFailed":false,"isAmbiguous":false,"isSkipped":false,"isNotdefined":false,"isPending":false,"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"totalTime":10218328897,"app":"","browser":"Chrome 156","device":"Máquina local","executionPlatform":"local","os":"Windows 10/11","username":"Máquina000088"};
+    const featureData = {"description":"  Como usuário do e-commerce\n  Quero acessar minha conta\n  Para visualizar as funcionalidades disponíveis","elements":[{"description":"","id":"login-de-usuário;realizar-login-com-credenciais-válidas","keyword":"Cenário","line":10,"name":"Realizar login com credenciais válidas","steps":[{"result":{"status":"passed","duration":194099499},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":2803159599},"arguments":[],"keyword":"Dado ","line":11,"name":"que acesso a página de login","match":{"location":"step-definitions\\WEB\\login.steps.js:29"},"time":"00:00:02.803"},{"result":{"status":"passed","duration":1565814500},"arguments":[],"keyword":"Quando ","line":12,"name":"realizo login com credenciais cadastradas","match":{"location":"step-definitions\\WEB\\login.steps.js:44"},"time":"00:00:01.565"},{"result":{"status":"passed","duration":174042399},"arguments":[],"keyword":"Então ","line":13,"name":"devo acessar minha conta com sucesso","match":{"location":"step-definitions\\WEB\\login.steps.js:108"},"time":"00:00:00.174"},{"result":{"status":"passed","duration":118077899},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":92599},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":48199},"keyword":"After","hidden":true}],"tags":[{"name":"@positivo","line":9},{"name":"@login","line":9}],"type":"scenario","duration":4.543016498,"time":"00:00:04.543","passed":3,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"login-de-usuário;realizar-login-com-senha-incorreta","keyword":"Cenário","line":16,"name":"Realizar login com senha incorreta","steps":[{"result":{"status":"passed","duration":191178799},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":2541448000},"arguments":[],"keyword":"Dado ","line":17,"name":"que acesso a página de login","match":{"location":"step-definitions\\WEB\\login.steps.js:29"},"time":"00:00:02.541"},{"result":{"status":"passed","duration":10810300},"arguments":[],"keyword":"Quando ","line":18,"name":"informo um e-mail cadastrado","match":{"location":"step-definitions\\WEB\\login.steps.js:54"},"time":"00:00:00.010"},{"result":{"status":"passed","duration":6154799},"arguments":[],"keyword":"E ","line":19,"name":"informo uma senha incorreta","match":{"location":"step-definitions\\WEB\\login.steps.js:64"},"time":"00:00:00.006"},{"result":{"status":"passed","duration":460157100},"arguments":[],"keyword":"E ","line":20,"name":"solicito o login","match":{"location":"step-definitions\\WEB\\login.steps.js:91"},"time":"00:00:00.460"},{"result":{"status":"passed","duration":82006300},"arguments":[],"keyword":"Então ","line":21,"name":"devo visualizar uma mensagem de erro de autenticação","match":{"location":"step-definitions\\WEB\\login.steps.js:123"},"time":"00:00:00.082"},{"result":{"status":"passed","duration":122989099},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":59600},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":38800},"keyword":"After","hidden":true}],"tags":[{"name":"@negativo","line":15},{"name":"@login","line":15}],"type":"scenario","duration":3.1005764989999998,"time":"00:00:03.100","passed":5,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"login-de-usuário;realizar-login-com-usuário-inexistente","keyword":"Cenário","line":24,"name":"Realizar login com usuário inexistente","steps":[{"result":{"status":"passed","duration":193478500},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":2772426699},"arguments":[],"keyword":"Dado ","line":25,"name":"que acesso a página de login","match":{"location":"step-definitions\\WEB\\login.steps.js:29"},"time":"00:00:02.772"},{"result":{"status":"passed","duration":12611400},"arguments":[],"keyword":"Quando ","line":26,"name":"informo um e-mail não cadastrado","match":{"location":"step-definitions\\WEB\\login.steps.js:80"},"time":"00:00:00.012"},{"result":{"status":"passed","duration":8083200},"arguments":[],"keyword":"E ","line":27,"name":"informo uma senha qualquer","match":{"location":"step-definitions\\WEB\\login.steps.js:72"},"time":"00:00:00.008"},{"result":{"status":"passed","duration":353394200},"arguments":[],"keyword":"E ","line":28,"name":"solicito o login","match":{"location":"step-definitions\\WEB\\login.steps.js:91"},"time":"00:00:00.353"},{"result":{"status":"passed","duration":125024799},"arguments":[],"keyword":"Então ","line":29,"name":"devo visualizar uma mensagem de usuário não encontrado","match":{"location":"step-definitions\\WEB\\login.steps.js:145"},"time":"00:00:00.125"},{"result":{"status":"passed","duration":107012699},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":42500},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":22799},"keyword":"After","hidden":true}],"tags":[{"name":"@negativo","line":23},{"name":"@login","line":23}],"type":"scenario","duration":3.2715402979999997,"time":"00:00:03.271","passed":5,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"login-de-usuário;tentar-realizar-login-com-os-campos-obrigatórios-em-branco","keyword":"Cenário","line":32,"name":"Tentar realizar login com os campos obrigatórios em branco","steps":[{"result":{"status":"passed","duration":188464299},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":2605828699},"arguments":[],"keyword":"Dado ","line":33,"name":"que acesso a página de login","match":{"location":"step-definitions\\WEB\\login.steps.js:29"},"time":"00:00:02.605"},{"result":{"status":"passed","duration":21642299},"arguments":[],"keyword":"Quando ","line":34,"name":"deixo o e-mail e a senha em branco","match":{"location":"step-definitions\\WEB\\login.steps.js:99"},"time":"00:00:00.021"},{"result":{"status":"passed","duration":58292500},"arguments":[],"keyword":"E ","line":35,"name":"solicito o login","match":{"location":"step-definitions\\WEB\\login.steps.js:91"},"time":"00:00:00.058"},{"result":{"status":"passed","duration":43769299},"arguments":[],"keyword":"Então ","line":36,"name":"devo visualizar as validações dos campos obrigatórios","match":{"location":"step-definitions\\WEB\\login.steps.js:167"},"time":"00:00:00.043"},{"result":{"status":"passed","duration":105669800},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":58199},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":30299},"keyword":"After","hidden":true}],"tags":[{"name":"@negativo","line":31},{"name":"@login","line":31}],"type":"scenario","duration":2.729532797,"time":"00:00:02.729","passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0}],"id":"e5267e89-636d-42cb-8291-d3aaa16dc9c1-login-de-usuário","line":4,"keyword":"Funcionalidade","name":"Login de usuário","tags":[],"uri":"features\\WEB\\login.feature","metadata":{"browser":{"name":"Chrome","version":"156"},"executionPlatform":"local","username":"Máquina000088","device":"Máquina local","platform":{"name":"Windows","version":"10/11"},"nodeVersion":"v24.22.1","reportVersion":"4.5.0","hostname":"DESKTOP-V8H127K","architecture":"x64"},"scenarios":{"passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"passedPercentage":"100.00","failedPercentage":"0.00","notDefinedPercentage":"0.00","skippedPercentage":"0.00","pendingPercentage":"0.00","ambiguousPercentage":"0.00","total":4},"duration":13644666092,"time":"00:00:13.644","isFailed":false,"isAmbiguous":false,"isSkipped":false,"isNotdefined":false,"isPending":false,"passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"totalTime":13644666092,"app":"","browser":"Chrome 156","device":"Máquina local","executionPlatform":"local","os":"Windows 10/11","username":"Máquina000088"};
   </script>
 
         </div>
