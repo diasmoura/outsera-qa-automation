@@ -10,7 +10,7 @@ class ProductsPage {
     // PRODUTOS
     // ==============================================
 
-    this.productCards = this.page.locator('.product-image-wrapper');
+    this.productCards = page.locator('.product-image-wrapper');
     this.firstProduct = this.productCards.first();
 
     this.addToCartButton = this.firstProduct
@@ -21,7 +21,7 @@ class ProductsPage {
     // MODAL DE CONFIRMAÇÃO
     // ==============================================
 
-    this.addedModal = this.page.locator('#cartModal');
+    this.addedModal = page.locator('#cartModal');
 
     this.addedMessage = this.addedModal.getByText('Added!', {
       exact: true
@@ -35,13 +35,13 @@ class ProductsPage {
     // CARRINHO
     // ==============================================
 
-    this.cartProductRows = this.page.locator(
+    this.cartProductRows = page.locator(
       '#cart_info_table tbody tr'
     );
 
-    this.emptyCartMessage = this.page.locator('#empty_cart');
+    this.emptyCartMessage = page.locator('#empty_cart');
 
-    this.proceedToCheckoutButton = this.page.locator(
+    this.proceedToCheckoutButton = page.locator(
       '.btn.btn-default.check_out'
     );
   }
@@ -55,8 +55,6 @@ class ProductsPage {
       timeout: this.timeout
     });
 
-    await this.page.waitForLoadState('domcontentloaded');
-
     await this.page.locator(
       '#cart_info_table, #empty_cart'
     ).first().waitFor({
@@ -66,7 +64,7 @@ class ProductsPage {
   }
 
   // ==============================================
-  // VERIFICAR PRODUTOS NO CARRINHO
+  // QUANTIDADE DE PRODUTOS
   // ==============================================
 
   async getCartProductCount() {
@@ -81,7 +79,6 @@ class ProductsPage {
 
   async addFirstProductToCart() {
     try {
-      // Garante que está na página de produtos
       if (!this.page.url().includes('/products')) {
         await this.page.goto(`${this.baseUrl}/products`, {
           waitUntil: 'domcontentloaded',
@@ -89,15 +86,12 @@ class ProductsPage {
         });
       }
 
-      // Aguarda a lista de produtos
       await this.firstProduct.waitFor({
         state: 'visible',
         timeout: this.timeout
       });
 
       await this.firstProduct.scrollIntoViewIfNeeded();
-
-      // Exibe o botão Add to cart
       await this.firstProduct.hover();
 
       await this.addToCartButton.waitFor({
@@ -109,61 +103,59 @@ class ProductsPage {
         throw new Error('Botão Add to cart está desabilitado.');
       }
 
-      // Realiza a inclusão
+      // Aguarda a resposta da requisição de inclusão.
+      // O listener é registrado antes do clique.
+      const respostaInclusao = this.page.waitForResponse(
+        response => {
+          const url = response.url();
+
+          return (
+            url.includes('/add_to_cart/') &&
+            response.request().method() === 'POST'
+          );
+        },
+        { timeout: this.timeout }
+      ).catch(() => null);
+
       await this.addToCartButton.click();
 
       console.log(
         '[CARRINHO] Clique em Add to cart realizado.'
       );
 
-      // Aguarda o modal sem interromper o fluxo caso ele não apareça
-      const modalOpened = await this.addedModal.waitFor({
-        state: 'visible',
-        timeout: 10000
-      }).then(() => true).catch(() => false);
+      const response = await respostaInclusao;
 
-      if (modalOpened) {
-        await this.addedMessage.waitFor({
-          state: 'visible',
-          timeout: 5000
-        });
-
-        console.log(
-          '[CARRINHO] Confirmação de inclusão exibida.'
+      if (response && !response.ok()) {
+        throw new Error(
+          `Requisição de inclusão retornou HTTP ${response.status()}.`
         );
-
-        return true;
       }
 
-      console.warn(
-        '[CARRINHO] Modal não exibido. Validando inclusão diretamente no carrinho.'
-      );
+      if (response) {
+        console.log(
+          `[CARRINHO] Requisição de inclusão concluída: HTTP ${response.status()}.`
+        );
+      } else {
+        console.warn(
+          '[CARRINHO] Resposta da inclusão não identificada. Validando pela interface.'
+        );
+      }
 
-      // Não realiza outro clique para evitar duplicidade
-      await this.page.goto(`${this.baseUrl}/view_cart`, {
-        waitUntil: 'domcontentloaded',
+      await this.addedModal.waitFor({
+        state: 'visible',
         timeout: this.timeout
       });
 
-      await this.waitForCartPage();
-
-      const productCount = await this.cartProductRows.count();
+      await this.addedMessage.waitFor({
+        state: 'visible',
+        timeout: this.timeout
+      });
 
       console.log(
-        `[CARRINHO] Produtos encontrados após inclusão: ${productCount}.`
+        '[CARRINHO] Confirmação de inclusão exibida.'
       );
 
-      if (productCount > 0) {
-        console.log(
-          '[CARRINHO] Produto identificado no carrinho.'
-        );
-
-        return true;
-      }
-
-      throw new Error(
-        'O modal não foi exibido e nenhum produto foi encontrado no carrinho.'
-      );
+      return true;
 
     } catch (error) {
       throw new Error(
@@ -174,12 +166,34 @@ class ProductsPage {
   }
 
   // ==============================================
+  // VALIDAR CONFIRMAÇÃO
+  // ==============================================
+
+  async isAddToCartConfirmationVisible() {
+    try {
+      await this.addedModal.waitFor({
+        state: 'visible',
+        timeout: this.timeout
+      });
+
+      await this.addedMessage.waitFor({
+        state: 'visible',
+        timeout: this.timeout
+      });
+
+      return true;
+
+    } catch {
+      return false;
+    }
+  }
+
+  // ==============================================
   // ACESSAR CARRINHO
   // ==============================================
 
   async openCartFromConfirmation() {
     try {
-      // Se já estiver no carrinho, não navega novamente
       if (this.page.url().includes('/view_cart')) {
         await this.waitForCartPage();
 
@@ -187,7 +201,7 @@ class ProductsPage {
           '[CARRINHO] Já está na página do carrinho.'
         );
 
-        return;
+        return true;
       }
 
       const modalVisible = await this.addedModal
@@ -205,6 +219,7 @@ class ProductsPage {
           '[CARRINHO] Acessando carrinho pelo modal de confirmação.'
         );
       } else {
+        // Acesso direto para cenários sem modal.
         await this.page.goto(`${this.baseUrl}/view_cart`, {
           waitUntil: 'domcontentloaded',
           timeout: this.timeout
@@ -220,6 +235,8 @@ class ProductsPage {
       console.log(
         '[CARRINHO] Página do carrinho acessada com sucesso.'
       );
+
+      return true;
 
     } catch (error) {
       throw new Error(
@@ -237,24 +254,35 @@ class ProductsPage {
     try {
       await this.waitForCartPage();
 
-      const productCount = await this.cartProductRows.count();
+      const quantidade = await this.cartProductRows.count();
 
       console.log(
-        `[CARRINHO] Quantidade de produtos encontrados: ${productCount}.`
+        `[CARRINHO] Quantidade de produtos encontrados: ${quantidade}.`
       );
 
-      if (productCount === 0) {
+      if (quantidade === 0) {
+        console.error(
+          '[CARRINHO] Nenhum produto encontrado após a inclusão.'
+        );
+
         return false;
       }
 
-      return await this.cartProductRows
+      const produtoVisivel = await this.cartProductRows
         .first()
-        .isVisible()
-        .catch(() => false);
+        .isVisible();
+
+      if (produtoVisivel) {
+        console.log(
+          '[CARRINHO] Produto encontrado no carrinho.'
+        );
+      }
+
+      return produtoVisivel;
 
     } catch (error) {
       console.error(
-        `[CARRINHO] Falha ao validar produto no carrinho: ${error.message}`
+        `[CARRINHO] Falha na validação: ${error.message}`
       );
 
       return false;
@@ -266,30 +294,22 @@ class ProductsPage {
   // ==============================================
 
   async isCartEmpty() {
-    try {
-      await this.waitForCartPage();
+    await this.waitForCartPage();
 
-      const productCount = await this.cartProductRows.count();
+    const quantidade = await this.cartProductRows.count();
 
-      const emptyMessageVisible = await this.emptyCartMessage
-        .isVisible()
-        .catch(() => false);
+    const mensagemVisivel = await this.emptyCartMessage
+      .isVisible()
+      .catch(() => false);
 
-      const isEmpty =
-        productCount === 0 && emptyMessageVisible;
+    const carrinhoVazio =
+      quantidade === 0 && mensagemVisivel;
 
-      console.log(
-        `[CARRINHO] Carrinho vazio: ${isEmpty ? 'SIM' : 'NÃO'}.`
-      );
+    console.log(
+      `[CARRINHO] Carrinho vazio: ${carrinhoVazio ? 'SIM' : 'NÃO'}.`
+    );
 
-      return isEmpty;
-
-    } catch (error) {
-      throw new Error(
-        `[CARRINHO] Falha ao validar carrinho vazio. ` +
-        `URL: ${this.page.url()}. Detalhe: ${error.message}`
-      );
-    }
+    return carrinhoVazio;
   }
 
   // ==============================================
@@ -297,25 +317,17 @@ class ProductsPage {
   // ==============================================
 
   async isCheckoutAvailable() {
-    try {
-      await this.waitForCartPage();
+    await this.waitForCartPage();
 
-      const checkoutVisible = await this.proceedToCheckoutButton
-        .isVisible()
-        .catch(() => false);
+    const disponivel = await this.proceedToCheckoutButton
+      .isVisible()
+      .catch(() => false);
 
-      console.log(
-        `[CHECKOUT] Botão disponível: ${checkoutVisible ? 'SIM' : 'NÃO'}.`
-      );
+    console.log(
+      `[CHECKOUT] Botão disponível: ${disponivel ? 'SIM' : 'NÃO'}.`
+    );
 
-      return checkoutVisible;
-
-    } catch (error) {
-      throw new Error(
-        `[CHECKOUT] Falha ao verificar disponibilidade do checkout. ` +
-        `URL: ${this.page.url()}. Detalhe: ${error.message}`
-      );
-    }
+    return disponivel;
   }
 
   // ==============================================
@@ -326,9 +338,9 @@ class ProductsPage {
     try {
       await this.waitForCartPage();
 
-      const checkoutAvailable = await this.isCheckoutAvailable();
+      const disponivel = await this.isCheckoutAvailable();
 
-      if (!checkoutAvailable) {
+      if (!disponivel) {
         throw new Error(
           'O botão Proceed To Checkout não está disponível.'
         );
