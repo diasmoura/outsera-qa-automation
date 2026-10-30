@@ -43,7 +43,7 @@
       </div>
       <div class="text-balance">
         <h1 class="text-lg md:text-2xl font-bold text-foreground text-balance tracking-tight">
-          Relatório de Automação BDD
+          Relatório Consolidado - Web e API
         </h1>
         <p class="mt-0.5 text-[10px] md:text-xs text-muted-foreground uppercase font-bold tracking-widest opacity-70">
           Outsera QA Automation
@@ -90,7 +90,7 @@
             <div class="flex flex-wrap items-center gap-3 md:gap-4 text-sm text-muted-foreground">
   
     
-    <span class="flex items-center gap-1.5" title="Máquina local">
+    <span class="flex items-center gap-1.5" title="Automação">
       <i
         class="fa-solid fa-desktop text-primary text-base"
       ></i>
@@ -98,17 +98,17 @@
   
   
     
-    <span class="flex items-center gap-1.5" title="Windows 10/11">
+    <span class="flex items-center gap-1.5" title="win32 10.0.26200">
       <i
-        class="fa-brands fa-windows text-primary text-base"
+        class="fa-solid fa-laptop-code text-primary text-base"
       ></i>
     </span>
   
   
     
-    <span class="flex items-center gap-1.5" title="Chrome 156">
+    <span class="flex items-center gap-1.5" title="Chromium Playwright">
       <i
-        class="fa-brands fa-chrome text-primary text-base"
+        class="fa-solid fa-globe text-primary text-base"
       ></i>
     </span>
   
@@ -395,7 +395,7 @@
       </div>
     </div>
     <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:00.168</span>
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.161</span>
       <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
       </svg>
@@ -451,7 +451,7 @@
                 <span>consultar o usuário de ID 1</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.163</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.154</p>
 
               
 
@@ -715,7 +715,7 @@
       </div>
     </div>
     <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:00.074</span>
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.165</span>
       <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
       </svg>
@@ -771,7 +771,7 @@
                 <span>consultar o usuário de ID 999</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.073</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.162</p>
 
               
 
@@ -807,7 +807,7 @@
                 <span>a resposta da API deve ter status 404</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.000</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.002</p>
 
               
 
@@ -956,7 +956,7 @@
 
     // Embedded data for charts (status/duration/tags only — never embeddings,
     // which would make this inline blob scale with attachment size)
-    const featureData = {"description":"","elements":[{"description":"","id":"consulta-de-usuários;consultar-um-usuário-existente","keyword":"Cenário","line":6,"name":"Consultar um usuário existente","steps":[{"result":{"status":"passed","duration":944500},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":163285399},"arguments":[],"keyword":"Quando ","line":7,"name":"consultar o usuário de ID 1","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:00.163"},{"result":{"status":"passed","duration":3535800},"arguments":[],"keyword":"Então ","line":8,"name":"a resposta da API deve ter status 200","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.003"},{"result":{"status":"passed","duration":799800},"arguments":[],"keyword":"E ","line":9,"name":"o header Content-Type da consulta deve indicar JSON","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:42"},"time":"00:00:00.000"},{"result":{"status":"passed","duration":1002300},"arguments":[],"keyword":"E ","line":10,"name":"o nome do usuário deve estar preenchido","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:36"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":180700},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":147999},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":2761700},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":0.168623299,"time":"00:00:00.168","passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"consulta-de-usuários;consultar-um-usuário-inexistente","keyword":"Cenário","line":12,"name":"Consultar um usuário inexistente","steps":[{"result":{"status":"passed","duration":251700},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":73845900},"arguments":[],"keyword":"Quando ","line":13,"name":"consultar o usuário de ID 999","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:00.073"},{"result":{"status":"passed","duration":750299},"arguments":[],"keyword":"Então ","line":14,"name":"a resposta da API deve ter status 404","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.000"},{"result":{"status":"passed","duration":66299},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":68600},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":1099799},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":0.074596199,"time":"00:00:00.074","passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0}],"id":"22c0e3a3-b224-4203-aaf6-b1c41e9ac674-consulta-de-usuários","line":4,"keyword":"Funcionalidade","name":"Consulta de usuários","tags":[],"uri":"features\\API\\api-consulta-users.feature","metadata":{"browser":{"name":"Chrome","version":"156"},"executionPlatform":"local","username":"Máquina000088","device":"Máquina local","platform":{"name":"Windows","version":"10/11"},"nodeVersion":"v24.22.1","reportVersion":"4.5.0","hostname":"DESKTOP-V8H127K","architecture":"x64"},"scenarios":{"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"passedPercentage":"100.00","failedPercentage":"0.00","notDefinedPercentage":"0.00","skippedPercentage":"0.00","pendingPercentage":"0.00","ambiguousPercentage":"0.00","total":2},"duration":243219498,"time":"00:00:00.243","isFailed":false,"isAmbiguous":false,"isSkipped":false,"isNotdefined":false,"isPending":false,"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"totalTime":243219498,"app":"","browser":"Chrome 156","device":"Máquina local","executionPlatform":"local","os":"Windows 10/11","username":"Máquina000088"};
+    const featureData = {"description":"","elements":[{"description":"","id":"consulta-de-usuários;consultar-um-usuário-existente","keyword":"Cenário","line":6,"name":"Consultar um usuário existente","steps":[{"result":{"status":"passed","duration":838300},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5154569100},"arguments":[],"keyword":"Quando ","line":7,"name":"consultar o usuário de ID 1","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:05.154"},{"result":{"status":"passed","duration":3727200},"arguments":[],"keyword":"Então ","line":8,"name":"a resposta da API deve ter status 200","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.003"},{"result":{"status":"passed","duration":918899},"arguments":[],"keyword":"E ","line":9,"name":"o header Content-Type da consulta deve indicar JSON","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:42"},"time":"00:00:00.000"},{"result":{"status":"passed","duration":1984599},"arguments":[],"keyword":"E ","line":10,"name":"o nome do usuário deve estar preenchido","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:36"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":194500},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":119599},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":2397100},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.161199797999999,"time":"00:00:05.161","passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"consulta-de-usuários;consultar-um-usuário-inexistente","keyword":"Cenário","line":12,"name":"Consultar um usuário inexistente","steps":[{"result":{"status":"passed","duration":221199},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5162477100},"arguments":[],"keyword":"Quando ","line":13,"name":"consultar o usuário de ID 999","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:05.162"},{"result":{"status":"passed","duration":2646800},"arguments":[],"keyword":"Então ","line":14,"name":"a resposta da API deve ter status 404","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.002"},{"result":{"status":"passed","duration":446599},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":212900},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":1849099},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.165123899999999,"time":"00:00:05.165","passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0}],"id":"2315e1bd-a326-4eb5-a6bc-79e935898bd3-consulta-de-usuários","line":4,"keyword":"Funcionalidade","name":"Consulta de usuários","tags":[],"uri":"features\\API\\api-consulta-users.feature","metadata":{"browser":{"name":"Chromium","version":"Playwright"},"executionPlatform":"local","username":"Máquina000088","device":"Automação","platform":{"name":"win32","version":"10.0.26200"},"nodeVersion":"v24.22.1","reportVersion":"4.5.0","hostname":"DESKTOP-V8H127K","architecture":"x64"},"scenarios":{"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"passedPercentage":"100.00","failedPercentage":"0.00","notDefinedPercentage":"0.00","skippedPercentage":"0.00","pendingPercentage":"0.00","ambiguousPercentage":"0.00","total":2},"duration":10326323698,"time":"00:00:10.326","isFailed":false,"isAmbiguous":false,"isSkipped":false,"isNotdefined":false,"isPending":false,"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"totalTime":10326323698,"app":"","browser":"Chromium Playwright","device":"Automação","executionPlatform":"local","os":"win32 10.0.26200","username":"Máquina000088"};
   </script>
 
         </div>

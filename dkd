@@ -1,0 +1,59 @@
+[1mdiff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml[m
+[1mindex 5fdec44..1ab1d5e 100644[m
+[1m--- a/.github/workflows/ci.yml[m
+[1m+++ b/.github/workflows/ci.yml[m
+[36m@@ -1,5 +1,5 @@[m
+ [m
+[31m-name: QA Automation Pipeline[m
+[32m+[m[32mname: Lucas Dias[m
+ [m
+ on:[m
+   push:[m
+[36m@@ -149,6 +149,7 @@[m [mjobs:[m
+               echo "API disponível."[m
+               exit 0[m
+             fi[m
+[32m+[m
+             echo "Aguardando API... tentativa $attempt"[m
+             sleep 2[m
+           done[m
+[36m@@ -243,11 +244,38 @@[m [mjobs:[m
+             echo "Nenhum relatório Cucumber disponível para consolidação."[m
+           fi[m
+ [m
+[32m+[m[32m      - name: Prepare dashboard inputs[m
+[32m+[m[32m        shell: bash[m
+[32m+[m[32m        run: |[m
+[32m+[m[32m          mkdir -p reports test-results[m
+[32m+[m
+[32m+[m[32m          if [ -f reports/web/cucumber-web-report.json ]; then[m
+[32m+[m[32m            cp reports/web/cucumber-web-report.json reports/cucumber-web-report.json[m
+[32m+[m[32m          fi[m
+[32m+[m
+[32m+[m[32m          if [ -f reports/api/cucumber-api-report.json ]; then[m
+[32m+[m[32m            cp reports/api/cucumber-api-report.json reports/cucumber-api-report.json[m
+[32m+[m[32m          fi[m
+[32m+[m
+[32m+[m[32m          if [ -f reports/playwright/test-results/.last-run.json ]; then[m
+[32m+[m[32m            cp reports/playwright/test-results/.last-run.json test-results/.last-run.json[m
+[32m+[m[32m          fi[m
+[32m+[m
+[32m+[m[32m          if [ -d reports/playwright/playwright-report ]; then[m
+[32m+[m[32m            cp -R reports/playwright/playwright-report ./playwright-report[m
+[32m+[m[32m          fi[m
+[32m+[m
+[32m+[m[32m      - name: Generate QA dashboard[m
+[32m+[m[32m        if: always()[m
+[32m+[m[32m        run: node dashboard.js[m
+[32m+[m
+       - name: Upload final reports[m
+         if: always()[m
+         uses: actions/upload-artifact@v6[m
+         with:[m
+           name: qa-automation-final-report[m
+[31m-          path: reports/[m
+[32m+[m[32m          path: |[m
+[32m+[m[32m            reports/[m
+[32m+[m[32m            playwright-report/[m
+           if-no-files-found: warn[m
+           retention-days: 15[m

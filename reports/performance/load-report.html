@@ -2,38 +2,118 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Relatório de Carga K6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Relatorio de Performance - K6</title>
 <style>
-body { font-family: Arial; margin: 40px; color: #222; }
-h1 { color: #243b64; }
-table { border-collapse: collapse; width: 100%; max-width: 850px; }
-th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-th { background: #eee; }
-.note { margin-top: 25px; padding: 15px; background: #fff3cd; }
+body {
+  font-family: Arial, sans-serif;
+  margin: 35px;
+  color: #222;
+  background: #f7f8fa;
+}
+h1, h2 { color: #243b64; }
+.container {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  max-width: 950px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 25px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 11px;
+  text-align: left;
+}
+th { background: #e9edf5; }
+.pass { color: #16803c; font-weight: bold; }
+.fail { color: #c62828; font-weight: bold; }
+.note {
+  padding: 15px;
+  background: #fff3cd;
+  border-left: 5px solid #e0a800;
+  margin-top: 20px;
+}
 </style>
 </head>
 <body>
-<h1>Relatório de Teste de Carga - K6</h1>
+<div class="container">
 
+<h1>Relatorio de Teste de Performance - K6</h1>
+<p>Teste de carga realizado com API de teste local.</p>
+
+<h2>1. Resumo da execucao</h2>
 <table>
-<tr><th>Métrica</th><th>Resultado</th></tr>
-<tr><td>Usuários virtuais máximos registrados</td><td>500</td></tr>
-<tr><td>Total de requisições</td><td>131548</td></tr>
-<tr><td>Requisições por segundo</td><td>157.01</td></tr>
-<tr><td>Tempo médio</td><td>0.95 ms</td></tr>
-<tr><td>Mediana</td><td>1.01 ms</td></tr>
-<tr><td>Percentil 90</td><td>1.69 ms</td></tr>
-<tr><td>Percentil 95</td><td>1.85 ms</td></tr>
-<tr><td>Tempo máximo</td><td>28.49 ms</td></tr>
+<tr><th>Indicador</th><th>Resultado</th></tr>
+<tr><td>Usuarios virtuais maximos</td><td>500</td></tr>
+<tr><td>Total de requisicoes</td><td>131548</td></tr>
+<tr><td>Requisicoes por segundo</td><td>157.01</td></tr>
 <tr><td>Falhas HTTP</td><td>0.00%</td></tr>
 <tr><td>Checks aprovados</td><td>394644</td></tr>
 <tr><td>Checks reprovados</td><td>0</td></tr>
 </table>
 
+<h2>2. Tempo de resposta</h2>
+<table>
+<tr><th>Metrica</th><th>Resultado</th></tr>
+<tr><td>Media</td><td>0.95 ms</td></tr>
+<tr><td>Mediana</td><td>1.01 ms</td></tr>
+<tr><td>Percentil 90</td><td>1.69 ms</td></tr>
+<tr><td>Percentil 95</td><td>1.85 ms</td></tr>
+<tr><td>Tempo maximo</td><td>28.49 ms</td></tr>
+<tr><td>Tempo de conexao</td><td>0.00 ms</td></tr>
+<tr><td>Tempo de espera da resposta</td><td>0.83 ms</td></tr>
+<tr><td>Tempo de recebimento</td><td>0.10 ms</td></tr>
+<tr><td>Duracao media da iteracao</td><td>1609.02 ms</td></tr>
+</table>
+
+<h2>3. Validacao dos thresholds</h2>
+<table>
+<tr><th>Critério</th><th>Resultado</th><th>Status</th></tr>
+<tr>
+<td>Falhas HTTP abaixo de 1%</td>
+<td>0.00%</td>
+<td><span class="pass">ATENDIDO</span></td>
+</tr>
+<tr>
+<td>p95 abaixo de 1000 ms</td>
+<td>1.85 ms</td>
+<td><span class="pass">ATENDIDO</span></td>
+</tr>
+<tr>
+<td>Checks acima de 99%</td>
+<td>100.00%</td>
+<td><span class="pass">ATENDIDO</span></td>
+</tr>
+</table>
+
+<h2>4. Analise dos resultados</h2>
+<p>
+O teste registrou 500 usuarios virtuais maximos
+e 131548 requisicoes, com vazao de
+157.01 requisicoes por segundo.
+O tempo de resposta p95 foi de 1.85 ms.
+A taxa de falhas HTTP foi de 0.00%
+e 394644 checks foram aprovados.
+</p>
+
+<p>
+Os resultados indicam desempenho positivo no ambiente de teste
+e atendimento aos thresholds configurados.
+</p>
+
 <div class="note">
-<strong>Observação:</strong> teste executado localmente, com K6 e API
-na mesma máquina. Os resultados não representam uma medição isolada
-da capacidade de uma infraestrutura de produção.
+<strong>Limitacao do teste:</strong>
+o K6 e a API foram executados na mesma maquina.
+Portanto, os resultados representam uma validacao local e
+nao uma medicao isolada da capacidade de uma infraestrutura
+de producao. Para uma analise completa de gargalos, recomenda-se
+monitorar CPU, memoria, rede e logs da API durante o teste.
+</div>
+
 </div>
 </body>
 </html>

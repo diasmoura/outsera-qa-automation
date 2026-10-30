@@ -35,7 +35,7 @@ outsera-qa-automation/
 │
 ├── .github/
 │   └── workflows/
-│       └── ci.yml
+│       └── qa-automation.yml
 │
 ├── features/
 │   ├── API/
@@ -254,7 +254,7 @@ O Dashboard é gerado pelo arquivo `dashboard.js` e integrado ao job de consolid
 
 Os relatórios e evidências podem ser baixados na página da execução do workflow. A retenção configurada dos artefatos é de 15 dias.
 
-### Histórico da última execução validada
+### Histórico da última execução validada no documento original
 
 - Pipeline: #12.
 - Branch: `main`.
@@ -356,6 +356,8 @@ Para executar os testes de performance, configure a variável `BASE_URL` para ap
 
 No ambiente Windows utilizado no desenvolvimento, o arquivo `performance/run-k6.js` utiliza o caminho local de instalação do K6. Em outros ambientes, esse caminho deve ser adaptado.
 
+> Importante: os comandos `test:report`, `test:performance:smoke` e `test:performance:load` devem estar cadastrados no `package.json` para funcionar. Caso não estejam, será necessário ajustar os scripts antes de executar esses comandos.
+
 ## 8. Relatórios e evidências
 
 O projeto gera relatórios de execução para facilitar a análise dos resultados e a identificação de falhas.
@@ -416,14 +418,4 @@ Os artefatos gerados pelo GitHub Actions podem ser baixados diretamente na pági
 | Performance K6 | Até 500 usuários virtuais |
 | GitHub Actions | 5 jobs aprovados na execução #12 |
 
-**Total de cenários BDD:** 13 aprovados, com 104 steps aprovados nas execuções apresentadas.
-
-**Resultado histórico da pipeline:** todos os cinco jobs foram concluídos com sucesso na execução #12.
-
-## 11. Repositório
-
-**GitHub:** https://github.com/diasmoura/outsera-qa-automation
-
----
-
-**Projeto desenvolvido para demonstrar conhecimentos em Qualidade de Software, automação de testes, testes de API, BDD, Playwright, performance, organização de código, geração de relatórios e integração contínua.**
+**Total de cenários BDD:** 13 aprovados, com 104

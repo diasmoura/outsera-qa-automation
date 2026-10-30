@@ -12,7 +12,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 238268900
+              "duration": 180963700
             },
             "keyword": "Before",
             "hidden": true
@@ -20,7 +20,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1311182000
+              "duration": 1520048599
             },
             "arguments": [],
             "keyword": "Dado ",
@@ -33,7 +33,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1078513399
+              "duration": 2445686900
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -46,7 +46,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1448571699
+              "duration": 744719799
             },
             "arguments": [],
             "keyword": "E ",
@@ -59,7 +59,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 18433200
+              "duration": 14712099
             },
             "arguments": [],
             "keyword": "Então ",
@@ -72,7 +72,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1295921499
+              "duration": 1450244000
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -85,7 +85,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 16144500
+              "duration": 24205200
             },
             "arguments": [],
             "keyword": "Então ",
@@ -98,7 +98,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 91676000
+              "duration": 195402200
             },
             "keyword": "After",
             "hidden": true
@@ -106,7 +106,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 137999
+              "duration": 397100
             },
             "keyword": "After",
             "hidden": true
@@ -114,7 +114,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 96199
+              "duration": 474000
             },
             "keyword": "After",
             "hidden": true
@@ -142,7 +142,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 148814300
+              "duration": 272718300
             },
             "keyword": "Before",
             "hidden": true
@@ -150,7 +150,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 8124072499
+              "duration": 6149357099
             },
             "arguments": [],
             "keyword": "Dado ",
@@ -163,7 +163,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 762067199
+              "duration": 832102499
             },
             "arguments": [],
             "keyword": "E ",
@@ -176,7 +176,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 33406500
+              "duration": 99269700
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -189,7 +189,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 924667499
+              "duration": 1897877000
             },
             "arguments": [],
             "keyword": "E ",
@@ -202,7 +202,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1729964700
+              "duration": 2097250400
             },
             "arguments": [],
             "keyword": "E ",
@@ -215,7 +215,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 47682499
+              "duration": 161127500
             },
             "arguments": [],
             "keyword": "Então ",
@@ -228,7 +228,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 82366999
+              "duration": 176984599
             },
             "keyword": "After",
             "hidden": true
@@ -236,7 +236,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 67800
+              "duration": 173299
             },
             "keyword": "After",
             "hidden": true
@@ -244,7 +244,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 59400
+              "duration": 165299
             },
             "keyword": "After",
             "hidden": true
@@ -272,7 +272,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 145308900
+              "duration": 212602800
             },
             "keyword": "Before",
             "hidden": true
@@ -280,7 +280,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 7174491000
+              "duration": 8655709400
             },
             "arguments": [],
             "keyword": "Dado ",
@@ -293,7 +293,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 658368500
+              "duration": 768290900
             },
             "arguments": [],
             "keyword": "E ",
@@ -306,7 +306,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 22983899
+              "duration": 79535400
             },
             "arguments": [],
             "keyword": "Então ",
@@ -319,7 +319,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 89098100
+              "duration": 159082699
             },
             "keyword": "After",
             "hidden": true
@@ -327,7 +327,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 72800
+              "duration": 124599
             },
             "keyword": "After",
             "hidden": true
@@ -335,7 +335,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 17500
+              "duration": 56099
             },
             "keyword": "After",
             "hidden": true
@@ -363,7 +363,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 147855000
+              "duration": 242185700
             },
             "keyword": "Before",
             "hidden": true
@@ -371,7 +371,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 2076920700
+              "duration": 798682899
             },
             "arguments": [],
             "keyword": "Dado ",
@@ -384,7 +384,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1557368299
+              "duration": 374181000
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -397,7 +397,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 5963200
+              "duration": 19159599
             },
             "arguments": [],
             "keyword": "Então ",
@@ -410,7 +410,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 5683699
+              "duration": 29199700
             },
             "arguments": [],
             "keyword": "E ",
@@ -423,7 +423,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 68303500
+              "duration": 105487400
             },
             "keyword": "After",
             "hidden": true
@@ -431,7 +431,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 38000
+              "duration": 106399
             },
             "keyword": "After",
             "hidden": true
@@ -439,7 +439,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 34100
+              "duration": 86299
             },
             "keyword": "After",
             "hidden": true
@@ -478,7 +478,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 151604100
+              "duration": 232771199
             },
             "keyword": "Before",
             "hidden": true
@@ -486,46 +486,46 @@
           {
             "result": {
               "status": "passed",
-              "duration": 2728353699
+              "duration": 792175799
             },
             "arguments": [],
             "keyword": "Dado ",
             "line": 11,
             "name": "que acesso a página de login",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:29"
+              "location": "step-definitions\\WEB\\login.steps.js:62"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 2575751599
+              "duration": 997055199
             },
             "arguments": [],
             "keyword": "Quando ",
             "line": 12,
             "name": "realizo login com credenciais cadastradas",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:44"
+              "location": "step-definitions\\WEB\\login.steps.js:74"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 112293399
+              "duration": 149316000
             },
             "arguments": [],
             "keyword": "Então ",
             "line": 13,
             "name": "devo acessar minha conta com sucesso",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:108"
+              "location": "step-definitions\\WEB\\login.steps.js:166"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 74032899
+              "duration": 91703999
             },
             "keyword": "After",
             "hidden": true
@@ -533,7 +533,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 43599
+              "duration": 82199
             },
             "keyword": "After",
             "hidden": true
@@ -541,7 +541,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 25199
+              "duration": 31800
             },
             "keyword": "After",
             "hidden": true
@@ -569,7 +569,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 144433799
+              "duration": 169634299
             },
             "keyword": "Before",
             "hidden": true
@@ -577,72 +577,72 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1933591500
+              "duration": 1361677299
             },
             "arguments": [],
             "keyword": "Dado ",
             "line": 17,
             "name": "que acesso a página de login",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:29"
+              "location": "step-definitions\\WEB\\login.steps.js:62"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 9114699
+              "duration": 8610800
             },
             "arguments": [],
             "keyword": "Quando ",
             "line": 18,
             "name": "informo um e-mail cadastrado",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:54"
+              "location": "step-definitions\\WEB\\login.steps.js:88"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 4685600
+              "duration": 6241199
             },
             "arguments": [],
             "keyword": "E ",
             "line": 19,
             "name": "informo uma senha incorreta",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:64"
+              "location": "step-definitions\\WEB\\login.steps.js:102"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 911645600
+              "duration": 333550199
             },
             "arguments": [],
             "keyword": "E ",
             "line": 20,
             "name": "solicito o login",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:91"
+              "location": "step-definitions\\WEB\\login.steps.js:141"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 60170100
+              "duration": 75944599
             },
             "arguments": [],
             "keyword": "Então ",
             "line": 21,
             "name": "devo visualizar uma mensagem de erro de autenticação",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:123"
+              "location": "step-definitions\\WEB\\login.steps.js:219"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 75011900
+              "duration": 85802100
             },
             "keyword": "After",
             "hidden": true
@@ -650,7 +650,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 42699
+              "duration": 55000
             },
             "keyword": "After",
             "hidden": true
@@ -658,7 +658,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 45699
+              "duration": 36499
             },
             "keyword": "After",
             "hidden": true
@@ -686,7 +686,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 146005899
+              "duration": 163561200
             },
             "keyword": "Before",
             "hidden": true
@@ -694,72 +694,72 @@
           {
             "result": {
               "status": "passed",
-              "duration": 2340056000
+              "duration": 3155090099
             },
             "arguments": [],
             "keyword": "Dado ",
             "line": 25,
             "name": "que acesso a página de login",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:29"
+              "location": "step-definitions\\WEB\\login.steps.js:62"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 9282299
+              "duration": 40369800
             },
             "arguments": [],
             "keyword": "Quando ",
             "line": 26,
             "name": "informo um e-mail não cadastrado",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:80"
+              "location": "step-definitions\\WEB\\login.steps.js:126"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 4795500
+              "duration": 6935499
             },
             "arguments": [],
             "keyword": "E ",
             "line": 27,
             "name": "informo uma senha qualquer",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:72"
+              "location": "step-definitions\\WEB\\login.steps.js:114"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 319464200
+              "duration": 314897900
             },
             "arguments": [],
             "keyword": "E ",
             "line": 28,
             "name": "solicito o login",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:91"
+              "location": "step-definitions\\WEB\\login.steps.js:141"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 64139199
+              "duration": 80033199
             },
             "arguments": [],
             "keyword": "Então ",
             "line": 29,
             "name": "devo visualizar uma mensagem de usuário não encontrado",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:145"
+              "location": "step-definitions\\WEB\\login.steps.js:230"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 85810799
+              "duration": 99104200
             },
             "keyword": "After",
             "hidden": true
@@ -767,7 +767,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 37499
+              "duration": 85399
             },
             "keyword": "After",
             "hidden": true
@@ -775,7 +775,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 28800
+              "duration": 50400
             },
             "keyword": "After",
             "hidden": true
@@ -803,7 +803,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 145776799
+              "duration": 185491900
             },
             "keyword": "Before",
             "hidden": true
@@ -811,59 +811,59 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1575613700
+              "duration": 1331973400
             },
             "arguments": [],
             "keyword": "Dado ",
             "line": 33,
             "name": "que acesso a página de login",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:29"
+              "location": "step-definitions\\WEB\\login.steps.js:62"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 18903500
+              "duration": 14031300
             },
             "arguments": [],
             "keyword": "Quando ",
             "line": 34,
             "name": "deixo o e-mail e a senha em branco",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:99"
+              "location": "step-definitions\\WEB\\login.steps.js:153"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 38023900
+              "duration": 37068400
             },
             "arguments": [],
             "keyword": "E ",
             "line": 35,
             "name": "solicito o login",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:91"
+              "location": "step-definitions\\WEB\\login.steps.js:141"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 31018000
+              "duration": 37658600
             },
             "arguments": [],
             "keyword": "Então ",
             "line": 36,
             "name": "devo visualizar as validações dos campos obrigatórios",
             "match": {
-              "location": "step-definitions\\WEB\\login.steps.js:167"
+              "location": "step-definitions\\WEB\\login.steps.js:241"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 63391199
+              "duration": 75019299
             },
             "keyword": "After",
             "hidden": true
@@ -871,7 +871,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 35700
+              "duration": 69700
             },
             "keyword": "After",
             "hidden": true
@@ -879,7 +879,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 15999
+              "duration": 58799
             },
             "keyword": "After",
             "hidden": true

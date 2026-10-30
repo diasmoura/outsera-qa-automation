@@ -1,7 +1,8 @@
+
 {
   "name": "outsera-qa-automation",
   "version": "1.0.0",
-  "description": "Automacao de testes de API e Web com Cucumber, Playwright e BDD",
+  "description": "Automacao de testes Web, API e Performance com Cucumber, Playwright, BDD e K6",
   "main": "index.js",
   "scripts": {
     "test:bdd": "cucumber-js --format progress --format json:reports/bdd/cucumber-report.json features",
@@ -12,11 +13,10 @@
     "test:api": "cucumber-js --format progress --format json:reports/cucumber-api-report.json features/API",
     "test:playwright": "playwright test",
     "report": "node cucumber-report.js",
+    "dashboard": "node dashboard.js",
     "test:report": "npm run test:web && npm run test:api && npm run report",
     "test:all": "npm run test:web && npm run test:api && npm run test:playwright",
-    "test:all:report": "npm run test:web && npm run test:api && npm run test:playwright && npm run report",
-    "test:performance:smoke": "node performance/run-k6.js performance/smoke-test.js",
-    "test:performance:load": "node performance/run-k6.js performance/load-test.js"
+    "test:all:report": "npm run test:all && npm run report"
   },
   "keywords": [
     "qa",
@@ -26,7 +26,9 @@
     "web",
     "playwright",
     "cucumber",
-    "bdd"
+    "bdd",
+    "performance",
+    "k6"
   ],
   "author": "Lucas Dias",
   "license": "ISC",
@@ -39,7 +41,6 @@
     "playwright": "^1.64.1"
   },
   "dependencies": {
-    "dotenv": "^18.0.9",
-    "express": "^5.3.0"
+    "dotenv": "^18.0.9"
   }
 }
