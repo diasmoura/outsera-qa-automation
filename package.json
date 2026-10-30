@@ -5,12 +5,14 @@
   "description": "Automacao de testes de API e Web com Cucumber, Playwright e BDD",
   "main": "index.js",
   "scripts": {
-    "test:bdd": "cucumber-js features --require \"./support/**/*.js\" --require \"./step-definitions/**/*.js\" --format progress",
+    "test:bdd": "cucumber-js features --require \"./support/**/*.js\" --require \"./step-definitions/**/*.js\" --format progress --format json:reports/cucumber-report.json",
     "test:login": "cucumber-js features/WEB/login.feature --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress",
     "test:checkout": "cucumber-js features/WEB/ecommerce-checkout.feature --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress",
-    "test:web": "cucumber-js features/WEB --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress",
+    "test:web": "cucumber-js features/WEB --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress --format json:reports/cucumber-report.json",
     "test:api": "cucumber-js features/API --require \"./step-definitions/API/**/*.js\" --format progress",
     "test:playwright": "playwright test",
+    "report": "node cucumber-report.js",
+    "test:report": "npm run test:bdd && npm run report",
     "test:all": "npm run test:web && npm run test:api && npm run test:playwright"
   },
   "keywords": [
