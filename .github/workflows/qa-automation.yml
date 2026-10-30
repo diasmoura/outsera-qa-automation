@@ -1,67 +1,78 @@
 
-name: QA Automation Tests
+name: QA Automation - CI/CD
 
 on:
   push:
-    branches: [main, master]
+    branches:
+      - main
+      - master
+
   pull_request:
-    branches: [main, master]
+    branches:
+      - main
+      - master
+
+  workflow_dispatch:
 
 jobs:
-  test:
-    name: BDD, API e Web
-    timeout-minutes: 60
+  qa-automation:
+    name: Execute QA Tests
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do repositório
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: npm ci
 
-      - name: Instalar navegadores do Playwright
+      - name: Create report directories
+        run: |
+          mkdir -p reports/bdd
+          mkdir -p reports/html
+
+      - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Executar testes BDD
+      - name: Execute BDD tests
+        id: bdd
+        continue-on-error: true
         run: npm run test:bdd
 
-      - name: Executar testes API e Web
-        run: npx playwright test
+      - name: Execute Playwright tests
+        id: playwright
+        continue-on-error: true
+        run: npm run test:playwright
 
-      - name: Gerar relatório HTML do Cucumber
-        if: ${{ always() }}
-        run: |
-          if [ -f reports/cucumber-report.json ]; then
-            npm run report
-          else
-            echo "Arquivo JSON do Cucumber não foi gerado."
-          fi
+      - name: Generate HTML report
+        if: always()
+        continue-on-error: true
+        run: npm run report
 
-      - name: Publicar relatório Cucumber
-        if: ${{ always() }}
+      - name: Upload QA reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cucumber-report
+          name: qa-automation-reports
           path: |
-            reports/cucumber-report.json
-            reports/html/
-          if-no-files-found: warn
-          retention-days: 30
-
-      - name: Publicar relatório Playwright
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: |
+            reports/
             playwright-report/
             test-results/
           if-no-files-found: warn
-          retention-days: 30
+          retention-days: 15
+
+      - name: Validate test results
+        if: always()
+        run: |
+          if [ "${{ steps.bdd.outcome }}" != "success" ] || [ "${{ steps.playwright.outcome }}" != "success" ]; then
+            echo "Falha na execução dos testes QA."
+            exit 1
+          fi
+
+          echo "Todos os testes foram aprovados!"

@@ -1,0 +1,1353 @@
+[
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "consulta-de-usuários;consultar-um-usuário-existente",
+        "keyword": "Cenário",
+        "line": 6,
+        "name": "Consultar um usuário existente",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 155848700
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 5140758100
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 7,
+            "name": "consultar o usuário de ID 1",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:17"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1356600
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 8,
+            "name": "a resposta da API deve ter status 200",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:29"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 468499
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 9,
+            "name": "o header Content-Type da consulta deve indicar JSON",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:42"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 887200
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 10,
+            "name": "o nome do usuário deve estar preenchido",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:36"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 58873500
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 167800
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1181800
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "consulta-de-usuários;consultar-um-usuário-inexistente",
+        "keyword": "Cenário",
+        "line": 12,
+        "name": "Consultar um usuário inexistente",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 140211000
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 5096458200
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 13,
+            "name": "consultar o usuário de ID 999",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:17"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 798099
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 14,
+            "name": "a resposta da API deve ter status 404",
+            "match": {
+              "location": "step-definitions\\API\\api-consulta-users.steps.js:29"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 59084600
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 99299
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 983200
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "consulta-de-usuários",
+    "line": 4,
+    "keyword": "Funcionalidade",
+    "name": "Consulta de usuários",
+    "tags": [],
+    "uri": "features\\API\\api-consulta-users.feature"
+  },
+  {
+    "description": "",
+    "elements": [
+      {
+        "description": "",
+        "id": "gerenciamento-de-usuários;criar-um-usuário-com-dados-válidos",
+        "keyword": "Cenário",
+        "line": 6,
+        "name": "Criar um usuário com dados válidos",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 141366299
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 5221986699
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 7,
+            "name": "enviar uma requisição POST para criar um usuário",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:17"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 589199
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 8,
+            "name": "a resposta CRUD da API deve ter status 201",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:86"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 488500
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 9,
+            "name": "o header Content-Type deve indicar JSON",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:78"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 228500
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 10,
+            "name": "o nome do usuário retornado deve ser \"Lucas QA\"",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:71"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 61546399
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 715000
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 28500
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "gerenciamento-de-usuários;atualizar-um-usuário-existente",
+        "keyword": "Cenário",
+        "line": 12,
+        "name": "Atualizar um usuário existente",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 137543900
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 5506376499
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 13,
+            "name": "enviar uma requisição PUT para atualizar o usuário de ID 1",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:35"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 795199
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 14,
+            "name": "a resposta CRUD da API deve ter status 200",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:86"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 331899
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 15,
+            "name": "o header Content-Type deve indicar JSON",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:78"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 180400
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 16,
+            "name": "o nome do usuário retornado deve ser \"Lucas QA Atualizado\"",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:71"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 43860300
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1053899
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 41999
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "gerenciamento-de-usuários;excluir-um-usuário-existente",
+        "keyword": "Cenário",
+        "line": 18,
+        "name": "Excluir um usuário existente",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 148693800
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 5235332200
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 19,
+            "name": "enviar uma requisição DELETE para o usuário de ID 1",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:57"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 819299
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 20,
+            "name": "a resposta CRUD da API deve ter status 200",
+            "match": {
+              "location": "step-definitions\\API\\api-users.steps.js:86"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 52939399
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 748400
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 27599
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      }
+    ],
+    "id": "gerenciamento-de-usuários",
+    "line": 4,
+    "keyword": "Funcionalidade",
+    "name": "Gerenciamento de usuários",
+    "tags": [],
+    "uri": "features\\API\\api-users.feature"
+  },
+  {
+    "description": "  Como usuário do e-commerce\n  Quero adicionar produtos ao carrinho e finalizar uma compra\n  Para validar o fluxo de compra e suas regras de negócio",
+    "elements": [
+      {
+        "description": "",
+        "id": "checkout-do-e-commerce;adicionar-produto-ao-carrinho",
+        "keyword": "Cenário",
+        "line": 11,
+        "name": "Adicionar produto ao carrinho",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 139754699
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1191830599
+            },
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 12,
+            "name": "que acesso a página inicial do e-commerce",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:148"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1227883499
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 13,
+            "name": "acesso a lista de produtos",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:160"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1675959199
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 14,
+            "name": "adiciono o primeiro produto ao carrinho",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:168"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 7087900
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 15,
+            "name": "devo visualizar a confirmação de inclusão do produto",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:174"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 616958599
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 16,
+            "name": "acesso o carrinho",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:197"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 6649300
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 17,
+            "name": "devo visualizar o produto adicionado",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:209"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 70277299
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 100699
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 18299
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [
+          {
+            "name": "@positivo",
+            "line": 10
+          },
+          {
+            "name": "@carrinho",
+            "line": 10
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "checkout-do-e-commerce;realizar-compra-completa-com-dados-válidos",
+        "keyword": "Cenário",
+        "line": 20,
+        "name": "Realizar compra completa com dados válidos",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 143277399
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 5102877700
+            },
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 21,
+            "name": "que tenho um produto no carrinho",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:269"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 348629200
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 22,
+            "name": "acesso o checkout",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:273"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 14856299
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 23,
+            "name": "preencho os dados pessoais e o endereço de entrega",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:290"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 468095200
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 24,
+            "name": "preencho o formulário de pagamento com dados válidos",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:344"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1577584100
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 25,
+            "name": "confirmo o pedido",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:359"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 26949300
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 26,
+            "name": "devo visualizar a confirmação da compra",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:367"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 85264999
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 69300
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 79300
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [
+          {
+            "name": "@positivo",
+            "line": 19
+          },
+          {
+            "name": "@checkout",
+            "line": 19
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "checkout-do-e-commerce;validar-endereço-de-entrega-exibido-no-checkout",
+        "keyword": "Cenário",
+        "line": 29,
+        "name": "Validar endereço de entrega exibido no checkout",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 141582600
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 5889298499
+            },
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 30,
+            "name": "que tenho um produto no carrinho",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:269"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 390777800
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 31,
+            "name": "acesso o checkout",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:273"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 22615499
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 32,
+            "name": "devo visualizar o endereço de entrega cadastrado",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:316"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 88744599
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 55599
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 23399
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [
+          {
+            "name": "@positivo",
+            "line": 28
+          },
+          {
+            "name": "@endereco",
+            "line": 28
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "checkout-do-e-commerce;tentar-acessar-o-checkout-com-o-carrinho-vazio",
+        "keyword": "Cenário",
+        "line": 35,
+        "name": "Tentar acessar o checkout com o carrinho vazio",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 148916499
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1217439800
+            },
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 36,
+            "name": "que acesso a página inicial do e-commerce",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:148"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 454968999
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 37,
+            "name": "acesso o carrinho",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:197"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 7402600
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 38,
+            "name": "devo visualizar a mensagem de carrinho vazio",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:228"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 5917099
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 39,
+            "name": "não devo conseguir prosseguir para o checkout",
+            "match": {
+              "location": "step-definitions\\WEB\\checkout.steps.js:247"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 81444499
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 47100
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 19800
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [
+          {
+            "name": "@negativo",
+            "line": 34
+          },
+          {
+            "name": "@carrinho",
+            "line": 34
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "checkout-do-e-commerce",
+    "line": 4,
+    "keyword": "Funcionalidade",
+    "name": "Checkout do e-commerce",
+    "tags": [],
+    "uri": "features\\WEB\\ecommerce-checkout.feature"
+  },
+  {
+    "description": "  Como usuário do e-commerce\n  Quero acessar minha conta\n  Para visualizar as funcionalidades disponíveis",
+    "elements": [
+      {
+        "description": "",
+        "id": "login-de-usuário;realizar-login-com-credenciais-válidas",
+        "keyword": "Cenário",
+        "line": 10,
+        "name": "Realizar login com credenciais válidas",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 152667399
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 750396800
+            },
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 11,
+            "name": "que acesso a página de login",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:29"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1468345700
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 12,
+            "name": "realizo login com credenciais cadastradas",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:44"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 101417999
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 13,
+            "name": "devo acessar minha conta com sucesso",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:108"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 84508600
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 51099
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 30699
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [
+          {
+            "name": "@positivo",
+            "line": 9
+          },
+          {
+            "name": "@login",
+            "line": 9
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "login-de-usuário;realizar-login-com-senha-incorreta",
+        "keyword": "Cenário",
+        "line": 16,
+        "name": "Realizar login com senha incorreta",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 152399399
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 811039099
+            },
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 17,
+            "name": "que acesso a página de login",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:29"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 11609100
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 18,
+            "name": "informo um e-mail cadastrado",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:54"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 6940800
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 19,
+            "name": "informo uma senha incorreta",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:64"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 324308299
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 20,
+            "name": "solicito o login",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:91"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 25289199
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 21,
+            "name": "devo visualizar uma mensagem de erro de autenticação",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:123"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 94294800
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 55599
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 52099
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [
+          {
+            "name": "@negativo",
+            "line": 15
+          },
+          {
+            "name": "@login",
+            "line": 15
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "login-de-usuário;realizar-login-com-usuário-inexistente",
+        "keyword": "Cenário",
+        "line": 24,
+        "name": "Realizar login com usuário inexistente",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 186217299
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 1218788899
+            },
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 25,
+            "name": "que acesso a página de login",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:29"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 7813600
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 26,
+            "name": "informo um e-mail não cadastrado",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:80"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 5056199
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 27,
+            "name": "informo uma senha qualquer",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:72"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 291409399
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 28,
+            "name": "solicito o login",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:91"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 20608200
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 29,
+            "name": "devo visualizar uma mensagem de usuário não encontrado",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:145"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 67342499
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 42500
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 18000
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [
+          {
+            "name": "@negativo",
+            "line": 23
+          },
+          {
+            "name": "@login",
+            "line": 23
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "login-de-usuário;tentar-realizar-login-com-os-campos-obrigatórios-em-branco",
+        "keyword": "Cenário",
+        "line": 32,
+        "name": "Tentar realizar login com os campos obrigatórios em branco",
+        "steps": [
+          {
+            "result": {
+              "status": "passed",
+              "duration": 145606800
+            },
+            "keyword": "Before",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 788657999
+            },
+            "arguments": [],
+            "keyword": "Dado ",
+            "line": 33,
+            "name": "que acesso a página de login",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:29"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 15926200
+            },
+            "arguments": [],
+            "keyword": "Quando ",
+            "line": 34,
+            "name": "deixo o e-mail e a senha em branco",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:99"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 41317699
+            },
+            "arguments": [],
+            "keyword": "E ",
+            "line": 35,
+            "name": "solicito o login",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:91"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 34190699
+            },
+            "arguments": [],
+            "keyword": "Então ",
+            "line": 36,
+            "name": "devo visualizar as validações dos campos obrigatórios",
+            "match": {
+              "location": "step-definitions\\WEB\\login.steps.js:167"
+            }
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 58286299
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 50800
+            },
+            "keyword": "After",
+            "hidden": true
+          },
+          {
+            "result": {
+              "status": "passed",
+              "duration": 24700
+            },
+            "keyword": "After",
+            "hidden": true
+          }
+        ],
+        "tags": [
+          {
+            "name": "@negativo",
+            "line": 31
+          },
+          {
+            "name": "@login",
+            "line": 31
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "login-de-usuário",
+    "line": 4,
+    "keyword": "Funcionalidade",
+    "name": "Login de usuário",
+    "tags": [],
+    "uri": "features\\WEB\\login.feature"
+  }
+]

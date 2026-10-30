@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Relatório QA</title>
+<title>Outsera QA Automation</title>
 <link
   rel="icon"
   type="image/x-icon"
@@ -43,10 +43,10 @@
       </div>
       <div class="text-balance">
         <h1 class="text-lg md:text-2xl font-bold text-foreground text-balance tracking-tight">
-          Outsera QA Automation
+          Relatório de Automação BDD
         </h1>
         <p class="mt-0.5 text-[10px] md:text-xs text-muted-foreground uppercase font-bold tracking-widest opacity-70">
-          Relatório QA
+          Outsera QA Automation
         </p>
       </div>
     </div>
@@ -81,14 +81,8 @@
       <div class="p-4 md:p-6 flex flex-col lg:flex-row lg:items-start justify-between gap-6">
         <div class="space-y-4 flex-1">
           <div class="space-y-2">
-            <h2 class="text-xl md:text-2xl font-bold text-foreground leading-tight">Login no e-commerce</h2>
+            <h2 class="text-xl md:text-2xl font-bold text-foreground leading-tight">Consulta de usuários</h2>
             
-            
-              <div class="mt-4 text-sm text-muted-foreground whitespace-pre-line bg-muted/20 p-3 rounded-lg border border-border/50">
-                Como usuário
-  Quero acessar minha conta
-  Para utilizar as funcionalidades do e-commerce
-              </div>
             
           </div>
 
@@ -96,7 +90,7 @@
             <div class="flex flex-wrap items-center gap-3 md:gap-4 text-sm text-muted-foreground">
   
     
-    <span class="flex items-center gap-1.5" title="Local">
+    <span class="flex items-center gap-1.5" title="Máquina local">
       <i
         class="fa-solid fa-desktop text-primary text-base"
       ></i>
@@ -104,7 +98,7 @@
   
   
     
-    <span class="flex items-center gap-1.5" title="Windows 10">
+    <span class="flex items-center gap-1.5" title="Windows 10/11">
       <i
         class="fa-brands fa-windows text-primary text-base"
       ></i>
@@ -112,9 +106,9 @@
   
   
     
-    <span class="flex items-center gap-1.5" title="chromium Playwright">
+    <span class="flex items-center gap-1.5" title="Chrome 156">
       <i
-        class="fa-solid fa-globe text-primary text-base"
+        class="fa-brands fa-chrome text-primary text-base"
       ></i>
     </span>
   
@@ -157,9 +151,9 @@
 
   <div class="w-full my-2"></div>
   
-    <span class="flex items-center gap-1.5 min-w-0 max-w-full" title="features\ecommerce-login.feature">
+    <span class="flex items-center gap-1.5 min-w-0 max-w-full" title="features\API\api-consulta-users.feature">
       <i class="fa-solid fa-file-code text-primary text-base shrink-0"></i>
-      <span class="text-xs font-mono text-muted-foreground truncate">features\ecommerce-login.feature</span>
+      <span class="text-xs font-mono text-muted-foreground truncate">features\API\api-consulta-users.feature</span>
     </span>
   
   
@@ -191,7 +185,7 @@
         <div class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-3 md:gap-4 shrink-0 lg:ml-6 w-full sm:w-auto">
           <div class="flex flex-col items-center justify-center bg-status-passed/10 rounded-xl py-3 px-3 border border-status-passed/20 w-full">
             <div class="text-xl md:text-2xl font-bold text-status-passed leading-none">
-              1
+              2
             </div>
             <div class="text-[9px] md:text-[10px] uppercase font-bold text-status-passed/70 dark:text-status-passed/30 mt-1 tracking-wider">
               Passed
@@ -395,13 +389,13 @@
       
 
       <div class="truncate">
-        <h4 class="font-bold text-sm md:text-base truncate">Acessar a tela de login</h4>
+        <h4 class="font-bold text-sm md:text-base truncate">Consultar um usuário existente</h4>
         
         
       </div>
     </div>
     <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:03.010</span>
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.143</span>
       <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
       </svg>
@@ -453,47 +447,11 @@
             
             <div class="w-full">
               <p class="text-sm">
-                <span class="font-bold text-foreground">Dado </span>
-                <span>que acesso a página inicial do e-commerce</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:02.512</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
                 <span class="font-bold text-foreground">Quando </span>
-                <span>acesso a opção de login</span>
+                <span>consultar o usuário de ID 1</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.343</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.140</p>
 
               
 
@@ -526,10 +484,330 @@
             <div class="w-full">
               <p class="text-sm">
                 <span class="font-bold text-foreground">Então </span>
-                <span>devo visualizar o formulário de login</span>
+                <span>a resposta da API deve ter status 200</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.153</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.001</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">E </span>
+                <span>o header Content-Type da consulta deve indicar JSON</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.000</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">E </span>
+                <span>o nome do usuário deve estar preenchido</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.000</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">After</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">After</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">After</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </div>
+</div>
+
+        
+          
+
+
+
+
+<div
+  class="rounded-xl border bg-card text-card-foreground shadow overflow-hidden scenario-card"
+  data-status="passed"
+  data-tags=""
+>
+  <button
+    class="w-full text-left px-4 md:px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
+    onclick="this.nextElementSibling.classList.toggle('hidden')"
+  >
+    <div class="flex items-center gap-3 overflow-hidden">
+      
+        <i class="fa-solid fa-circle-check text-xl md:text-2xl shrink-0 text-status-passed"></i>
+      
+
+      <div class="truncate">
+        <h4 class="font-bold text-sm md:text-base truncate">Consultar um usuário inexistente</h4>
+        
+        
+      </div>
+    </div>
+    <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.097</span>
+      <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+      </svg>
+    </div>
+  </button>
+  <div class="hidden border-t divide-y divide-border">
+    
+
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Before</span>
+                <span></span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
+
+              
+
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Quando </span>
+                <span>consultar o usuário de ID 999</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.096</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">Então </span>
+                <span>a resposta da API deve ter status 404</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.000</p>
 
               
 
@@ -678,7 +956,7 @@
 
     // Embedded data for charts (status/duration/tags only — never embeddings,
     // which would make this inline blob scale with attachment size)
-    const featureData = {"description":"  Como usuário\n  Quero acessar minha conta\n  Para utilizar as funcionalidades do e-commerce","elements":[{"description":"","id":"login-no-e-commerce;acessar-a-tela-de-login","keyword":"Cenário","line":10,"name":"Acessar a tela de login","steps":[{"result":{"status":"passed","duration":156796699},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":2512723600},"arguments":[],"keyword":"Dado ","line":11,"name":"que acesso a página inicial do e-commerce","match":{"location":"step-definitions\\web.steps.js:8"},"time":"00:00:02.512"},{"result":{"status":"passed","duration":343835699},"arguments":[],"keyword":"Quando ","line":12,"name":"acesso a opção de login","match":{"location":"step-definitions\\web.steps.js:34"},"time":"00:00:00.343"},{"result":{"status":"passed","duration":153567900},"arguments":[],"keyword":"Então ","line":13,"name":"devo visualizar o formulário de login","match":{"location":"step-definitions\\web.steps.js:38"},"time":"00:00:00.153"},{"result":{"status":"passed","duration":69942699},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":53899},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":28000},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":3.010127199,"time":"00:00:03.010","passed":3,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0}],"id":"56077e58-afbd-4474-a529-f2fa224e007f-login-no-e-commerce","line":4,"keyword":"Funcionalidade","name":"Login no e-commerce","tags":[],"uri":"features\\ecommerce-login.feature","metadata":{"browser":{"name":"chromium","version":"Playwright"},"executionPlatform":"local","username":"Máquina000088","device":"Local","platform":{"name":"Windows","version":"10"},"nodeVersion":"v24.22.1","reportVersion":"4.5.0","hostname":"DESKTOP-V8H127K","architecture":"x64"},"scenarios":{"passed":1,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"passedPercentage":"100.00","failedPercentage":"0.00","notDefinedPercentage":"0.00","skippedPercentage":"0.00","pendingPercentage":"0.00","ambiguousPercentage":"0.00","total":1},"duration":3010127199,"time":"00:00:03.010","isFailed":false,"isAmbiguous":false,"isSkipped":false,"isNotdefined":false,"isPending":false,"passed":1,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"totalTime":3010127199,"app":"","browser":"chromium Playwright","device":"Local","executionPlatform":"local","os":"Windows 10","username":"Máquina000088"};
+    const featureData = {"description":"","elements":[{"description":"","id":"consulta-de-usuários;consultar-um-usuário-existente","keyword":"Cenário","line":6,"name":"Consultar um usuário existente","steps":[{"result":{"status":"passed","duration":155848700},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5140758100},"arguments":[],"keyword":"Quando ","line":7,"name":"consultar o usuário de ID 1","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:05.140"},{"result":{"status":"passed","duration":1356600},"arguments":[],"keyword":"Então ","line":8,"name":"a resposta da API deve ter status 200","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":468499},"arguments":[],"keyword":"E ","line":9,"name":"o header Content-Type da consulta deve indicar JSON","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:42"},"time":"00:00:00.000"},{"result":{"status":"passed","duration":887200},"arguments":[],"keyword":"E ","line":10,"name":"o nome do usuário deve estar preenchido","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:36"},"time":"00:00:00.000"},{"result":{"status":"passed","duration":58873500},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":167800},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":1181800},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.143470399,"time":"00:00:05.143","passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"consulta-de-usuários;consultar-um-usuário-inexistente","keyword":"Cenário","line":12,"name":"Consultar um usuário inexistente","steps":[{"result":{"status":"passed","duration":140211000},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5096458200},"arguments":[],"keyword":"Quando ","line":13,"name":"consultar o usuário de ID 999","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:05.096"},{"result":{"status":"passed","duration":798099},"arguments":[],"keyword":"Então ","line":14,"name":"a resposta da API deve ter status 404","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.000"},{"result":{"status":"passed","duration":59084600},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":99299},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":983200},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.097256299,"time":"00:00:05.097","passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0}],"id":"789fbd9d-2b09-4eb7-afa5-394ab3e94e79-consulta-de-usuários","line":4,"keyword":"Funcionalidade","name":"Consulta de usuários","tags":[],"uri":"features\\API\\api-consulta-users.feature","metadata":{"browser":{"name":"Chrome","version":"156"},"executionPlatform":"local","username":"Máquina000088","device":"Máquina local","platform":{"name":"Windows","version":"10/11"},"nodeVersion":"v24.22.1","reportVersion":"4.5.0","hostname":"DESKTOP-V8H127K","architecture":"x64"},"scenarios":{"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"passedPercentage":"100.00","failedPercentage":"0.00","notDefinedPercentage":"0.00","skippedPercentage":"0.00","pendingPercentage":"0.00","ambiguousPercentage":"0.00","total":2},"duration":10240726698,"time":"00:00:10.240","isFailed":false,"isAmbiguous":false,"isSkipped":false,"isNotdefined":false,"isPending":false,"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"totalTime":10240726698,"app":"","browser":"Chrome 156","device":"Máquina local","executionPlatform":"local","os":"Windows 10/11","username":"Máquina000088"};
   </script>
 
         </div>

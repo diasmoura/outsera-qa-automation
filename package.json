@@ -5,15 +5,17 @@
   "description": "Automacao de testes de API e Web com Cucumber, Playwright e BDD",
   "main": "index.js",
   "scripts": {
-    "test:bdd": "cucumber-js features --require \"./support/**/*.js\" --require \"./step-definitions/**/*.js\" --format progress --format json:reports/cucumber-report.json",
-    "test:login": "cucumber-js features/WEB/login.feature --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress",
-    "test:checkout": "cucumber-js features/WEB/ecommerce-checkout.feature --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress",
-    "test:web": "cucumber-js features/WEB --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress --format json:reports/cucumber-report.json",
-    "test:api": "cucumber-js features/API --require \"./step-definitions/API/**/*.js\" --format progress",
+    "test:bdd": "cucumber-js --require \"./support/**/*.js\" --require \"./step-definitions/**/*.js\" --format progress --format json:reports/bdd/cucumber-report.json",
+    "test:login": "cucumber-js --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress features/WEB/login.feature",
+    "test:checkout": "cucumber-js --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress features/WEB/ecommerce-checkout.feature",
+    "test:cart:add": "cucumber-js --name \"Adicionar produto ao carrinho\"",
+    "test:web": "cucumber-js --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress --format json:reports/cucumber-web-report.json features/WEB",
+    "test:api": "cucumber-js --require \"./step-definitions/API/**/*.js\" --format progress --format json:reports/cucumber-api-report.json features/API",
     "test:playwright": "playwright test",
     "report": "node cucumber-report.js",
     "test:report": "npm run test:bdd && npm run report",
-    "test:all": "npm run test:web && npm run test:api && npm run test:playwright"
+    "test:all": "npm run test:web && npm run test:api && npm run test:playwright",
+    "test:all:report": "npm run test:web && npm run test:api && npm run test:playwright && npm run report"
   },
   "keywords": [
     "qa",
