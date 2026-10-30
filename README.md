@@ -1,261 +1,230 @@
-# 🚀 Outsera QA Automation
+# QA Automation — Outsera
 
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
-![Playwright](https://img.shields.io/badge/Playwright-Automation-green)
-![Cucumber](https://img.shields.io/badge/Cucumber-BDD-brightgreen)
-![BDD Tests](https://img.shields.io/badge/BDD-13%20Passed-success)
-![CI](https://img.shields.io/badge/GitHub%20Actions-Success-brightgreen)
+Projeto de automação de testes desenvolvido como parte de um desafio técnico de QA, com foco na validação de funcionalidades Web e APIs REST, utilizando boas práticas de automação, organização de código e integração contínua.
 
-Projeto de automação de testes Web e API desenvolvido como parte de um desafio técnico de QA Automation, utilizando JavaScript, Playwright e Cucumber.
+## Objetivo
 
-A solução valida funcionalidades Web e serviços REST por meio de cenários automatizados, aplicando boas práticas de desenvolvimento, reutilização de código, organização dos testes e integração contínua.
+Construir uma estrutura de automação capaz de validar fluxos funcionais de uma aplicação Web e operações de API, garantindo qualidade, confiabilidade e rastreabilidade dos testes por meio de relatórios e evidências.
 
-## 🎯 Objetivo
+## Tecnologias utilizadas
 
-Desenvolver uma estrutura de automação capaz de validar funcionalidades Web e serviços REST, contemplando cenários positivos e negativos, execução cross-browser e integração contínua.
+- **Node.js** — ambiente de execução.
+- **JavaScript** — linguagem de programação.
+- **Playwright** — automação Web e testes de API.
+- **Cucumber** — escrita e execução de cenários BDD.
+- **Gherkin** — especificação dos cenários em linguagem legível.
+- **Page Object Model (POM)** — organização e reutilização dos elementos e ações das páginas.
+- **Git e GitHub** — versionamento do código.
+- **GitHub Actions** — integração e execução contínua (CI).
+- **multiple-cucumber-html-reporter** — geração de relatórios de testes.
 
-## 🛠️ Tecnologias utilizadas
+## Aplicações utilizadas
 
-- JavaScript / Node.js
-- Playwright
-- Cucumber
-- Gherkin (BDD)
-- Page Object Model (POM)
-- Dotenv
-- NPM
-- Git e GitHub
-- GitHub Actions
+- **Aplicação Web:** https://automationexercise.com
+- **API REST:** https://jsonplaceholder.typicode.com
 
-## 📁 Estrutura do projeto
+## Estrutura do projeto
 
 ```text
 outsera-qa-automation/
+│
 ├── .github/
 │   └── workflows/
 │       └── ci.yml
+│
 ├── features/
-│   ├── WEB/
-│   │   ├── login.feature
-│   │   └── ecommerce-checkout.feature
-│   └── API/
-│       ├── api-users.feature
-│       └── api-consulta-users.feature
+│   ├── API/
+│   │   ├── api-consulta-users.feature
+│   │   └── api-users.feature
+│   │
+│   └── WEB/
+│       ├── ecommerce-checkout.feature
+│       └── login.feature
+│
+├── step-definitions/
+│   ├── API/
+│   │   ├── api-consulta-users.steps.js
+│   │   └── api-users.steps.js
+│   │
+│   └── WEB/
+│       ├── checkout.steps.js
+│       └── login.steps.js
+│
 ├── pages/
 │   └── WEB/
-│       ├── HomePage.js
 │       ├── AuthPage.js
-│       ├── ProductsPage.js
-│       └── CartCheckoutPage.js
-├── step-definitions/
-│   ├── WEB/
-│   └── API/
+│       ├── CartCheckoutPage.js
+│       ├── HomePage.js
+│       └── ProductsPage.js
+│
+├── tests/
+│   └── api.spec.js
+│
 ├── support/
 │   └── hooks.js
-├── tests/
+│
 ├── reports/
 │   └── evidences/
+│
+├── cucumber.js
 ├── cucumber-report.js
 ├── playwright.config.js
-├── cucumber.js
 ├── package.json
 ├── package-lock.json
 ├── .env.example
-├── .gitignore
 └── README.md
 ```
 
-*Estrutura resumida. Consulte o repositório para visualizar todos os arquivos.*
+## Cobertura de testes
 
-## 🧪 Cobertura dos testes
+### 1. Testes Web — BDD
 
-### Testes Web — Cucumber / BDD
+Automação dos principais fluxos da aplicação Automation Exercise.
 
-- Login com credenciais válidas.
-- Login com senha incorreta.
-- Login com usuário inexistente.
-- Validação de campos obrigatórios.
-- Inclusão de produtos no carrinho.
-- Validação de carrinho vazio.
-- Acesso ao checkout.
-- Validação do endereço de entrega.
-- Finalização de compra.
+**Login — 4 cenários**
+- Realizar login com credenciais válidas.
+- Realizar login com senha incorreta.
+- Realizar login com usuário inexistente.
+- Tentar login com campos obrigatórios em branco.
 
-### Testes de API
+**Carrinho e Checkout — 4 cenários**
+- Adicionar produto ao carrinho.
+- Realizar compra completa com dados válidos.
+- Validar endereço de entrega exibido no checkout.
+- Tentar acessar checkout com carrinho vazio.
 
-- GET: consulta de usuário existente.
-- GET: consulta de usuário inexistente.
-- GET: validação de rota inexistente.
-- POST: criação de usuário.
-- POST: validação de campos obrigatórios.
-- POST: validação de payload malformado.
-- PUT: atualização de usuário.
-- DELETE: exclusão de usuário.
+**Resultado:** 8 cenários aprovados e 68 steps aprovados.
+
+### 2. Testes de API — BDD
+
+Validação dos principais métodos HTTP utilizando JSONPlaceholder.
+
+**Consulta de usuários**
+- Consultar usuário existente — HTTP 200.
+- Consultar usuário inexistente — HTTP 404.
+
+**Gerenciamento de usuários**
+- Criar usuário com dados válidos — HTTP 201.
+- Atualizar usuário existente — HTTP 200.
+- Excluir usuário existente — HTTP 200.
+
+Validações realizadas:
+- Status code HTTP.
+- Header Content-Type.
+- Estrutura e conteúdo do JSON.
+- Dados retornados pela API.
+
+**Resultado:** 5 cenários aprovados e 36 steps aprovados.
+
+> Observação: o JSONPlaceholder é uma API de testes. As operações POST, PUT e DELETE simulam as respostas, sem persistir efetivamente as alterações.
+
+### 3. Testes de API — Playwright
+
+Execução de testes automatizados utilizando Playwright, com cobertura nos navegadores Chromium, Firefox e WebKit.
+
+Casos contemplados:
+- GET de usuário existente.
+- GET de usuário inexistente.
+- POST para criação de usuário.
+- POST sem campos obrigatórios.
+- POST com payload malformado.
+- PUT para atualização de usuário.
+- DELETE de usuário.
 - Validação de método HTTP inválido.
 
-**Observação:** os testes utilizam a API JSONPlaceholder, um serviço de demonstração. As operações de criação, atualização e exclusão simulam respostas HTTP, sem persistir efetivamente as alterações.
+**Cobertura:** 8 testes executados em 3 engines, totalizando 24 execuções de testes.
 
-### Limitações identificadas no Checkout
+## Integração contínua — GitHub Actions
 
-Durante a implementação dos testes E2E, foram identificadas limitações no ambiente Automation Exercise:
+O projeto possui pipeline automatizada para execução dos testes após alterações no repositório.
 
-- **Cartão inválido:** não foi possível implementar uma validação negativa confiável de rejeição do cartão.
-- **Endereço incompleto:** o checkout utiliza o endereço previamente cadastrado na conta, não oferecendo um fluxo adequado para validar essa condição.
+**Pipeline:** QA Automation Pipeline
 
-Esses cenários foram documentados como limitações do ambiente, evitando validações artificiais.
+Jobs configurados:
 
-## 🌐 Execução Cross-browser
+1. **Web BDD Tests:** execução dos cenários Web.
+2. **API BDD Tests:** execução dos cenários de API.
+3. **Playwright Tests:** execução dos testes automatizados nos navegadores configurados.
+4. **Generate Consolidated Report:** consolidação e disponibilização dos relatórios.
 
-A configuração do Playwright contempla três motores de navegador:
+**Última execução validada:**
 
-- **Chromium:** navegador baseado em Chromium.
-- **Firefox:** navegador Firefox.
-- **WebKit:** motor utilizado pelo Safari.
+- Pipeline #9.
+- Branch: `main`.
+- Commit: `d7f43b7`.
+- Status: Success.
+- 4 de 4 jobs aprovados.
 
-O arquivo `playwright.config.js` também contempla:
+Artefatos gerados:
+- `web-results`
+- `api-results`
+- `playwright-results`
+- `qa-automation-final-report`
 
-- Execução paralela dos testes.
-- Duas tentativas adicionais em caso de falha no CI.
-- Um worker durante a execução no CI.
-- Geração de relatório HTML.
-- Captura de trace na primeira repetição.
-
-## 📊 Resultados da execução
-
-### Execução local BDD — 30/10/2026
-
-| Suíte | Cenários aprovados | Falhas |
-|---|---:|---:|
-| BDD Web — Cucumber | 8 | 0 |
-| BDD API — Cucumber | 5 | 0 |
-| **Total BDD** | **13** | **0** |
-
-**Taxa de aprovação BDD: 100%.**
-
-Os resultados acima correspondem à execução local registrada em 30/10/2026.
-
-### Integração contínua
-
-A execução #6 do GitHub Actions, commit `e36b7cb`, na branch `main`, terminou com sucesso.
-
-Jobs concluídos:
-
-- Web BDD Tests.
-- API BDD Tests.
-- Playwright Tests.
-- Generate Consolidated Report.
-
-Os resultados detalhados e os relatórios podem ser consultados nos artefatos da execução no GitHub Actions.
-
-A quantidade individual de testes Playwright não é apresentada nesta tabela porque o total da execução #6 ainda não foi detalhado nesta documentação.
-
-## ⚙️ Instalação
+## Como executar o projeto
 
 ### Pré-requisitos
 
-- Node.js
-- NPM
-- Git
+- Node.js instalado.
+- NPM instalado.
+- Git instalado.
+- Navegadores do Playwright configurados.
 
-### Clonar o repositório
+### 1. Clonar o repositório
 
 ```bash
 git clone https://github.com/diasmoura/outsera-qa-automation.git
 ```
 
-Acessar a pasta:
+### 2. Acessar a pasta
 
 ```bash
 cd outsera-qa-automation
 ```
 
-Instalar as dependências:
+### 3. Instalar as dependências
 
 ```bash
 npm install
 ```
 
-Instalar os navegadores do Playwright:
+### 4. Instalar os navegadores do Playwright
 
 ```bash
 npx playwright install
 ```
 
-## 🔐 Configuração do ambiente
+### 5. Executar os testes
 
-Crie um arquivo `.env` na raiz do projeto:
-
-```env
-QA_LOGIN_EMAIL=seu_email
-QA_LOGIN_PASSWORD=sua_senha
-
-QA_CARD_NAME=Nome do titular
-QA_CARD_NUMBER=Numero do cartao
-QA_CARD_CVC=CVC
-QA_CARD_EXPIRY_MONTH=12
-QA_CARD_EXPIRY_YEAR=2028
-```
-
-Utilize somente dados de teste.
-
-**Importante:** não compartilhe credenciais reais no GitHub. O arquivo `.env` deve estar incluído no `.gitignore`. O arquivo `.env.example` pode conter apenas valores fictícios ou campos de exemplo.
-
-## ▶️ Execução dos testes
-
-Executar testes Web:
+Para executar os testes BDD:
 
 ```bash
-npm run test:web
+npm run test:bdd
 ```
 
-Executar testes de API:
+Para executar os testes Playwright:
 
 ```bash
-npm run test:api
+npx playwright test
 ```
 
-Executar testes Playwright:
-
-```bash
-npm run test:playwright
-```
-
-Executar toda a suíte:
-
-```bash
-npm run test:all
-```
-
-Executar testes Web e API e gerar o relatório HTML consolidado:
+Para executar a rotina consolidada de testes e relatório:
 
 ```bash
 npm run test:report
 ```
 
-Executar toda a suíte e gerar o relatório Cucumber:
+> Os scripts disponíveis podem ser consultados na seção `scripts` do arquivo `package.json`.
 
-```bash
-npm run test:all:report
-```
+## Relatórios e evidências
 
-Gerar novamente o relatório Cucumber:
+O projeto gera relatórios de execução para facilitar a análise dos resultados e a identificação de falhas.
 
-```bash
-npm run report
-```
-
-## 📄 Relatórios e evidências
-
-O projeto gera relatórios separados para as suítes de automação:
-
-**Cucumber — Web e API**
-
-O relatório HTML consolidado é gerado em:
-
-```text
-reports/html/index.html
-```
-
-**Playwright**
+As evidências incluem:
+- Relatórios Cucumber.
+- Relatórios HTML do Playwright.
+- Screenshots dos cenários automatizados.
+- Artefatos disponibilizados pela pipeline do GitHub Actions.
 
 Para visualizar o relatório HTML do Playwright:
 
@@ -263,42 +232,31 @@ Para visualizar o relatório HTML do Playwright:
 npx playwright show-report
 ```
 
-O relatório Playwright é disponibilizado separadamente do relatório consolidado Cucumber.
+## Boas práticas aplicadas
 
-O projeto também contempla captura automática de screenshots em caso de falhas nos cenários Web.
-
-Os relatórios e evidências são disponibilizados como artefatos nas execuções do GitHub Actions, conforme a configuração do pipeline.
-
-## 🔄 Integração contínua — CI/CD
-
-O projeto utiliza GitHub Actions para automatizar a execução dos testes após alterações no repositório.
-
-O pipeline contempla:
-
-- Execução dos testes BDD Web.
-- Execução dos testes BDD API.
-- Execução dos testes Playwright.
-- Geração do relatório consolidado Cucumber.
-- Disponibilização de relatórios e evidências como artefatos.
-
-A pipeline também permite acompanhar o resultado de cada etapa diretamente pelo GitHub Actions.
-
-## ⭐ Diferenciais técnicos
-
-- Automação de testes Web e API.
-- Arquitetura Page Object Model.
-- Desenvolvimento de cenários BDD com Gherkin.
-- Execução cross-browser.
-- Cobertura de cenários positivos e negativos.
-- Reutilização de componentes e steps.
-- Gerenciamento de credenciais por variáveis de ambiente.
-- Captura automática de evidências.
-- Scripts NPM para execução dos testes.
+- Organização dos cenários utilizando BDD e Gherkin.
+- Separação entre funcionalidades, steps e Page Objects.
+- Reutilização de métodos e seletores.
+- Validação de cenários positivos e negativos.
+- Evidências de execução.
 - Integração contínua com GitHub Actions.
-- Geração de relatórios HTML.
+- Geração de relatórios para acompanhamento dos testes.
 
-## 👨‍💻 Considerações finais
+## Resultados consolidados
 
-Este projeto demonstra conhecimentos práticos em QA Automation, incluindo automação de testes Web e API, estruturação de cenários BDD, aplicação de boas práticas de desenvolvimento, validação funcional, execução cross-browser e integração contínua.
+| Tipo de teste | Resultado |
+|---|---:|
+| Web BDD | 8 cenários aprovados |
+| API BDD | 5 cenários aprovados |
+| Playwright API | 24 execuções |
+| GitHub Actions | 4 jobs aprovados |
 
-**Desenvolvido como parte de um desafio técnico de QA Automation.**
+**Total de cenários BDD:** 13 aprovados, com 104 steps aprovados nas execuções apresentadas.
+
+## Repositório
+
+GitHub: https://github.com/diasmoura/outsera-qa-automation
+
+---
+
+**Projeto desenvolvido para demonstrar conhecimentos em Qualidade de Software, automação de testes, testes de API, BDD, Playwright, organização de código e integração contínua.**
