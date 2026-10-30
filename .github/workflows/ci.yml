@@ -4,8 +4,10 @@ name: QA Automation - CI/CD Pipeline
 on:
   push:
     branches: [main]
+
   pull_request:
     branches: [main]
+
   workflow_dispatch:
 
 permissions:
@@ -14,7 +16,7 @@ permissions:
 jobs:
   web-tests:
     name: Web BDD Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
 
     steps:
@@ -40,7 +42,7 @@ jobs:
 
       - name: Upload Web results
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: web-results
           path: |
@@ -51,7 +53,7 @@ jobs:
 
   api-tests:
     name: API BDD Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
 
     steps:
@@ -74,7 +76,7 @@ jobs:
 
       - name: Upload API results
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: api-results
           path: reports/cucumber-api-report.json
@@ -83,7 +85,7 @@ jobs:
 
   playwright-tests:
     name: Playwright Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
 
     steps:
@@ -107,7 +109,7 @@ jobs:
 
       - name: Upload Playwright results
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-results
           path: |
@@ -118,7 +120,7 @@ jobs:
 
   performance-tests:
     name: Performance Tests (K6)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 25
 
     steps:
@@ -174,7 +176,7 @@ jobs:
 
       - name: Upload K6 results
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: performance-results
           path: reports/performance/
@@ -183,7 +185,7 @@ jobs:
 
   report:
     name: Generate Consolidated Report
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
 
     needs:
@@ -208,41 +210,32 @@ jobs:
         run: npm ci
 
       - name: Download Web results
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: web-results
           path: reports/web
         continue-on-error: true
 
       - name: Download API results
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: api-results
           path: reports/api
         continue-on-error: true
 
       - name: Download Playwright results
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: playwright-results
           path: reports/playwright
         continue-on-error: true
 
       - name: Download Performance results
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: performance-results
           path: reports/performance
         continue-on-error: true
-
-      - name: Generate consolidated Web and API report
-        shell: bash
-        run: |
-          if [ -f reports/web/cucumber-web-report.json ] || [ -f reports/api/cucumber-api-report.json ]; then
-            node cucumber-report.js
-          else
-            echo "Nenhum relatório Cucumber disponível para consolidação."
-          fi
 
       - name: Prepare dashboard inputs
         shell: bash
@@ -265,13 +258,22 @@ jobs:
             cp -R reports/playwright/playwright-report ./playwright-report
           fi
 
+      - name: Generate consolidated Web and API report
+        shell: bash
+        run: |
+          if [ -f reports/cucumber-web-report.json ] || [ -f reports/cucumber-api-report.json ]; then
+            node cucumber-report.js
+          else
+            echo "Nenhum relatório Cucumber disponível para consolidação."
+          fi
+
       - name: Generate QA dashboard
         if: always()
         run: node dashboard.js
 
       - name: Upload final reports
         if: always()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: qa-automation-final-report
           path: |

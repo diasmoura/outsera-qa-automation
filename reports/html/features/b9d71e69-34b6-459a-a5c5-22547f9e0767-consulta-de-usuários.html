@@ -81,7 +81,7 @@
       <div class="p-4 md:p-6 flex flex-col lg:flex-row lg:items-start justify-between gap-6">
         <div class="space-y-4 flex-1">
           <div class="space-y-2">
-            <h2 class="text-xl md:text-2xl font-bold text-foreground leading-tight">Gerenciamento de usuários</h2>
+            <h2 class="text-xl md:text-2xl font-bold text-foreground leading-tight">Consulta de usuários</h2>
             
             
           </div>
@@ -151,9 +151,9 @@
 
   <div class="w-full my-2"></div>
   
-    <span class="flex items-center gap-1.5 min-w-0 max-w-full" title="features\API\api-users.feature">
+    <span class="flex items-center gap-1.5 min-w-0 max-w-full" title="features\API\api-consulta-users.feature">
       <i class="fa-solid fa-file-code text-primary text-base shrink-0"></i>
-      <span class="text-xs font-mono text-muted-foreground truncate">features\API\api-users.feature</span>
+      <span class="text-xs font-mono text-muted-foreground truncate">features\API\api-consulta-users.feature</span>
     </span>
   
   
@@ -185,7 +185,7 @@
         <div class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-3 md:gap-4 shrink-0 lg:ml-6 w-full sm:w-auto">
           <div class="flex flex-col items-center justify-center bg-status-passed/10 rounded-xl py-3 px-3 border border-status-passed/20 w-full">
             <div class="text-xl md:text-2xl font-bold text-status-passed leading-none">
-              3
+              2
             </div>
             <div class="text-[9px] md:text-[10px] uppercase font-bold text-status-passed/70 dark:text-status-passed/30 mt-1 tracking-wider">
               Passed
@@ -389,13 +389,13 @@
       
 
       <div class="truncate">
-        <h4 class="font-bold text-sm md:text-base truncate">Criar um usuário com dados válidos</h4>
+        <h4 class="font-bold text-sm md:text-base truncate">Consultar um usuário existente</h4>
         
         
       </div>
     </div>
     <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.508</span>
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.161</span>
       <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
       </svg>
@@ -448,10 +448,10 @@
             <div class="w-full">
               <p class="text-sm">
                 <span class="font-bold text-foreground">Quando </span>
-                <span>enviar uma requisição POST para criar um usuário</span>
+                <span>consultar o usuário de ID 1</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.505</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.154</p>
 
               
 
@@ -484,7 +484,43 @@
             <div class="w-full">
               <p class="text-sm">
                 <span class="font-bold text-foreground">Então </span>
-                <span>a resposta CRUD da API deve ter status 201</span>
+                <span>a resposta da API deve ter status 200</span>
+                
+              </p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.003</p>
+
+              
+
+              
+                
+              
+
+              
+
+              
+
+              
+              
+
+              
+              
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div class="px-6 py-4 bg-muted/20">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start gap-3 w-full">
+            
+              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
+            
+            <div class="w-full">
+              <p class="text-sm">
+                <span class="font-bold text-foreground">E </span>
+                <span>o header Content-Type da consulta deve indicar JSON</span>
                 
               </p>
               <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.000</p>
@@ -520,43 +556,7 @@
             <div class="w-full">
               <p class="text-sm">
                 <span class="font-bold text-foreground">E </span>
-                <span>o header Content-Type deve indicar JSON</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.001</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">E </span>
-                <span>o nome do usuário retornado deve ser "Lucas QA"</span>
+                <span>o nome do usuário deve estar preenchido</span>
                 
               </p>
               <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.001</p>
@@ -709,13 +709,13 @@
       
 
       <div class="truncate">
-        <h4 class="font-bold text-sm md:text-base truncate">Atualizar um usuário existente</h4>
+        <h4 class="font-bold text-sm md:text-base truncate">Consultar um usuário inexistente</h4>
         
         
       </div>
     </div>
     <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.515</span>
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.165</span>
       <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
       </svg>
@@ -768,10 +768,10 @@
             <div class="w-full">
               <p class="text-sm">
                 <span class="font-bold text-foreground">Quando </span>
-                <span>enviar uma requisição PUT para atualizar o usuário de ID 1</span>
+                <span>consultar o usuário de ID 999</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.511</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.162</p>
 
               
 
@@ -804,330 +804,10 @@
             <div class="w-full">
               <p class="text-sm">
                 <span class="font-bold text-foreground">Então </span>
-                <span>a resposta CRUD da API deve ter status 200</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.001</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">E </span>
-                <span>o header Content-Type deve indicar JSON</span>
+                <span>a resposta da API deve ter status 404</span>
                 
               </p>
               <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.002</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">E </span>
-                <span>o nome do usuário retornado deve ser "Lucas QA Atualizado"</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.001</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">After</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">After</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">After</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-  </div>
-</div>
-
-        
-          
-
-
-
-
-<div
-  class="rounded-xl border bg-card text-card-foreground shadow overflow-hidden scenario-card"
-  data-status="passed"
-  data-tags=""
->
-  <button
-    class="w-full text-left px-4 md:px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
-    onclick="this.nextElementSibling.classList.toggle('hidden')"
-  >
-    <div class="flex items-center gap-3 overflow-hidden">
-      
-        <i class="fa-solid fa-circle-check text-xl md:text-2xl shrink-0 text-status-passed"></i>
-      
-
-      <div class="truncate">
-        <h4 class="font-bold text-sm md:text-base truncate">Excluir um usuário existente</h4>
-        
-        
-      </div>
-    </div>
-    <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.245</span>
-      <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-      </svg>
-    </div>
-  </button>
-  <div class="hidden border-t divide-y divide-border">
-    
-
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Before</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Quando </span>
-                <span>enviar uma requisição DELETE para o usuário de ID 1</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.244</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Então </span>
-                <span>a resposta CRUD da API deve ter status 200</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.001</p>
 
               
 
@@ -1276,7 +956,7 @@
 
     // Embedded data for charts (status/duration/tags only — never embeddings,
     // which would make this inline blob scale with attachment size)
-    const featureData = {"description":"","elements":[{"description":"","id":"gerenciamento-de-usuários;criar-um-usuário-com-dados-válidos","keyword":"Cenário","line":6,"name":"Criar um usuário com dados válidos","steps":[{"result":{"status":"passed","duration":415100},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5505491900},"arguments":[],"keyword":"Quando ","line":7,"name":"enviar uma requisição POST para criar um usuário","match":{"location":"step-definitions\\API\\api-users.steps.js:42"},"time":"00:00:05.505"},{"result":{"status":"passed","duration":890300},"arguments":[],"keyword":"Então ","line":8,"name":"a resposta CRUD da API deve ter status 201","match":{"location":"step-definitions\\API\\api-users.steps.js:144"},"time":"00:00:00.000"},{"result":{"status":"passed","duration":1076600},"arguments":[],"keyword":"E ","line":9,"name":"o header Content-Type deve indicar JSON","match":{"location":"step-definitions\\API\\api-users.steps.js:151"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":1390400},"arguments":[],"keyword":"E ","line":10,"name":"o nome do usuário retornado deve ser \"Lucas QA\"","match":{"location":"step-definitions\\API\\api-users.steps.js:159"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":86299},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":2555700},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":53299},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.508849199999999,"time":"00:00:05.508","passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"gerenciamento-de-usuários;atualizar-um-usuário-existente","keyword":"Cenário","line":12,"name":"Atualizar um usuário existente","steps":[{"result":{"status":"passed","duration":358599},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5511040999},"arguments":[],"keyword":"Quando ","line":13,"name":"enviar uma requisição PUT para atualizar o usuário de ID 1","match":{"location":"step-definitions\\API\\api-users.steps.js:90"},"time":"00:00:05.511"},{"result":{"status":"passed","duration":1291800},"arguments":[],"keyword":"Então ","line":14,"name":"a resposta CRUD da API deve ter status 200","match":{"location":"step-definitions\\API\\api-users.steps.js:144"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":2105900},"arguments":[],"keyword":"E ","line":15,"name":"o header Content-Type deve indicar JSON","match":{"location":"step-definitions\\API\\api-users.steps.js:151"},"time":"00:00:00.002"},{"result":{"status":"passed","duration":1549599},"arguments":[],"keyword":"E ","line":16,"name":"o nome do usuário retornado deve ser \"Lucas QA Atualizado\"","match":{"location":"step-definitions\\API\\api-users.steps.js:159"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":124299},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":1984599},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":79799},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.515988298,"time":"00:00:05.515","passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"gerenciamento-de-usuários;excluir-um-usuário-existente","keyword":"Cenário","line":18,"name":"Excluir um usuário existente","steps":[{"result":{"status":"passed","duration":375000},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5244061399},"arguments":[],"keyword":"Quando ","line":19,"name":"enviar uma requisição DELETE para o usuário de ID 1","match":{"location":"step-definitions\\API\\api-users.steps.js:120"},"time":"00:00:05.244"},{"result":{"status":"passed","duration":1623700},"arguments":[],"keyword":"Então ","line":20,"name":"a resposta CRUD da API deve ter status 200","match":{"location":"step-definitions\\API\\api-users.steps.js:144"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":203299},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":2353699},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":75000},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.245685099,"time":"00:00:05.245","passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0}],"id":"585345d4-f0a2-4a52-b405-1e9b040e2ea5-gerenciamento-de-usuários","line":4,"keyword":"Funcionalidade","name":"Gerenciamento de usuários","tags":[],"uri":"features\\API\\api-users.feature","metadata":{"browser":{"name":"Chromium","version":"Playwright"},"executionPlatform":"local","username":"Máquina000088","device":"Automação","platform":{"name":"win32","version":"10.0.26200"},"nodeVersion":"v24.22.1","reportVersion":"4.5.0","hostname":"DESKTOP-V8H127K","architecture":"x64"},"scenarios":{"passed":3,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"passedPercentage":"100.00","failedPercentage":"0.00","notDefinedPercentage":"0.00","skippedPercentage":"0.00","pendingPercentage":"0.00","ambiguousPercentage":"0.00","total":3},"duration":16270522597,"time":"00:00:16.270","isFailed":false,"isAmbiguous":false,"isSkipped":false,"isNotdefined":false,"isPending":false,"passed":3,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"totalTime":16270522597,"app":"","browser":"Chromium Playwright","device":"Automação","executionPlatform":"local","os":"win32 10.0.26200","username":"Máquina000088"};
+    const featureData = {"description":"","elements":[{"description":"","id":"consulta-de-usuários;consultar-um-usuário-existente","keyword":"Cenário","line":6,"name":"Consultar um usuário existente","steps":[{"result":{"status":"passed","duration":838300},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5154569100},"arguments":[],"keyword":"Quando ","line":7,"name":"consultar o usuário de ID 1","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:05.154"},{"result":{"status":"passed","duration":3727200},"arguments":[],"keyword":"Então ","line":8,"name":"a resposta da API deve ter status 200","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.003"},{"result":{"status":"passed","duration":918899},"arguments":[],"keyword":"E ","line":9,"name":"o header Content-Type da consulta deve indicar JSON","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:42"},"time":"00:00:00.000"},{"result":{"status":"passed","duration":1984599},"arguments":[],"keyword":"E ","line":10,"name":"o nome do usuário deve estar preenchido","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:36"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":194500},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":119599},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":2397100},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.161199797999999,"time":"00:00:05.161","passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"consulta-de-usuários;consultar-um-usuário-inexistente","keyword":"Cenário","line":12,"name":"Consultar um usuário inexistente","steps":[{"result":{"status":"passed","duration":221199},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5162477100},"arguments":[],"keyword":"Quando ","line":13,"name":"consultar o usuário de ID 999","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:05.162"},{"result":{"status":"passed","duration":2646800},"arguments":[],"keyword":"Então ","line":14,"name":"a resposta da API deve ter status 404","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.002"},{"result":{"status":"passed","duration":446599},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":212900},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":1849099},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.165123899999999,"time":"00:00:05.165","passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0}],"id":"b9d71e69-34b6-459a-a5c5-22547f9e0767-consulta-de-usuários","line":4,"keyword":"Funcionalidade","name":"Consulta de usuários","tags":[],"uri":"features\\API\\api-consulta-users.feature","metadata":{"browser":{"name":"Chromium","version":"Playwright"},"executionPlatform":"local","username":"Máquina000088","device":"Automação","platform":{"name":"win32","version":"10.0.26200"},"nodeVersion":"v24.22.1","reportVersion":"4.5.0","hostname":"DESKTOP-V8H127K","architecture":"x64"},"scenarios":{"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"passedPercentage":"100.00","failedPercentage":"0.00","notDefinedPercentage":"0.00","skippedPercentage":"0.00","pendingPercentage":"0.00","ambiguousPercentage":"0.00","total":2},"duration":10326323698,"time":"00:00:10.326","isFailed":false,"isAmbiguous":false,"isSkipped":false,"isNotdefined":false,"isPending":false,"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"totalTime":10326323698,"app":"","browser":"Chromium Playwright","device":"Automação","executionPlatform":"local","os":"win32 10.0.26200","username":"Máquina000088"};
   </script>
 
         </div>
