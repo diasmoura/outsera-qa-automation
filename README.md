@@ -15,6 +15,7 @@ Construir uma estrutura de automação capaz de validar fluxos funcionais de uma
 - **Gherkin:** especificação dos cenários em linguagem legível.
 - **Page Object Model (POM):** organização e reutilização de elementos e ações das páginas.
 - **K6:** execução de testes de performance, smoke e carga.
+- **Express:** desenvolvimento da API mock utilizada nos testes de performance.
 - **Git e GitHub:** versionamento do código.
 - **GitHub Actions:** integração e execução contínua (CI).
 - **multiple-cucumber-html-reporter:** geração de relatórios de testes.
@@ -23,7 +24,7 @@ Construir uma estrutura de automação capaz de validar fluxos funcionais de uma
 
 - **Aplicação Web:** https://automationexercise.com
 - **API REST para testes funcionais:** https://jsonplaceholder.typicode.com
-- **API local para testes de performance:** aplicação mock desenvolvida com Node.js e Express.
+- **API mock para testes de performance:** aplicação desenvolvida com Node.js e Express.
 
 ## 4. Estrutura do projeto
 
@@ -66,6 +67,7 @@ outsera-qa-automation/
 │
 ├── reports/
 │   ├── evidences/
+│   ├── consolidated/
 │   └── performance/
 │       ├── smoke-summary.json
 │       ├── load-summary.json
@@ -127,7 +129,7 @@ Validações realizadas:
 
 Execução de testes automatizados utilizando Playwright, com cobertura nos navegadores Chromium, Firefox e WebKit.
 
-Casos contemplados:
+**Casos contemplados:**
 - GET de usuário existente.
 - GET de usuário inexistente.
 - POST para criação de usuário.
@@ -141,7 +143,7 @@ Casos contemplados:
 
 ### 5.4. Testes de Performance — K6
 
-Foi implementada uma estrutura de testes de performance utilizando K6 para avaliar o comportamento de uma API sob carga.
+Foi implementada uma estrutura de testes de performance utilizando K6 para avaliar o comportamento de uma API mock sob diferentes níveis de carga.
 
 **Smoke Test**
 - 1 usuário virtual.
@@ -151,24 +153,28 @@ Foi implementada uma estrutura de testes de performance utilizando K6 para avali
 - Validação do Content-Type JSON.
 
 **Teste de Carga**
+
+Configuração de estágios:
 - Ramp-up para 100 usuários virtuais em 1 minuto.
 - Ramp-up para 250 usuários virtuais em 1 minuto.
 - Ramp-up para 500 usuários virtuais em 1 minuto.
 - Sustentação de 500 usuários virtuais durante 5 minutos.
 - Ramp-down para zero usuários em 1 minuto.
 
-**Resultados registrados**
+**Resultados da execução no GitHub Actions**
 
 | Métrica | Resultado |
 |---|---:|
 | Usuários virtuais máximos | 500 |
-| Total de requisições | 131.548 |
-| Requisições por segundo | 157,01 |
-| Tempo médio | 0,95 ms |
-| Percentil 95 (p95) | 1,85 ms |
-| Tempo máximo | 28,49 ms |
-| Falhas HTTP | 0% |
-| Checks aprovados | 394.644 |
+| Total de requisições | 200.985 |
+| Requisições por segundo | 371,73 |
+| Tempo médio | 0,70 ms |
+| Mediana | 0,60 ms |
+| Percentil 90 (p90) | 1,31 ms |
+| Percentil 95 (p95) | 1,55 ms |
+| Tempo máximo | 9,54 ms |
+| Falhas HTTP | 0,00% |
+| Checks aprovados | 602.955 |
 | Checks reprovados | 0 |
 
 **Thresholds configurados**
@@ -176,39 +182,55 @@ Foi implementada uma estrutura de testes de performance utilizando K6 para avali
 - Percentil 95 inferior a 1.000 ms.
 - Taxa de checks superior a 99%.
 
+**Validação dos thresholds**
+
+| Critério | Resultado | Status |
+|---|---:|---|
+| Falhas HTTP abaixo de 1% | 0,00% | **ATENDIDO** |
+| p95 abaixo de 1.000 ms | 1,55 ms | **ATENDIDO** |
+| Checks acima de 99% | 100,00% | **ATENDIDO** |
+
 **Análise dos resultados**
 
-O teste apresentou 0% de falhas HTTP e 100% de checks aprovados. O percentil 95 foi de 1,85 ms, permanecendo abaixo do limite configurado de 1.000 ms.
+O teste registrou 500 usuários virtuais máximos e 200.985 requisições, alcançando uma vazão de 371,73 requisições por segundo.
 
-**Limitação do ambiente:** o teste foi executado localmente, com a API e o K6 na mesma máquina. Portanto, os resultados não representam uma medição isolada da capacidade de uma infraestrutura de produção. Recomenda-se repetir o teste em infraestrutura separada e autorizada para uma análise mais representativa de possíveis gargalos.
+O tempo médio de resposta foi de 0,70 ms, enquanto o percentil 95 (p95) foi de 1,55 ms. A taxa de falhas HTTP foi de 0,00%, e os 602.955 checks executados foram aprovados, sem reprovações.
+
+Os resultados demonstram desempenho positivo da API mock no ambiente avaliado, com baixa latência e atendimento a todos os thresholds configurados.
+
+**Limitação do ambiente:** a API mock e o K6 foram executados no mesmo runner do GitHub Actions. Portanto, os resultados representam uma validação técnica do ambiente de teste e não uma medição isolada da capacidade de uma infraestrutura de produção. Para uma análise mais completa de possíveis gargalos, recomenda-se monitorar CPU, memória, rede e logs da API durante a execução, além de realizar testes com o gerador de carga separado do servidor.
+
+> Observação: a duração média da iteração inclui o `sleep(1)` configurado no script K6. Portanto, não representa exclusivamente o tempo de resposta da API.
 
 ## 6. Integração contínua — GitHub Actions
 
-O projeto possui pipeline automatizada para execução dos testes após alterações no repositório.
+O projeto possui pipeline automatizada para execução dos testes e geração de relatórios após alterações no repositório.
 
 **Pipeline:** QA Automation Pipeline.
 
-Jobs configurados:
+**Jobs configurados:**
 
-1. **Web BDD Tests:** execução dos cenários Web.
-2. **API BDD Tests:** execução dos cenários de API.
-3. **Playwright Tests:** execução dos testes automatizados nos navegadores configurados.
-4. **Generate Consolidated Report:** consolidação e disponibilização dos relatórios.
+1. **Web BDD Tests:** execução dos cenários automatizados Web.
+2. **API BDD Tests:** execução dos cenários automatizados de API.
+3. **Playwright Tests:** execução dos testes automatizados utilizando Playwright.
+4. **Performance Tests (K6):** execução dos testes de carga e geração dos resultados de performance.
+5. **Generate Consolidated Report:** consolidação e disponibilização dos relatórios de execução.
 
 **Última execução validada:**
-- Pipeline #9.
+- Pipeline: #12.
 - Branch: `main`.
-- Commit informado: `d7f43b7`.
-- Status: Success.
-- 4 de 4 jobs aprovados.
+- Commit: `fcc399b`.
+- Status: **Success**.
+- Jobs aprovados: 5 de 5.
 
-Artefatos gerados:
+**Artefatos gerados:**
 - `web-results`
 - `api-results`
 - `playwright-results`
+- `performance-results`
 - `qa-automation-final-report`
 
-> Os testes de performance foram executados localmente. A integração do K6 ao GitHub Actions ainda não está incluída nesta execução validada da pipeline.
+A pipeline permite executar os testes de forma automatizada e disponibilizar os resultados e evidências para consulta após a execução.
 
 ## 7. Como executar o projeto
 
@@ -284,24 +306,27 @@ No ambiente Windows utilizado no desenvolvimento, o arquivo `performance/run-k6.
 
 O projeto gera relatórios de execução para facilitar a análise dos resultados e a identificação de falhas.
 
-As evidências incluem:
+**Evidências e relatórios disponíveis:**
 - Relatórios Cucumber.
 - Relatórios HTML do Playwright.
 - Screenshots dos cenários automatizados.
 - Relatórios JSON do K6.
 - Relatórios HTML de performance.
+- Relatórios consolidados.
 - Artefatos disponibilizados pela pipeline do GitHub Actions.
 
-Para visualizar o relatório HTML do Playwright:
+**Visualizar o relatório HTML do Playwright:**
 
 ```bash
 npx playwright show-report
 ```
 
-Relatórios de performance:
+**Relatórios de performance:**
 - `reports/performance/smoke-summary.json`
 - `reports/performance/load-summary.json`
 - `reports/performance/load-report.html`
+
+Os artefatos gerados pelo GitHub Actions podem ser baixados diretamente na página de execução da pipeline.
 
 ## 9. Boas práticas aplicadas
 
@@ -309,10 +334,12 @@ Relatórios de performance:
 - Separação entre funcionalidades, steps e Page Objects.
 - Reutilização de métodos e seletores.
 - Validação de cenários positivos e negativos.
+- Validação de status HTTP, headers e conteúdo das respostas.
 - Utilização de métricas e thresholds de performance.
 - Geração de evidências e relatórios.
 - Integração contínua com GitHub Actions.
 - Organização e rastreabilidade dos testes.
+- Versionamento do código utilizando Git e GitHub.
 
 ## 10. Resultados consolidados
 
@@ -321,14 +348,16 @@ Relatórios de performance:
 | Web BDD | 8 cenários aprovados |
 | API BDD | 5 cenários aprovados |
 | Playwright API | 24 execuções |
-| Performance K6 | Até 500 VUs |
-| GitHub Actions | 4 jobs aprovados |
+| Performance K6 | Até 500 usuários virtuais |
+| GitHub Actions | 5 jobs aprovados |
 
 **Total de cenários BDD:** 13 aprovados, com 104 steps aprovados nas execuções apresentadas.
 
+**Resultado da pipeline:** todos os cinco jobs foram concluídos com sucesso na execução #12.
+
 ## 11. Repositório
 
-GitHub: https://github.com/diasmoura/outsera-qa-automation
+**GitHub:** https://github.com/diasmoura/outsera-qa-automation
 
 ---
 
