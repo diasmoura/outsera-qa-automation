@@ -3,48 +3,78 @@ const fs = require('fs');
 const path = require('path');
 
 async function generateReport() {
-  const reporterModule = await import('multiple-cucumber-html-reporter');
-  const reporter = reporterModule.default || reporterModule;
+  try {
+    console.log('[REPORT] Iniciando relatório consolidado...');
 
-  const reportsDir = path.join(__dirname, 'reports', 'bdd');
-  const jsonFile = path.join(reportsDir, 'cucumber-report.json');
-  const htmlDir = path.join(__dirname, 'reports', 'html');
+    const module = await import('multiple-cucumber-html-reporter');
+    const reporter = module.default || module;
 
-  if (!fs.existsSync(jsonFile)) {
-    console.error('Arquivo cucumber-report.json não encontrado.');
-    console.error('Execute primeiro: npm run test:bdd');
-    process.exit(1);
-  }
+    const reportsDir = path.join(__dirname, 'reports');
+    const consolidatedDir = path.join(reportsDir, 'consolidated');
+    const htmlDir = path.join(reportsDir, 'html');
 
-  fs.rmSync(htmlDir, { recursive: true, force: true });
-  fs.mkdirSync(htmlDir, { recursive: true });
+    const sources = [
+      path.join(reportsDir, 'web', 'cucumber-web-report.json'),
+      path.join(reportsDir, 'api', 'cucumber-api-report.json'),
+      path.join(reportsDir, 'cucumber-web-report.json'),
+      path.join(reportsDir, 'cucumber-api-report.json')
+    ];
 
-  reporter.generate({
-    jsonDir: reportsDir,
-    reportPath: htmlDir,
-    openReportInBrowser: false,
-    disableLog: true,
-    pageTitle: 'Outsera QA Automation',
-    reportName: 'Relatório de Automação BDD',
-    displayDuration: true,
-    metadata: {
-      browser: {
-        name: 'Chrome',
-        version: '156'
-      },
-      device: 'Máquina local',
-      platform: {
-        name: 'Windows',
-        version: '10/11'
-      }
+    const availableFiles = sources.filter(file => fs.existsSync(file));
+
+    if (availableFiles.length === 0) {
+      throw new Error('Nenhum JSON do Cucumber foi encontrado.');
     }
-  });
 
-  console.log('Relatório HTML gerado com sucesso!');
-  console.log(`Local: ${htmlDir}`);
+    fs.rmSync(consolidatedDir, { recursive: true, force: true });
+    fs.mkdirSync(consolidatedDir, { recursive: true });
+
+    for (const source of availableFiles) {
+      const json = JSON.parse(fs.readFileSync(source, 'utf8'));
+
+      if (!Array.isArray(json)) {
+        throw new Error(`Formato inválido: ${source}`);
+      }
+
+      const destination = path.join(
+        consolidatedDir,
+        `${path.basename(path.dirname(source))}-${path.basename(source)}`
+      );
+
+      fs.writeFileSync(destination, JSON.stringify(json, null, 2));
+    }
+
+    fs.rmSync(htmlDir, { recursive: true, force: true });
+    fs.mkdirSync(htmlDir, { recursive: true });
+
+    await reporter.generate({
+      jsonDir: consolidatedDir,
+      reportPath: htmlDir,
+      openReportInBrowser: false,
+      disableLog: true,
+      pageTitle: 'Outsera QA Automation',
+      reportName: 'Relatório Consolidado - Web e API',
+      displayDuration: true,
+      metadata: {
+        browser: {
+          name: 'Chromium',
+          version: 'Playwright'
+        },
+        device: 'Automação',
+        platform: {
+          name: process.platform
+        }
+      }
+    });
+
+    console.log('[REPORT] Relatório HTML gerado com sucesso!');
+    console.log(`[REPORT] Arquivos processados: ${availableFiles.length}`);
+    console.log(`[REPORT] Local: ${htmlDir}`);
+
+  } catch (error) {
+    console.error('[REPORT] Falha ao gerar relatório:', error);
+    process.exitCode = 1;
+  }
 }
 
-generateReport().catch(error => {
-  console.error('Erro ao gerar relatório:', error);
-  process.exit(1);
-});
+generateReport();

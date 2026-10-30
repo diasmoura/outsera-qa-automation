@@ -12,43 +12,8 @@ permissions:
   contents: read
 
 jobs:
-  bdd-tests:
-    name: BDD Tests
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: 24
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Install Playwright Chromium
-        run: npx playwright install --with-deps chromium
-
-      - name: Run BDD tests
-        run: |
-          mkdir -p reports/bdd
-          npm run test:bdd
-
-      - name: Upload BDD results
-        if: always()
-        uses: actions/upload-artifact@v6
-        with:
-          name: bdd-results
-          path: reports/bdd/
-          if-no-files-found: warn
-          retention-days: 15
-
   web-tests:
-    name: Web Tests
+    name: Web BDD Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -85,7 +50,7 @@ jobs:
           retention-days: 15
 
   api-tests:
-    name: API Tests
+    name: API BDD Tests
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -152,12 +117,11 @@ jobs:
           retention-days: 15
 
   report:
-    name: Generate Final Report
+    name: Generate Consolidated Report
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
     needs:
-      - bdd-tests
       - web-tests
       - api-tests
       - playwright-tests
@@ -176,13 +140,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-      - name: Download BDD results
-        uses: actions/download-artifact@v6
-        with:
-          name: bdd-results
-          path: reports/bdd
-        continue-on-error: true
 
       - name: Download Web results
         uses: actions/download-artifact@v6
@@ -205,15 +162,21 @@ jobs:
           path: reports/playwright
         continue-on-error: true
 
-      - name: Generate BDD HTML report
-        if: hashFiles('reports/bdd/cucumber-report.json') != ''
-        run: npm run report
+      - name: Generate consolidated Web and API report
+        shell: bash
+        run: |
+          if [ -f reports/web/cucumber-web-report.json ] || [ -f reports/api/cucumber-api-report.json ]; then
+            node cucumber-report.js
+          else
+            echo "Nenhum relatório Cucumber disponível para consolidação."
+          fi
 
-      - name: Upload consolidated results
+      - name: Upload final reports
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: qa-automation-final-report
-          path: reports/
+          path: |
+            reports/
           if-no-files-found: warn
           retention-days: 15
