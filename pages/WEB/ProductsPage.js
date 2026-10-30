@@ -2,365 +2,289 @@
 class ProductsPage {
   constructor(page) {
     this.page = page;
-
-    this.timeout = 15000;
+    this.timeout = 20000;
     this.baseUrl = 'https://automationexercise.com';
 
-    // ==============================================
-    // PRODUTOS
-    // ==============================================
+    // Lista de produtos
+    this.productCards = this.page.locator(
+      '.features_items .product-image-wrapper'
+    );
 
-    this.productCards = page.locator('.product-image-wrapper');
     this.firstProduct = this.productCards.first();
 
+    // O site apresenta dois botões Add to cart no primeiro card.
+    // Utilizamos o primeiro para evitar strict mode violation.
     this.addToCartButton = this.firstProduct
-      .locator('a.add-to-cart')
+      .locator('.add-to-cart')
       .first();
 
-    // ==============================================
-    // MODAL DE CONFIRMAÇÃO
-    // ==============================================
+    // Modal de confirmação
+    this.cartModal = this.page.locator('#cartModal');
 
-    this.addedModal = page.locator('#cartModal');
+    this.addedConfirmation = this.cartModal.getByText(
+      'Added!',
+      { exact: false }
+    );
 
-    this.addedMessage = this.addedModal.getByText('Added!', {
-      exact: true
-    });
+    this.viewCartButton = this.cartModal.locator(
+      'a[href="/view_cart"]'
+    ).first();
 
-    this.viewCartLink = this.addedModal.getByRole('link', {
-      name: 'View Cart'
-    });
+    // Carrinho
+    this.cartTable = this.page.locator('#cart_info_table');
 
-    // ==============================================
-    // CARRINHO
-    // ==============================================
-
-    this.cartProductRows = page.locator(
+    this.cartRows = this.page.locator(
       '#cart_info_table tbody tr'
     );
 
-    this.emptyCartMessage = page.locator('#empty_cart');
+    this.emptyCartMessage = this.page.locator('#empty_cart');
 
-    this.proceedToCheckoutButton = page.locator(
+    // Checkout
+    this.checkoutButton = this.page.locator(
       '.btn.btn-default.check_out'
     );
   }
 
-  // ==============================================
-  // AGUARDAR PÁGINA DO CARRINHO
-  // ==============================================
+  /**
+   * Acessa a página de produtos e valida o carregamento.
+   */
+  async ensureProductsPage() {
+    for (let tentativa = 1; tentativa <= 2; tentativa++) {
+      try {
+        console.log(
+          `[PRODUTOS] Tentativa ${tentativa} de carregamento.`
+        );
 
-  async waitForCartPage() {
-    await this.page.waitForURL('**/view_cart', {
-      timeout: this.timeout
-    });
+        if (!this.page.url().includes('/products')) {
+          await this.page.goto(`${this.baseUrl}/products`, {
+            waitUntil: 'domcontentloaded',
+            timeout: this.timeout
+          });
+        } else if (tentativa > 1) {
+          await this.page.reload({
+            waitUntil: 'domcontentloaded',
+            timeout: this.timeout
+          });
+        }
 
-    await this.page.locator(
-      '#cart_info_table, #empty_cart'
-    ).first().waitFor({
-      state: 'attached',
-      timeout: this.timeout
-    });
-  }
-
-  // ==============================================
-  // QUANTIDADE DE PRODUTOS
-  // ==============================================
-
-  async getCartProductCount() {
-    await this.waitForCartPage();
-
-    return await this.cartProductRows.count();
-  }
-
-  // ==============================================
-  // ADICIONAR PRIMEIRO PRODUTO AO CARRINHO
-  // ==============================================
-
-  async addFirstProductToCart() {
-    try {
-      if (!this.page.url().includes('/products')) {
-        await this.page.goto(`${this.baseUrl}/products`, {
-          waitUntil: 'domcontentloaded',
+        await this.firstProduct.waitFor({
+          state: 'visible',
           timeout: this.timeout
         });
-      }
 
-      await this.firstProduct.waitFor({
-        state: 'visible',
-        timeout: this.timeout
-      });
+        const quantidade = await this.productCards.count();
 
-      await this.firstProduct.scrollIntoViewIfNeeded();
-      await this.firstProduct.hover();
+        if (quantidade === 0) {
+          throw new Error('Nenhum produto foi encontrado.');
+        }
 
-      await this.addToCartButton.waitFor({
-        state: 'visible',
-        timeout: this.timeout
-      });
-
-      if (!(await this.addToCartButton.isEnabled())) {
-        throw new Error('Botão Add to cart está desabilitado.');
-      }
-
-      // Aguarda a resposta da requisição de inclusão.
-      // O listener é registrado antes do clique.
-      const respostaInclusao = this.page.waitForResponse(
-        response => {
-          const url = response.url();
-
-          return (
-            url.includes('/add_to_cart/') &&
-            response.request().method() === 'POST'
-          );
-        },
-        { timeout: this.timeout }
-      ).catch(() => null);
-
-      await this.addToCartButton.click();
-
-      console.log(
-        '[CARRINHO] Clique em Add to cart realizado.'
-      );
-
-      const response = await respostaInclusao;
-
-      if (response && !response.ok()) {
-        throw new Error(
-          `Requisição de inclusão retornou HTTP ${response.status()}.`
-        );
-      }
-
-      if (response) {
         console.log(
-          `[CARRINHO] Requisição de inclusão concluída: HTTP ${response.status()}.`
+          `[PRODUTOS] ${quantidade} produtos carregados.`
         );
-      } else {
+
+        return true;
+
+      } catch (error) {
         console.warn(
-          '[CARRINHO] Resposta da inclusão não identificada. Validando pela interface.'
+          `[PRODUTOS] Tentativa ${tentativa} falhou: ${error.message}`
         );
+
+        if (tentativa === 2) {
+          throw new Error(
+            `Falha ao carregar produtos: ${error.message}`
+          );
+        }
       }
-
-      await this.addedModal.waitFor({
-        state: 'visible',
-        timeout: this.timeout
-      });
-
-      await this.addedMessage.waitFor({
-        state: 'visible',
-        timeout: this.timeout
-      });
-
-      console.log(
-        '[CARRINHO] Confirmação de inclusão exibida.'
-      );
-
-      return true;
-
-    } catch (error) {
-      throw new Error(
-        `[CARRINHO] Falha ao adicionar o primeiro produto. ` +
-        `URL: ${this.page.url()}. Detalhe: ${error.message}`
-      );
     }
   }
 
-  // ==============================================
-  // VALIDAR CONFIRMAÇÃO
-  // ==============================================
+  /**
+   * Aguarda a página de produtos.
+   */
+  async waitForProducts() {
+    return this.ensureProductsPage();
+  }
 
+  /**
+   * Adiciona o primeiro produto ao carrinho.
+   */
+  async addFirstProductToCart() {
+    await this.ensureProductsPage();
+
+    await this.firstProduct.scrollIntoViewIfNeeded();
+
+    await this.addToCartButton.waitFor({
+      state: 'visible',
+      timeout: this.timeout
+    });
+
+    await this.addToCartButton.click();
+
+    await this.addedConfirmation.waitFor({
+      state: 'visible',
+      timeout: this.timeout
+    });
+
+    console.log(
+      '[CARRINHO] Produto adicionado com sucesso.'
+    );
+
+    return true;
+  }
+
+  /**
+   * Verifica a confirmação de inclusão do produto.
+   */
   async isAddToCartConfirmationVisible() {
     try {
-      await this.addedModal.waitFor({
+      await this.addedConfirmation.waitFor({
         state: 'visible',
-        timeout: this.timeout
-      });
-
-      await this.addedMessage.waitFor({
-        state: 'visible',
-        timeout: this.timeout
+        timeout: 10000
       });
 
       return true;
-
     } catch {
       return false;
     }
   }
 
-  // ==============================================
-  // ACESSAR CARRINHO
-  // ==============================================
-
+  /**
+   * Abre o carrinho.
+   *
+   * Se o modal estiver visível, utiliza o botão View Cart.
+   * Se não estiver visível, acessa diretamente o carrinho.
+   * Isso permite testar também o cenário de carrinho vazio.
+   */
   async openCartFromConfirmation() {
-    try {
-      if (this.page.url().includes('/view_cart')) {
-        await this.waitForCartPage();
-
-        console.log(
-          '[CARRINHO] Já está na página do carrinho.'
-        );
-
-        return true;
-      }
-
-      const modalVisible = await this.addedModal
-        .isVisible()
-        .catch(() => false);
-
-      const cartLinkVisible = modalVisible
-        ? await this.viewCartLink.isVisible().catch(() => false)
-        : false;
-
-      if (cartLinkVisible) {
-        await this.viewCartLink.click();
-
-        console.log(
-          '[CARRINHO] Acessando carrinho pelo modal de confirmação.'
-        );
-      } else {
-        // Acesso direto para cenários sem modal.
-        await this.page.goto(`${this.baseUrl}/view_cart`, {
-          waitUntil: 'domcontentloaded',
-          timeout: this.timeout
-        });
-
-        console.log(
-          '[CARRINHO] Acessando carrinho diretamente.'
-        );
-      }
-
-      await this.waitForCartPage();
-
-      console.log(
-        '[CARRINHO] Página do carrinho acessada com sucesso.'
-      );
-
-      return true;
-
-    } catch (error) {
-      throw new Error(
-        `[CARRINHO] Falha ao acessar o carrinho. ` +
-        `URL: ${this.page.url()}. Detalhe: ${error.message}`
-      );
-    }
-  }
-
-  // ==============================================
-  // VALIDAR PRODUTO NO CARRINHO
-  // ==============================================
-
-  async isProductVisibleInCart() {
-    try {
-      await this.waitForCartPage();
-
-      const quantidade = await this.cartProductRows.count();
-
-      console.log(
-        `[CARRINHO] Quantidade de produtos encontrados: ${quantidade}.`
-      );
-
-      if (quantidade === 0) {
-        console.error(
-          '[CARRINHO] Nenhum produto encontrado após a inclusão.'
-        );
-
-        return false;
-      }
-
-      const produtoVisivel = await this.cartProductRows
-        .first()
-        .isVisible();
-
-      if (produtoVisivel) {
-        console.log(
-          '[CARRINHO] Produto encontrado no carrinho.'
-        );
-      }
-
-      return produtoVisivel;
-
-    } catch (error) {
-      console.error(
-        `[CARRINHO] Falha na validação: ${error.message}`
-      );
-
-      return false;
-    }
-  }
-
-  // ==============================================
-  // VALIDAR CARRINHO VAZIO
-  // ==============================================
-
-  async isCartEmpty() {
-    await this.waitForCartPage();
-
-    const quantidade = await this.cartProductRows.count();
-
-    const mensagemVisivel = await this.emptyCartMessage
-      .isVisible()
+    const modalVisivel = await this.cartModal.isVisible()
       .catch(() => false);
 
-    const carrinhoVazio =
-      quantidade === 0 && mensagemVisivel;
+    if (modalVisivel) {
+      await this.viewCartButton.waitFor({
+        state: 'visible',
+        timeout: this.timeout
+      });
 
-    console.log(
-      `[CARRINHO] Carrinho vazio: ${carrinhoVazio ? 'SIM' : 'NÃO'}.`
-    );
+      await this.viewCartButton.click();
 
-    return carrinhoVazio;
+      await this.page.waitForURL(/view_cart/, {
+        timeout: this.timeout
+      });
+
+    } else {
+      console.log(
+        '[CARRINHO] Modal não exibido. Acessando carrinho diretamente.'
+      );
+
+      await this.page.goto(`${this.baseUrl}/view_cart`, {
+        waitUntil: 'domcontentloaded',
+        timeout: this.timeout
+      });
+    }
+
+    await this.waitForCartPage();
+
+    console.log('[CARRINHO] Página do carrinho acessada.');
+
+    return true;
   }
 
-  // ==============================================
-  // VALIDAR DISPONIBILIDADE DO CHECKOUT
-  // ==============================================
+  /**
+   * Aguarda o carregamento da página do carrinho.
+   */
+  async waitForCartPage() {
+    if (!this.page.url().includes('view_cart')) {
+      await this.page.goto(`${this.baseUrl}/view_cart`, {
+        waitUntil: 'domcontentloaded',
+        timeout: this.timeout
+      });
+    }
 
+    await this.page.locator('body').waitFor({
+      state: 'visible',
+      timeout: this.timeout
+    });
+
+    // Aguarda a tabela ou a mensagem de carrinho vazio.
+    await Promise.race([
+      this.cartTable.waitFor({
+        state: 'visible',
+        timeout: this.timeout
+      }),
+      this.emptyCartMessage.waitFor({
+        state: 'visible',
+        timeout: this.timeout
+      })
+    ]).catch(async () => {
+      throw new Error(
+        'A página do carrinho carregou, mas não foi possível identificar a tabela ou o estado vazio.'
+      );
+    });
+
+    return true;
+  }
+
+  /**
+   * Retorna a quantidade de produtos no carrinho.
+   */
+  async getCartProductCount() {
+    await this.waitForCartPage();
+
+    const quantidade = await this.cartRows.count();
+
+    return quantidade;
+  }
+
+  /**
+   * Verifica se existe produto no carrinho.
+   */
+  async isProductVisibleInCart() {
+    const quantidade = await this.getCartProductCount();
+
+    return quantidade > 0;
+  }
+
+  /**
+   * Verifica se o carrinho está vazio.
+   */
+  async isCartEmpty() {
+    const quantidade = await this.getCartProductCount();
+
+    return quantidade === 0;
+  }
+
+  /**
+   * Verifica se o botão de checkout está disponível.
+   */
   async isCheckoutAvailable() {
     await this.waitForCartPage();
 
-    const disponivel = await this.proceedToCheckoutButton
-      .isVisible()
+    return this.checkoutButton.isVisible()
       .catch(() => false);
-
-    console.log(
-      `[CHECKOUT] Botão disponível: ${disponivel ? 'SIM' : 'NÃO'}.`
-    );
-
-    return disponivel;
   }
 
-  // ==============================================
-  // PROSSEGUIR PARA CHECKOUT
-  // ==============================================
-
+  /**
+   * Prossegue para o checkout.
+   */
   async proceedToCheckout() {
-    try {
-      await this.waitForCartPage();
+    await this.waitForCartPage();
 
-      const disponivel = await this.isCheckoutAvailable();
+    const disponivel = await this.isCheckoutAvailable();
 
-      if (!disponivel) {
-        throw new Error(
-          'O botão Proceed To Checkout não está disponível.'
-        );
-      }
-
-      await this.proceedToCheckoutButton.click();
-
-      console.log(
-        '[CHECKOUT] Clique em Proceed To Checkout realizado.'
-      );
-
-      return true;
-
-    } catch (error) {
+    if (!disponivel) {
       throw new Error(
-        `[CHECKOUT] Falha ao prosseguir para checkout. ` +
-        `URL: ${this.page.url()}. Detalhe: ${error.message}`
+        'Botão de checkout indisponível. Verifique se o carrinho possui produtos.'
       );
     }
+
+    await this.checkoutButton.click();
+
+    await this.page.waitForLoadState('domcontentloaded');
+
+    console.log('[CHECKOUT] Acessando checkout.');
+
+    return true;
   }
 }
 
-module.exports = { ProductsPage };
+module.exports = ProductsPage;

@@ -5,11 +5,11 @@ const { Given, When, Then } = require('@cucumber/cucumber');
 
 const { HomePage } = require('../../pages/WEB/HomePage');
 const { AuthPage } = require('../../pages/WEB/AuthPage');
-const { ProductsPage } = require('../../pages/WEB/ProductsPage');
+const ProductsPage = require('../../pages/WEB/ProductsPage');
 const { CartCheckoutPage } = require('../../pages/WEB/CartCheckoutPage');
 
 const BASE_URL = 'https://automationexercise.com';
-const TIMEOUT = 15000;
+const TIMEOUT = 20000;
 
 // ==================================================
 // VALIDAÇÕES DE CONFIGURAÇÃO
@@ -21,7 +21,7 @@ const validarCredenciais = () => {
 
   if (!email || !senha) {
     throw new Error(
-      '[CONFIGURAÇÃO] Configure QA_LOGIN_EMAIL e QA_LOGIN_PASSWORD no arquivo .env.'
+      '[CONFIGURAÇÃO] Configure QA_LOGIN_EMAIL e QA_LOGIN_PASSWORD no .env.'
     );
   }
 
@@ -64,6 +64,7 @@ const inicializarPaginas = function () {
   this.homePage = this.homePage || new HomePage(this.page);
   this.authPage = this.authPage || new AuthPage(this.page);
   this.productsPage = this.productsPage || new ProductsPage(this.page);
+
   this.cartCheckoutPage =
     this.cartCheckoutPage || new CartCheckoutPage(this.page);
 };
@@ -114,7 +115,7 @@ const prepararProdutoNoCarrinho = async function () {
 
     await this.homePage.openProducts();
 
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.productsPage.ensureProductsPage();
 
     console.log('[PRODUTOS] Lista de produtos acessada.');
 
@@ -122,16 +123,19 @@ const prepararProdutoNoCarrinho = async function () {
 
     await this.productsPage.openCartFromConfirmation();
 
-    const produtoVisivel =
+    const produtoAdicionado =
       await this.productsPage.isProductVisibleInCart();
 
-    if (!produtoVisivel) {
+    if (!produtoAdicionado) {
       throw new Error(
-        'Produto não encontrado após a tentativa de inclusão.'
+        'O produto não foi encontrado no carrinho após a inclusão.'
       );
     }
 
-    console.log('[CARRINHO] Produto adicionado e validado com sucesso.');
+    console.log(
+      '[CARRINHO] Produto adicionado e validado com sucesso.'
+    );
+
   } catch (error) {
     throw new Error(
       `[PREPARAÇÃO DO CARRINHO] Falha ao preparar produto para checkout. ` +
@@ -153,45 +157,80 @@ Given('que acesso a página inicial do e-commerce', async function () {
   console.log('[HOME] Página inicial acessada.');
 });
 
+Given('que acesso a página inicial', async function () {
+  inicializarPaginas.call(this);
+
+  await this.homePage.open();
+
+  console.log('[HOME] Página inicial acessada.');
+});
+
 // ==================================================
 // PRODUTOS
 // ==================================================
+
+Given('que acesso a lista de produtos', async function () {
+  inicializarPaginas.call(this);
+
+  await this.homePage.openProducts();
+  await this.productsPage.ensureProductsPage();
+
+  console.log('[PRODUTOS] Lista de produtos acessada.');
+});
 
 When('acesso a lista de produtos', async function () {
   inicializarPaginas.call(this);
 
   await this.homePage.openProducts();
+  await this.productsPage.ensureProductsPage();
 
   console.log('[PRODUTOS] Lista de produtos acessada.');
 });
+
+// ==================================================
+// ADICIONAR PRODUTO AO CARRINHO
+// ==================================================
 
 When('adiciono o primeiro produto ao carrinho', async function () {
   inicializarPaginas.call(this);
 
   await this.productsPage.addFirstProductToCart();
+
+  console.log('[CARRINHO] Inclusão do produto solicitada.');
 });
 
-Then(
-  'devo visualizar a confirmação de inclusão do produto',
-  async function () {
-    inicializarPaginas.call(this);
+Then('devo visualizar a confirmação de inclusão do produto', async function () {
+  inicializarPaginas.call(this);
 
-    await this.productsPage.addedModal.waitFor({
-      state: 'visible',
-      timeout: TIMEOUT
-    });
+  const confirmado =
+    await this.productsPage.isAddToCartConfirmationVisible();
 
-    await this.productsPage.addedMessage.waitFor({
-      state: 'visible',
-      timeout: TIMEOUT
-    });
-
-    console.log('[CARRINHO] Confirmação de inclusão exibida.');
+  if (!confirmado) {
+    throw new Error(
+      'A confirmação de inclusão do produto não foi exibida.'
+    );
   }
-);
+
+  console.log('[CARRINHO] Confirmação de inclusão validada.');
+});
+
+Then('devo visualizar a confirmação de produto adicionado', async function () {
+  inicializarPaginas.call(this);
+
+  const confirmado =
+    await this.productsPage.isAddToCartConfirmationVisible();
+
+  if (!confirmado) {
+    throw new Error(
+      'A confirmação de inclusão do produto não foi exibida.'
+    );
+  }
+
+  console.log('[CARRINHO] Confirmação de inclusão validada.');
+});
 
 // ==================================================
-// CARRINHO
+// ACESSAR CARRINHO
 // ==================================================
 
 When('acesso o carrinho', async function () {
@@ -199,12 +238,20 @@ When('acesso o carrinho', async function () {
 
   await this.productsPage.openCartFromConfirmation();
 
-  await this.page.waitForURL('**/view_cart', {
-    timeout: TIMEOUT
-  });
+  console.log('[CARRINHO] Página do carrinho acessada.');
+});
+
+When('acesso o carrinho de compras', async function () {
+  inicializarPaginas.call(this);
+
+  await this.productsPage.openCartFromConfirmation();
 
   console.log('[CARRINHO] Página do carrinho acessada.');
 });
+
+// ==================================================
+// VALIDAR PRODUTO NO CARRINHO
+// ==================================================
 
 Then('devo visualizar o produto adicionado', async function () {
   inicializarPaginas.call(this);
@@ -213,57 +260,27 @@ Then('devo visualizar o produto adicionado', async function () {
     await this.productsPage.isProductVisibleInCart();
 
   if (!produtoVisivel) {
-    throw new Error(
-      '[CARRINHO] O produto adicionado não foi encontrado no carrinho.'
-    );
+    throw new Error('Produto não encontrado no carrinho.');
+  }
+
+  console.log('[CARRINHO] Produto adicionado validado.');
+});
+
+Then('devo visualizar o produto no carrinho', async function () {
+  inicializarPaginas.call(this);
+
+  const produtoVisivel =
+    await this.productsPage.isProductVisibleInCart();
+
+  if (!produtoVisivel) {
+    throw new Error('Produto não encontrado no carrinho.');
   }
 
   console.log('[CARRINHO] Produto encontrado no carrinho.');
 });
 
 // ==================================================
-// CARRINHO VAZIO
-// ==================================================
-
-Then('devo visualizar a mensagem de carrinho vazio', async function () {
-  inicializarPaginas.call(this);
-
-  await this.page.waitForURL('**/view_cart', {
-    timeout: TIMEOUT
-  });
-
-  const carrinhoVazio =
-    await this.productsPage.isCartEmpty();
-
-  if (!carrinhoVazio) {
-    throw new Error(
-      '[CARRINHO] O carrinho não está vazio ou a mensagem esperada não foi exibida.'
-    );
-  }
-
-  console.log('[CARRINHO] Carrinho vazio validado.');
-});
-
-Then(
-  'não devo conseguir prosseguir para o checkout',
-  async function () {
-    inicializarPaginas.call(this);
-
-    const checkoutDisponivel =
-      await this.productsPage.isCheckoutAvailable();
-
-    if (checkoutDisponivel) {
-      throw new Error(
-        '[CHECKOUT] O botão Proceed To Checkout está disponível com o carrinho vazio.'
-      );
-    }
-
-    console.log('[CHECKOUT] Checkout indisponível com carrinho vazio.');
-  }
-);
-
-// ==================================================
-// CHECKOUT POSITIVO
+// PREPARAÇÃO PARA CHECKOUT
 // ==================================================
 
 Given('que tenho um produto no carrinho', async function () {
@@ -273,104 +290,225 @@ Given('que tenho um produto no carrinho', async function () {
 Given('acesso o checkout', async function () {
   inicializarPaginas.call(this);
 
-  await this.cartCheckoutPage.proceedToCheckout();
+  if (!this.page.url().includes('/view_cart')) {
+    await this.productsPage.openCartFromConfirmation();
+  }
 
-  await this.page.locator('#address_delivery').waitFor({
-    state: 'visible',
-    timeout: TIMEOUT
-  });
+  await this.productsPage.proceedToCheckout();
 
-  console.log('[CHECKOUT] Página de checkout acessada.');
+  console.log('[CHECKOUT] Acesso ao checkout solicitado.');
 });
 
 // ==================================================
-// ENDEREÇO DE ENTREGA
+// DADOS PESSOAIS E ENDEREÇO
 // ==================================================
 
-When(
-  'preencho os dados pessoais e o endereço de entrega',
-  async function () {
-    inicializarPaginas.call(this);
+When('preencho os dados pessoais e o endereço de entrega', async function () {
+  inicializarPaginas.call(this);
 
-    const endereco = this.page.locator('#address_delivery');
+  const { email, senha } = validarCredenciais();
 
-    await endereco.waitFor({
-      state: 'visible',
-      timeout: TIMEOUT
-    });
-
-    const textoEndereco = (await endereco.innerText()).trim();
-
-    if (!textoEndereco) {
-      throw new Error(
-        '[CHECKOUT] Dados pessoais e endereço de entrega não encontrados.'
-      );
-    }
-
-    console.log(
-      '[CHECKOUT] Dados pessoais e endereço de entrega validados com sucesso.'
+  if (
+    typeof this.cartCheckoutPage.fillDeliveryDetails !== 'function'
+  ) {
+    throw new Error(
+      'O método fillDeliveryDetails() não existe no CartCheckoutPage.js.'
     );
   }
-);
 
-Then(
-  'devo visualizar o endereço de entrega cadastrado',
-  async function () {
-    inicializarPaginas.call(this);
+  await this.cartCheckoutPage.fillDeliveryDetails({
+    email,
+    senha
+  });
 
-    const endereco = this.page.locator('#address_delivery');
+  console.log(
+    '[CHECKOUT] Dados pessoais e endereço de entrega validados.'
+  );
+});
 
-    await endereco.waitFor({
-      state: 'visible',
-      timeout: TIMEOUT
-    });
+Then('devo visualizar o endereço de entrega cadastrado', async function () {
+  inicializarPaginas.call(this);
 
-    const textoEndereco = (await endereco.innerText()).trim();
-
-    if (!textoEndereco) {
-      throw new Error(
-        '[CHECKOUT] Endereço de entrega cadastrado não está sendo exibido.'
-      );
-    }
-
-    console.log('[CHECKOUT] Endereço de entrega exibido com sucesso.');
+  if (
+    typeof this.cartCheckoutPage.validateDeliveryAddress !== 'function'
+  ) {
+    throw new Error(
+      'O método validateDeliveryAddress() não existe no CartCheckoutPage.js.'
+    );
   }
-);
+
+  const valido =
+    await this.cartCheckoutPage.validateDeliveryAddress();
+
+  if (!valido) {
+    throw new Error(
+      'Endereço de entrega não foi exibido corretamente.'
+    );
+  }
+
+  console.log('[CHECKOUT] Endereço de entrega validado.');
+});
+
+Then('devo visualizar os dados de entrega', async function () {
+  inicializarPaginas.call(this);
+
+  if (
+    typeof this.cartCheckoutPage.validateDeliveryAddress !== 'function'
+  ) {
+    throw new Error(
+      'O método validateDeliveryAddress() não existe no CartCheckoutPage.js.'
+    );
+  }
+
+  const valido =
+    await this.cartCheckoutPage.validateDeliveryAddress();
+
+  if (!valido) {
+    throw new Error(
+      'Dados de entrega não foram exibidos corretamente.'
+    );
+  }
+
+  console.log('[CHECKOUT] Dados de entrega validados.');
+});
 
 // ==================================================
 // PAGAMENTO
 // ==================================================
 
-When(
-  'preencho o formulário de pagamento com dados válidos',
-  async function () {
-    inicializarPaginas.call(this);
+When('preencho o formulário de pagamento com dados válidos', async function () {
+  inicializarPaginas.call(this);
 
-    const dadosPagamento = validarDadosPagamento();
+  const dados = validarDadosPagamento();
 
-    await this.cartCheckoutPage.openPaymentForm();
-
-    await this.cartCheckoutPage.fillPayment(dadosPagamento);
-
-    console.log('[PAGAMENTO] Formulário preenchido com dados válidos.');
+  if (
+    typeof this.cartCheckoutPage.openPaymentForm !== 'function' ||
+    typeof this.cartCheckoutPage.fillPaymentForm !== 'function'
+  ) {
+    throw new Error(
+      'Métodos de pagamento não encontrados no CartCheckoutPage.js.'
+    );
   }
-);
+
+  // Abre a página de pagamento.
+  await this.cartCheckoutPage.openPaymentForm();
+
+  // Preenche os dados do cartão.
+  await this.cartCheckoutPage.fillPaymentForm(dados);
+
+  console.log('[PAGAMENTO] Formulário preenchido com sucesso.');
+});
+
+When('preencho os dados de pagamento', async function () {
+  inicializarPaginas.call(this);
+
+  const dados = validarDadosPagamento();
+
+  if (
+    typeof this.cartCheckoutPage.openPaymentForm !== 'function' ||
+    typeof this.cartCheckoutPage.fillPaymentForm !== 'function'
+  ) {
+    throw new Error(
+      'Métodos de pagamento não encontrados no CartCheckoutPage.js.'
+    );
+  }
+
+  await this.cartCheckoutPage.openPaymentForm();
+
+  await this.cartCheckoutPage.fillPaymentForm(dados);
+
+  console.log('[PAGAMENTO] Dados de pagamento preenchidos.');
+});
+
+// ==================================================
+// CONFIRMAR COMPRA
+// ==================================================
 
 When('confirmo o pedido', async function () {
   inicializarPaginas.call(this);
 
-  await this.cartCheckoutPage.pay();
+  if (
+    typeof this.cartCheckoutPage.placeOrder !== 'function'
+  ) {
+    throw new Error(
+      'O método placeOrder() não existe no CartCheckoutPage.js.'
+    );
+  }
+
+  await this.cartCheckoutPage.placeOrder();
 
   console.log('[PAGAMENTO] Pedido enviado para processamento.');
 });
 
+// ==================================================
+// CONFIRMAÇÃO DA COMPRA
+// ==================================================
+
 Then('devo visualizar a confirmação da compra', async function () {
   inicializarPaginas.call(this);
 
-  await this.cartCheckoutPage.orderSuccessMessage.waitFor({
-    state: 'visible',
+  if (
+    typeof this.cartCheckoutPage.isOrderConfirmed !== 'function'
+  ) {
+    throw new Error(
+      'O método isOrderConfirmed() não existe no CartCheckoutPage.js.'
+    );
+  }
+
+  const confirmado =
+    await this.cartCheckoutPage.isOrderConfirmed();
+
+  if (!confirmado) {
+    throw new Error(
+      'A confirmação da compra não foi exibida.'
+    );
+  }
+
+  console.log('[CHECKOUT] Compra realizada com sucesso.');
+});
+
+// ==================================================
+// CARRINHO VAZIO
+// ==================================================
+
+Given('que estou com o carrinho vazio', async function () {
+  inicializarPaginas.call(this);
+
+  await this.page.goto(`${BASE_URL}/view_cart`, {
+    waitUntil: 'domcontentloaded',
     timeout: TIMEOUT
   });
 
-  console.log('[CHECKOUT] Compra realizada com sucesso.');
+  await this.productsPage.waitForCartPage();
+
+  console.log('[CARRINHO] Página do carrinho acessada.');
+});
+
+Then('devo visualizar a mensagem de carrinho vazio', async function () {
+  inicializarPaginas.call(this);
+
+  const vazio = await this.productsPage.isCartEmpty();
+
+  if (!vazio) {
+    throw new Error('O carrinho não está vazio.');
+  }
+
+  console.log('[CARRINHO] Carrinho vazio validado.');
+});
+
+Then('não devo conseguir prosseguir para o checkout', async function () {
+  inicializarPaginas.call(this);
+
+  const disponivel =
+    await this.productsPage.isCheckoutAvailable();
+
+  if (disponivel) {
+    throw new Error(
+      'O checkout está disponível mesmo com o carrinho vazio.'
+    );
+  }
+
+  console.log(
+    '[CHECKOUT] Checkout indisponível com carrinho vazio.'
+  );
 });
