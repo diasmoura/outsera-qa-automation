@@ -1,0 +1,39 @@
+
+{
+  "name": "outsera-qa-automation",
+  "version": "1.0.0",
+  "description": "Automacao de testes de API e Web com Cucumber, Playwright e BDD",
+  "main": "index.js",
+  "scripts": {
+    "test:bdd": "cucumber-js features --require \"./support/**/*.js\" --require \"./step-definitions/**/*.js\" --format progress",
+    "test:login": "cucumber-js features/WEB/login.feature --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress",
+    "test:checkout": "cucumber-js features/WEB/ecommerce-checkout.feature --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress",
+    "test:web": "cucumber-js features/WEB --require \"./support/**/*.js\" --require \"./step-definitions/WEB/**/*.js\" --format progress",
+    "test:api": "cucumber-js features/API --require \"./step-definitions/API/**/*.js\" --format progress",
+    "test:playwright": "playwright test",
+    "test:all": "npm run test:web && npm run test:api && npm run test:playwright"
+  },
+  "keywords": [
+    "qa",
+    "automacao",
+    "testes",
+    "api",
+    "web",
+    "playwright",
+    "cucumber",
+    "bdd"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@cucumber/cucumber": "^13.3.0",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
+    "multiple-cucumber-html-reporter": "^4.5.0",
+    "playwright": "^1.64.1"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.9"
+  }
+}
