@@ -1,0 +1,17 @@
+
+> outsera-qa-automation@1.0.0 test:api
+> cucumber-js --format progress --format json:reports/cucumber-api-report.json features/API
+
+◇ injected env (8) from .env
+◇ injected env (0) from .env
+◇ injected env (0) from .env
+[HOOK] Cenário API: navegador não será iniciado
+........[HOOK] Cenário API: navegador não será iniciado
+......[HOOK] Cenário API: navegador não será iniciado
+........[HOOK] Cenário API: navegador não será iniciado
+........[HOOK] Cenário API: navegador não será iniciado
+......
+
+5 scenarios (5 passed)
+36 steps (36 passed)
+0m 0.896s (0m 0.854s executing your code)

@@ -12,7 +12,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1777899
+              "duration": 856299
             },
             "keyword": "Before",
             "hidden": true
@@ -20,7 +20,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 121857300
+              "duration": 127498699
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -33,7 +33,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 3508399
+              "duration": 3459299
             },
             "arguments": [],
             "keyword": "Então ",
@@ -46,7 +46,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 983300
+              "duration": 871499
             },
             "arguments": [],
             "keyword": "E ",
@@ -59,7 +59,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1653399
+              "duration": 1607999
             },
             "arguments": [],
             "keyword": "E ",
@@ -72,7 +72,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 220699
+              "duration": 206199
             },
             "keyword": "After",
             "hidden": true
@@ -80,7 +80,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 189399
+              "duration": 113299
             },
             "keyword": "After",
             "hidden": true
@@ -88,7 +88,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 5321599
+              "duration": 3268100
             },
             "keyword": "After",
             "hidden": true
@@ -107,7 +107,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 548600
+              "duration": 285899
             },
             "keyword": "Before",
             "hidden": true
@@ -115,7 +115,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 83217200
+              "duration": 66586600
             },
             "arguments": [],
             "keyword": "Quando ",
@@ -128,7 +128,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 880400
+              "duration": 689200
             },
             "arguments": [],
             "keyword": "Então ",
@@ -141,7 +141,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 163900
+              "duration": 148800
             },
             "keyword": "After",
             "hidden": true
@@ -149,7 +149,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 130599
+              "duration": 83700
             },
             "keyword": "After",
             "hidden": true
@@ -157,7 +157,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1793599
+              "duration": 1627300
             },
             "keyword": "After",
             "hidden": true
@@ -187,7 +187,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 368000
+              "duration": 157300
             },
             "keyword": "Before",
             "hidden": true
@@ -195,59 +195,59 @@
           {
             "result": {
               "status": "passed",
-              "duration": 209289400
+              "duration": 221452099
             },
             "arguments": [],
             "keyword": "Quando ",
             "line": 7,
             "name": "enviar uma requisição POST para criar um usuário",
             "match": {
-              "location": "step-definitions\\API\\api-users.steps.js:17"
+              "location": "step-definitions\\API\\api-users.steps.js:42"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 853200
+              "duration": 852600
             },
             "arguments": [],
             "keyword": "Então ",
             "line": 8,
             "name": "a resposta CRUD da API deve ter status 201",
             "match": {
-              "location": "step-definitions\\API\\api-users.steps.js:86"
+              "location": "step-definitions\\API\\api-users.steps.js:144"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 804899
+              "duration": 724799
             },
             "arguments": [],
             "keyword": "E ",
             "line": 9,
             "name": "o header Content-Type deve indicar JSON",
             "match": {
-              "location": "step-definitions\\API\\api-users.steps.js:78"
+              "location": "step-definitions\\API\\api-users.steps.js:151"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 897699
+              "duration": 1495799
             },
             "arguments": [],
             "keyword": "E ",
             "line": 10,
             "name": "o nome do usuário retornado deve ser \"Lucas QA\"",
             "match": {
-              "location": "step-definitions\\API\\api-users.steps.js:71"
+              "location": "step-definitions\\API\\api-users.steps.js:159"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 109600
+              "duration": 535399
             },
             "keyword": "After",
             "hidden": true
@@ -255,7 +255,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 2331100
+              "duration": 2093099
             },
             "keyword": "After",
             "hidden": true
@@ -263,7 +263,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 103400
+              "duration": 110100
             },
             "keyword": "After",
             "hidden": true
@@ -282,7 +282,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 332499
+              "duration": 282400
             },
             "keyword": "Before",
             "hidden": true
@@ -290,59 +290,59 @@
           {
             "result": {
               "status": "passed",
-              "duration": 472927199
+              "duration": 217562899
             },
             "arguments": [],
             "keyword": "Quando ",
             "line": 13,
             "name": "enviar uma requisição PUT para atualizar o usuário de ID 1",
             "match": {
-              "location": "step-definitions\\API\\api-users.steps.js:35"
+              "location": "step-definitions\\API\\api-users.steps.js:90"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 803899
+              "duration": 757800
             },
             "arguments": [],
             "keyword": "Então ",
             "line": 14,
             "name": "a resposta CRUD da API deve ter status 200",
             "match": {
-              "location": "step-definitions\\API\\api-users.steps.js:86"
+              "location": "step-definitions\\API\\api-users.steps.js:144"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 852199
+              "duration": 540899
             },
             "arguments": [],
             "keyword": "E ",
             "line": 15,
             "name": "o header Content-Type deve indicar JSON",
             "match": {
-              "location": "step-definitions\\API\\api-users.steps.js:78"
+              "location": "step-definitions\\API\\api-users.steps.js:151"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 989900
+              "duration": 959099
             },
             "arguments": [],
             "keyword": "E ",
             "line": 16,
             "name": "o nome do usuário retornado deve ser \"Lucas QA Atualizado\"",
             "match": {
-              "location": "step-definitions\\API\\api-users.steps.js:71"
+              "location": "step-definitions\\API\\api-users.steps.js:159"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 117999
+              "duration": 109500
             },
             "keyword": "After",
             "hidden": true
@@ -350,7 +350,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 2269999
+              "duration": 1874400
             },
             "keyword": "After",
             "hidden": true
@@ -358,7 +358,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 114399
+              "duration": 71899
             },
             "keyword": "After",
             "hidden": true
@@ -377,7 +377,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 369400
+              "duration": 256900
             },
             "keyword": "Before",
             "hidden": true
@@ -385,33 +385,33 @@
           {
             "result": {
               "status": "passed",
-              "duration": 205828600
+              "duration": 195001999
             },
             "arguments": [],
             "keyword": "Quando ",
             "line": 19,
             "name": "enviar uma requisição DELETE para o usuário de ID 1",
             "match": {
-              "location": "step-definitions\\API\\api-users.steps.js:57"
+              "location": "step-definitions\\API\\api-users.steps.js:120"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 1240699
+              "duration": 774000
             },
             "arguments": [],
             "keyword": "Então ",
             "line": 20,
             "name": "a resposta CRUD da API deve ter status 200",
             "match": {
-              "location": "step-definitions\\API\\api-users.steps.js:86"
+              "location": "step-definitions\\API\\api-users.steps.js:144"
             }
           },
           {
             "result": {
               "status": "passed",
-              "duration": 185100
+              "duration": 85599
             },
             "keyword": "After",
             "hidden": true
@@ -419,7 +419,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 1635800
+              "duration": 1520599
             },
             "keyword": "After",
             "hidden": true
@@ -427,7 +427,7 @@
           {
             "result": {
               "status": "passed",
-              "duration": 70699
+              "duration": 111199
             },
             "keyword": "After",
             "hidden": true
