@@ -3,15 +3,16 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
 ![Playwright](https://img.shields.io/badge/Playwright-Automation-green)
 ![Cucumber](https://img.shields.io/badge/Cucumber-BDD-brightgreen)
-![Tests](https://img.shields.io/badge/Tests-37%20Passed-success)
+![BDD Tests](https://img.shields.io/badge/BDD-13%20Passed-success)
+![CI](https://img.shields.io/badge/GitHub%20Actions-Success-brightgreen)
 
 Projeto de automação de testes Web e API desenvolvido como parte de um desafio técnico de QA Automation, utilizando JavaScript, Playwright e Cucumber.
 
-A solução tem como objetivo validar funcionalidades e serviços REST por meio de cenários automatizados, aplicando boas práticas de desenvolvimento, reutilização de código e organização dos testes.
+A solução valida funcionalidades Web e serviços REST por meio de cenários automatizados, aplicando boas práticas de desenvolvimento, reutilização de código, organização dos testes e integração contínua.
 
 ## 🎯 Objetivo
 
-Desenvolver uma estrutura de automação capaz de validar funcionalidades Web e serviços REST, contemplando cenários positivos e negativos, além de execução cross-browser e integração contínua.
+Desenvolver uma estrutura de automação capaz de validar funcionalidades Web e serviços REST, contemplando cenários positivos e negativos, execução cross-browser e integração contínua.
 
 ## 🛠️ Tecnologias utilizadas
 
@@ -29,41 +30,41 @@ Desenvolver uma estrutura de automação capaz de validar funcionalidades Web e 
 
 ```text
 outsera-qa-automation/
-│
+├── .github/
+│   └── workflows/
+│       └── ci.yml
 ├── features/
 │   ├── WEB/
 │   │   ├── login.feature
 │   │   └── ecommerce-checkout.feature
-│   │
 │   └── API/
 │       ├── api-users.feature
 │       └── api-consulta-users.feature
-│
 ├── pages/
 │   └── WEB/
 │       ├── HomePage.js
 │       ├── AuthPage.js
 │       ├── ProductsPage.js
 │       └── CartCheckoutPage.js
-│
 ├── step-definitions/
 │   ├── WEB/
 │   └── API/
-│
 ├── support/
 │   └── hooks.js
-│
 ├── tests/
-│   └── api.spec.js
-│
 ├── reports/
 │   └── evidences/
-│
-├── .env
-├── .gitignore
+├── cucumber-report.js
+├── playwright.config.js
+├── cucumber.js
 ├── package.json
+├── package-lock.json
+├── .env.example
+├── .gitignore
 └── README.md
 ```
+
+*Estrutura resumida. Consulte o repositório para visualizar todos os arquivos.*
 
 ## 🧪 Cobertura dos testes
 
@@ -83,6 +84,7 @@ outsera-qa-automation/
 
 - GET: consulta de usuário existente.
 - GET: consulta de usuário inexistente.
+- GET: validação de rota inexistente.
 - POST: criação de usuário.
 - POST: validação de campos obrigatórios.
 - POST: validação de payload malformado.
@@ -90,7 +92,7 @@ outsera-qa-automation/
 - DELETE: exclusão de usuário.
 - Validação de método HTTP inválido.
 
-**Observação:** os testes utilizam a API JSONPlaceholder, que é um serviço de demonstração. As operações de criação, atualização e exclusão simulam as respostas HTTP, sem persistir efetivamente as alterações.
+**Observação:** os testes utilizam a API JSONPlaceholder, um serviço de demonstração. As operações de criação, atualização e exclusão simulam respostas HTTP, sem persistir efetivamente as alterações.
 
 ### Limitações identificadas no Checkout
 
@@ -99,32 +101,52 @@ Durante a implementação dos testes E2E, foram identificadas limitações no am
 - **Cartão inválido:** não foi possível implementar uma validação negativa confiável de rejeição do cartão.
 - **Endereço incompleto:** o checkout utiliza o endereço previamente cadastrado na conta, não oferecendo um fluxo adequado para validar essa condição.
 
-Esses cenários foram documentados como não implementados, evitando validações artificiais ou resultados que não representem o comportamento real da aplicação.
+Esses cenários foram documentados como limitações do ambiente, evitando validações artificiais.
 
 ## 🌐 Execução Cross-browser
 
-Os testes Playwright contemplam os seguintes navegadores:
+A configuração do Playwright contempla três motores de navegador:
 
-- Chromium
-- Firefox
-- WebKit
+- **Chromium:** navegador baseado em Chromium.
+- **Firefox:** navegador Firefox.
+- **WebKit:** motor utilizado pelo Safari.
 
-Essa abordagem amplia a cobertura de compatibilidade e permite identificar possíveis diferenças de comportamento entre navegadores.
+O arquivo `playwright.config.js` também contempla:
+
+- Execução paralela dos testes.
+- Duas tentativas adicionais em caso de falha no CI.
+- Um worker durante a execução no CI.
+- Geração de relatório HTML.
+- Captura de trace na primeira repetição.
 
 ## 📊 Resultados da execução
 
-Resultados registrados em 29/10/2026:
+### Execução local BDD — 30/10/2026
 
-| Suíte | Resultado |
-|---|---:|
-| BDD Web — Cucumber | 8/8 aprovados |
-| BDD API — Cucumber | 5/5 aprovados |
-| Playwright Cross-browser | 24/24 aprovados |
-| **Total** | **37/37 aprovados** |
+| Suíte | Cenários aprovados | Falhas |
+|---|---:|---:|
+| BDD Web — Cucumber | 8 | 0 |
+| BDD API — Cucumber | 5 | 0 |
+| **Total BDD** | **13** | **0** |
 
-**Taxa de aprovação: 100% na execução registrada.**
+**Taxa de aprovação BDD: 100%.**
 
-Os resultados representam a execução registrada dos testes, não uma garantia de ausência de defeitos na aplicação.
+Os resultados acima correspondem à execução local registrada em 30/10/2026.
+
+### Integração contínua
+
+A execução #6 do GitHub Actions, commit `e36b7cb`, na branch `main`, terminou com sucesso.
+
+Jobs concluídos:
+
+- Web BDD Tests.
+- API BDD Tests.
+- Playwright Tests.
+- Generate Consolidated Report.
+
+Os resultados detalhados e os relatórios podem ser consultados nos artefatos da execução no GitHub Actions.
+
+A quantidade individual de testes Playwright não é apresentada nesta tabela porque o total da execução #6 ainda não foi detalhado nesta documentação.
 
 ## ⚙️ Instalação
 
@@ -175,7 +197,7 @@ QA_CARD_EXPIRY_YEAR=2028
 
 Utilize somente dados de teste.
 
-**Importante:** não compartilhe credenciais reais no GitHub. O arquivo `.env` deve estar incluído no `.gitignore`.
+**Importante:** não compartilhe credenciais reais no GitHub. O arquivo `.env` deve estar incluído no `.gitignore`. O arquivo `.env.example` pode conter apenas valores fictícios ou campos de exemplo.
 
 ## ▶️ Execução dos testes
 
@@ -203,21 +225,37 @@ Executar toda a suíte:
 npm run test:all
 ```
 
-## 🔄 Integração contínua — CI/CD
+Executar testes Web e API e gerar o relatório HTML consolidado:
 
-O projeto utiliza GitHub Actions para automatizar a execução dos testes após alterações no repositório.
+```bash
+npm run test:report
+```
 
-O pipeline contempla etapas de:
+Executar toda a suíte e gerar o relatório Cucumber:
 
-- Execução dos testes BDD.
-- Execução dos testes Web.
-- Execução dos testes de API.
-- Execução dos testes Playwright.
-- Geração e disponibilização de relatórios e evidências como artefatos.
+```bash
+npm run test:all:report
+```
 
-## 📸 Evidências e relatórios
+Gerar novamente o relatório Cucumber:
 
-O projeto contempla captura automática de screenshots em caso de falhas nos cenários Web, facilitando a análise e a rastreabilidade dos resultados.
+```bash
+npm run report
+```
+
+## 📄 Relatórios e evidências
+
+O projeto gera relatórios separados para as suítes de automação:
+
+**Cucumber — Web e API**
+
+O relatório HTML consolidado é gerado em:
+
+```text
+reports/html/index.html
+```
+
+**Playwright**
 
 Para visualizar o relatório HTML do Playwright:
 
@@ -225,7 +263,25 @@ Para visualizar o relatório HTML do Playwright:
 npx playwright show-report
 ```
 
-Os relatórios e evidências são armazenados na pasta `reports/` e disponibilizados como artefatos nas execuções do GitHub Actions, conforme configuração do pipeline.
+O relatório Playwright é disponibilizado separadamente do relatório consolidado Cucumber.
+
+O projeto também contempla captura automática de screenshots em caso de falhas nos cenários Web.
+
+Os relatórios e evidências são disponibilizados como artefatos nas execuções do GitHub Actions, conforme a configuração do pipeline.
+
+## 🔄 Integração contínua — CI/CD
+
+O projeto utiliza GitHub Actions para automatizar a execução dos testes após alterações no repositório.
+
+O pipeline contempla:
+
+- Execução dos testes BDD Web.
+- Execução dos testes BDD API.
+- Execução dos testes Playwright.
+- Geração do relatório consolidado Cucumber.
+- Disponibilização de relatórios e evidências como artefatos.
+
+A pipeline também permite acompanhar o resultado de cada etapa diretamente pelo GitHub Actions.
 
 ## ⭐ Diferenciais técnicos
 
@@ -239,6 +295,7 @@ Os relatórios e evidências são armazenados na pasta `reports/` e disponibiliz
 - Captura automática de evidências.
 - Scripts NPM para execução dos testes.
 - Integração contínua com GitHub Actions.
+- Geração de relatórios HTML.
 
 ## 👨‍💻 Considerações finais
 
