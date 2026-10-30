@@ -3,67 +3,78 @@ class HomePage {
   constructor(page) {
     this.page = page;
 
-    // Navegação principal
-    this.signupLoginLink = page.getByRole('link', {
-      name: /signup\s*\/\s*login/i
-    });
-
-    this.productsLink = page.getByRole('link', {
-      name: /products/i
-    });
-
-    this.cartLink = page.getByRole('link', {
-      name: /cart/i
-    });
-
-    this.homeLink = page.getByRole('link', {
-      name: /^home$/i
-    });
+    this.productsLink = page.locator('a[href="/products"]').first();
+    this.loginLink = page.locator('a[href="/login"]').first();
+    this.cartLink = page.locator('a[href="/view_cart"]').first();
   }
 
-  // Acessar página inicial
   async open() {
-    await this.page.goto(
-      'https://automationexercise.com/',
-      { waitUntil: 'domcontentloaded' }
-    );
-  }
-
-  // Acessar login
-  async openLogin() {
-    await this.signupLoginLink.waitFor({
-      state: 'visible'
+    await this.page.goto('https://automationexercise.com/', {
+      waitUntil: 'domcontentloaded',
+      timeout: 60000
     });
 
-    await this.signupLoginLink.click();
+    await this.productsLink.waitFor({
+      state: 'visible',
+      timeout: 30000
+    });
   }
 
-  // Acessar produtos
   async openProducts() {
     await this.productsLink.waitFor({
-      state: 'visible'
+      state: 'visible',
+      timeout: 30000
     });
 
     await this.productsLink.click();
+
+    await this.page.waitForURL('**/products', {
+      timeout: 30000
+    });
+
+    await this.page.locator(
+      '.features_items .product-image-wrapper'
+    ).first().waitFor({
+      state: 'visible',
+      timeout: 30000
+    });
   }
 
-  // Acessar carrinho
+  async openLogin() {
+    await this.loginLink.waitFor({
+      state: 'visible',
+      timeout: 30000
+    });
+
+    await this.loginLink.click();
+
+    await this.page.waitForURL('**/login', {
+      timeout: 30000
+    });
+
+    await this.page.getByText('Login to your account', {
+      exact: true
+    }).waitFor({
+      state: 'visible',
+      timeout: 30000
+    });
+  }
+
   async openCart() {
     await this.cartLink.waitFor({
-      state: 'visible'
+      state: 'visible',
+      timeout: 30000
     });
 
     await this.cartLink.click();
+
+    await this.page.waitForURL('**/view_cart', {
+      timeout: 30000
+    });
   }
 
-  // Voltar para Home
-  async returnHome() {
-    await this.homeLink.click();
-  }
-
-  // Validar página inicial
   async isHomeVisible() {
-    return await this.homeLink.isVisible();
+    return this.productsLink.isVisible().catch(() => false);
   }
 }
 
