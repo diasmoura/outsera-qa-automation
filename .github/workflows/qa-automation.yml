@@ -1,30 +1,27 @@
 
-name: QA Automation - CI/CD
+name: QA Automation Pipeline
 
 on:
   push:
-    branches:
-      - main
-      - master
-
+    branches: [main]
   pull_request:
-    branches:
-      - main
-      - master
-
+    branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  qa-automation:
-    name: Execute QA Tests
+  bdd-tests:
+    name: BDD Tests
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 24
           cache: npm
@@ -32,47 +29,146 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Create report directories
+      - name: Run BDD tests
         run: |
           mkdir -p reports/bdd
-          mkdir -p reports/html
+          npm run test:bdd
+
+      - name: Upload BDD results
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: bdd-results
+          path: reports/bdd/
+          if-no-files-found: warn
+
+  web-tests:
+    name: Web Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Web tests
+        run: npm run test:web
+
+      - name: Upload Web results
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: web-results
+          path: reports/
+          if-no-files-found: warn
+
+  api-tests:
+    name: API Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run API tests
+        run: npm run test:api
+
+      - name: Upload API results
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: api-results
+          path: reports/
+          if-no-files-found: warn
+
+  playwright-tests:
+    name: Playwright Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Execute BDD tests
-        id: bdd
-        continue-on-error: true
-        run: npm run test:bdd
-
-      - name: Execute Playwright tests
-        id: playwright
-        continue-on-error: true
+      - name: Run Playwright tests
         run: npm run test:playwright
 
-      - name: Generate HTML report
+      - name: Upload Playwright results
         if: always()
-        continue-on-error: true
-        run: npm run report
-
-      - name: Upload QA reports
-        if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
-          name: qa-automation-reports
+          name: playwright-results
           path: |
-            reports/
             playwright-report/
             test-results/
           if-no-files-found: warn
-          retention-days: 15
 
-      - name: Validate test results
+  report:
+    name: Generate Final Report
+    runs-on: ubuntu-latest
+    needs:
+      - bdd-tests
+      - web-tests
+      - api-tests
+      - playwright-tests
+    if: always()
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download BDD results
+        uses: actions/download-artifact@v6
+        with:
+          name: bdd-results
+          path: reports/bdd
+        continue-on-error: true
+
+      - name: Generate HTML report
+        run: npm run report
+
+      - name: Upload final report
         if: always()
-        run: |
-          if [ "${{ steps.bdd.outcome }}" != "success" ] || [ "${{ steps.playwright.outcome }}" != "success" ]; then
-            echo "Falha na execução dos testes QA."
-            exit 1
-          fi
-
-          echo "Todos os testes foram aprovados!"
+        uses: actions/upload-artifact@v6
+        with:
+          name: qa-automation-final-report
+          path: reports/html/
+          if-no-files-found: warn
+          retention-days: 15
