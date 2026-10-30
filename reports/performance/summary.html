@@ -1,0 +1,28 @@
+
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <title>Relatório de Performance - K6</title>
+    <style>
+      body { font-family: Arial; margin: 40px; }
+      h1 { color: #263b5e; }
+      table { border-collapse: collapse; width: 100%; }
+      td, th { border: 1px solid #ddd; padding: 10px; }
+      th { background: #eee; text-align: left; }
+    </style>
+  </head>
+  <body>
+    <h1>Relatório de Teste de Performance - K6</h1>
+    <p>Endpoint: https://jsonplaceholder.typicode.com/users</p>
+    <table>
+      <tr><th>Métrica</th><th>Resultado</th></tr>
+      <tr><td>Tempo médio</td><td>134.10388425957134 ms</td></tr>
+      <tr><td>Percentil 95 (p95)</td><td>528.062425 ms</td></tr>
+      <tr><td>Percentil 99 (p99)</td><td>N/A ms</td></tr>
+      <tr><td>Taxa de falhas HTTP</td><td>0.0003835826620636747</td></tr>
+      <tr><td>Taxa de checks aprovados</td><td>531626</td></tr>
+    </table>
+    <p>Os resultados detalhados estão no arquivo summary.json.</p>
+  </body>
+  </html>

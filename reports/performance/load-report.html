@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Relatório de Carga K6</title>
+<style>
+body { font-family: Arial; margin: 40px; color: #222; }
+h1 { color: #243b64; }
+table { border-collapse: collapse; width: 100%; max-width: 850px; }
+th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+th { background: #eee; }
+.note { margin-top: 25px; padding: 15px; background: #fff3cd; }
+</style>
+</head>
+<body>
+<h1>Relatório de Teste de Carga - K6</h1>
+
+<table>
+<tr><th>Métrica</th><th>Resultado</th></tr>
+<tr><td>Usuários virtuais máximos registrados</td><td>500</td></tr>
+<tr><td>Total de requisições</td><td>131548</td></tr>
+<tr><td>Requisições por segundo</td><td>157.01</td></tr>
+<tr><td>Tempo médio</td><td>0.95 ms</td></tr>
+<tr><td>Mediana</td><td>1.01 ms</td></tr>
+<tr><td>Percentil 90</td><td>1.69 ms</td></tr>
+<tr><td>Percentil 95</td><td>1.85 ms</td></tr>
+<tr><td>Tempo máximo</td><td>28.49 ms</td></tr>
+<tr><td>Falhas HTTP</td><td>0.00%</td></tr>
+<tr><td>Checks aprovados</td><td>394644</td></tr>
+<tr><td>Checks reprovados</td><td>0</td></tr>
+</table>
+
+<div class="note">
+<strong>Observação:</strong> teste executado localmente, com K6 e API
+na mesma máquina. Os resultados não representam uma medição isolada
+da capacidade de uma infraestrutura de produção.
+</div>
+</body>
+</html>
