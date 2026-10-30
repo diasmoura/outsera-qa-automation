@@ -1,5 +1,5 @@
 
-name: QA Automation Pipeline
+name: QA Automation - CI/CD Pipeline
 
 on:
   push:
@@ -149,6 +149,7 @@ jobs:
               echo "API disponível."
               exit 0
             fi
+
             echo "Aguardando API... tentativa $attempt"
             sleep 2
           done
@@ -243,11 +244,38 @@ jobs:
             echo "Nenhum relatório Cucumber disponível para consolidação."
           fi
 
+      - name: Prepare dashboard inputs
+        shell: bash
+        run: |
+          mkdir -p reports test-results
+
+          if [ -f reports/web/cucumber-web-report.json ]; then
+            cp reports/web/cucumber-web-report.json reports/cucumber-web-report.json
+          fi
+
+          if [ -f reports/api/cucumber-api-report.json ]; then
+            cp reports/api/cucumber-api-report.json reports/cucumber-api-report.json
+          fi
+
+          if [ -f reports/playwright/test-results/.last-run.json ]; then
+            cp reports/playwright/test-results/.last-run.json test-results/.last-run.json
+          fi
+
+          if [ -d reports/playwright/playwright-report ]; then
+            cp -R reports/playwright/playwright-report ./playwright-report
+          fi
+
+      - name: Generate QA dashboard
+        if: always()
+        run: node dashboard.js
+
       - name: Upload final reports
         if: always()
         uses: actions/upload-artifact@v6
         with:
           name: qa-automation-final-report
-          path: reports/
+          path: |
+            reports/
+            playwright-report/
           if-no-files-found: warn
           retention-days: 15
