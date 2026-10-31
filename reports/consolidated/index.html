@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard QA - Outsera</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f5f9;
+  color: #243047;
+}
+
+header {
+  background: #172b4d;
+  color: white;
+  padding: 32px 6%;
+}
+
+header h1 { margin: 0 0 10px; }
+
+main {
+  max-width: 1150px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+h2 {
+  color: #243b64;
+  margin-top: 35px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.card, .panel {
+  background: white;
+  border-radius: 10px;
+  padding: 22px;
+  box-shadow: 0 2px 9px rgba(0,0,0,.06);
+}
+
+.card h3 { margin-top: 0; }
+
+.metric {
+  font-size: 27px;
+  font-weight: bold;
+  color: #243b64;
+}
+
+.success {
+  color: #16803c;
+  font-weight: bold;
+}
+
+.warning {
+  color: #a56b00;
+  font-weight: bold;
+}
+
+a {
+  color: #1769aa;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th, td {
+  text-align: left;
+  padding: 13px;
+  border-bottom: 1px solid #e5e8ef;
+}
+
+th { background: #e9edf5; }
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #667085;
+}
+
+@media (max-width: 600px) {
+  header { padding: 25px 20px; }
+  .metric { font-size: 23px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Dashboard de Qualidade - Outsera</h1>
+  <p>Visão consolidada dos testes automatizados Web, API e Performance</p>
+  <p>Gerado em 30/10/2026, 21:50:57</p>
+</header>
+
+<main>
+
+  <h2>Resumo das execuções</h2>
+
+  <section class="grid">
+
+    <article class="card">
+      <h3>Cenários BDD</h3>
+      <div class="metric">13</div>
+      <p>Web: 8</p>
+      <p>API: 5</p>
+    </article>
+
+    <article class="card">
+      <h3>Steps BDD</h3>
+      <div class="metric">104</div>
+      <p>Web: 68</p>
+      <p>API: 36</p>
+    </article>
+
+    <article class="card">
+      <h3>Playwright</h3>
+      <div class="metric">
+        24 / 24
+      </div>
+      <p class="success">
+        Todos os testes aprovados
+      </p>
+      <p>Testes instáveis: 0</p>
+    </article>
+
+    <article class="card">
+      <h3>Total funcional</h3>
+      <div class="metric">
+        37
+      </div>
+      <p class="success">
+        37 aprovados
+      </p>
+      <p class="success">
+        0 reprovados
+      </p>
+    </article>
+
+    <article class="card">
+      <h3>Taxa de aprovação</h3>
+      <div class="metric">
+        100,00%
+      </div>
+      <p>Considera BDD e Playwright</p>
+    </article>
+
+    <article class="card">
+      <h3>K6 Load</h3>
+      <div class="metric">
+        Aprovado
+      </div>
+      <p>200.871 requisições</p>
+    </article>
+
+  </section>
+
+  <h2>Detalhamento dos testes funcionais</h2>
+
+  <section class="panel">
+    <table>
+      <tr>
+        <th>Suíte</th>
+        <th>Total</th>
+        <th>Aprovados</th>
+        <th>Reprovados</th>
+      </tr>
+
+      <tr>
+        <td>BDD Web</td>
+        <td>8</td>
+        <td>8</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>BDD API</td>
+        <td>5</td>
+        <td>5</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>Playwright</td>
+        <td>24</td>
+        <td>24</td>
+        <td>0</td>
+      </tr>
+    </table>
+  </section>
+
+  <h2>Resultados de Performance - K6 Load</h2>
+
+  <section class="panel">
+    <table>
+      <tr><th>Métrica</th><th>Resultado</th></tr>
+      <tr><td>Usuários virtuais máximos</td><td>500</td></tr>
+      <tr><td>Total de requisições</td><td>200.871</td></tr>
+      <tr><td>Requisições por segundo</td><td>371,59</td></tr>
+      <tr><td>Tempo médio de resposta</td><td>1,05 ms</td></tr>
+      <tr><td>Mediana</td><td>1,03 ms</td></tr>
+      <tr><td>p90</td><td>1,87 ms</td></tr>
+      <tr><td>p95</td><td>2,32 ms</td></tr>
+      <tr><td>Falhas HTTP</td><td>0,00%</td></tr>
+      <tr><td>Checks aprovados</td><td>602.613</td></tr>
+      <tr><td>Checks reprovados</td><td>0</td></tr>
+    </table>
+
+    <p class="success">
+      Thresholds de carga atendidos.
+    </p>
+  </section>
+
+  <h2>Relatórios detalhados</h2>
+
+  <section class="grid">
+    
+    <article class="card">
+      <h3>Cucumber Web</h3>
+      <p class="success">
+        Relatório disponível
+      </p>
+      <a href="../html/index.html">Abrir relatório</a>
+    </article>
+  
+    <article class="card">
+      <h3>Playwright</h3>
+      <p class="success">
+        Relatório disponível
+      </p>
+      <a href="../../playwright-report/index.html">Abrir relatório</a>
+    </article>
+  
+    <article class="card">
+      <h3>K6 Smoke</h3>
+      <p class="success">
+        Relatório disponível
+      </p>
+      <a href="../performance/smoke-report.html">Abrir relatório</a>
+    </article>
+  
+    <article class="card">
+      <h3>K6 Load</h3>
+      <p class="success">
+        Relatório disponível
+      </p>
+      <a href="../performance/load-report.html">Abrir relatório</a>
+    </article>
+  
+
+    
+    <article class="card">
+      <h3>Cucumber API - JSON</h3>
+      <p class="success">
+        Relatório disponível
+      </p>
+      <a href="../cucumber-api-report.json">Abrir relatório</a>
+    </article>
+  
+
+    
+    <article class="card">
+      <h3>K6 Smoke - JSON</h3>
+      <p class="success">
+        Relatório disponível
+      </p>
+      <a href="../performance/smoke-summary.json">Abrir relatório</a>
+    </article>
+  
+
+    
+    <article class="card">
+      <h3>Playwright - JSON</h3>
+      <p class="success">
+        Relatório disponível
+      </p>
+      <a href="../../test-results/playwright-results.json">Abrir relatório</a>
+    </article>
+  
+  </section>
+
+  <h2>Informações adicionais</h2>
+
+  <section class="panel">
+    <p>BDD Web: 8 cenários identificados.</p>
+
+    <p>BDD API: 5 cenários identificados.</p>
+
+    <p>Playwright: 24 testes identificados no relatório JSON.</p>
+
+    <p>Smoke test: 5 requisições registradas.</p>
+
+    <p>Último status Playwright: passed.</p>
+  </section>
+
+</main>
+
+<footer>
+  Outsera QA Automation | Dashboard de resultados
+</footer>
+
+</body>
+</html>

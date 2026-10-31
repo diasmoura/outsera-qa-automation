@@ -1,7 +1,8 @@
+
 {
   "name": "outsera-qa-automation",
   "version": "1.0.0",
-  "description": "Automacao de testes Web, API e Performance com Cucumber, Playwright, BDD e K6",
+  "description": "Automação de testes Web, API e Performance com Cucumber, Playwright, BDD e K6",
   "main": "index.js",
   "scripts": {
     "test:bdd": "cucumber-js --format progress --format json:reports/bdd/cucumber-report.json features",
@@ -11,11 +12,15 @@
     "test:web": "cucumber-js --format progress --format json:reports/cucumber-web-report.json features/WEB",
     "test:api": "cucumber-js --format progress --format json:reports/cucumber-api-report.json features/API",
     "test:playwright": "playwright test",
+    "test:playwright:report": "playwright show-report",
+    "test:k6:smoke": "k6 run performance/smoke-test.js",
+    "test:k6:load": "k6 run performance/load-test.js",
     "report": "node cucumber-report.js",
     "dashboard": "node dashboard.js",
     "test:report": "npm run test:web && npm run test:api && npm run report",
     "test:all": "npm run test:web && npm run test:api && npm run test:playwright",
-    "test:all:report": "npm run test:all && npm run report"
+    "test:all:report": "npm run test:all && npm run report && npm run dashboard",
+    "test:dashboard": "npm run dashboard"
   },
   "keywords": [
     "qa",

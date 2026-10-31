@@ -14,7 +14,7 @@ Construir uma estrutura de automação capaz de validar fluxos funcionais de uma
 | JavaScript | Linguagem de programação |
 | Playwright | Automação Web e testes de API |
 | Cucumber | Escrita e execução de cenários BDD |
-| Gherkin | Especificação dos cenários em linguagem legível |
+| Gherkin | Especificação dos cenários |
 | Page Object Model (POM) | Organização e reutilização de páginas e ações |
 | K6 | Testes de performance, smoke e carga |
 | Express | Desenvolvimento da API mock para performance |
@@ -147,7 +147,9 @@ Execução de testes automatizados utilizando Playwright, com cobertura nos nave
 - DELETE de usuário.
 - Validação de método HTTP inválido.
 
-**Cobertura:** 8 testes executados em 3 engines, totalizando 24 execuções de testes.
+**Cobertura:** 8 casos de teste executados em 3 engines, totalizando 24 execuções.
+
+**Resultado da última execução local:** 24 testes aprovados, sem falhas.
 
 ### 5.4. Testes de Performance — K6
 
@@ -171,20 +173,19 @@ Configuração de estágios:
 - Sustentação de 500 usuários virtuais durante 5 minutos.
 - Ramp-down para zero usuários em 1 minuto.
 
-#### Resultados da execução no GitHub Actions
+#### Resultados apresentados no Dashboard
 
 | Métrica | Resultado |
 |---|---:|
 | Usuários virtuais máximos | 500 |
-| Total de requisições | 200.985 |
-| Requisições por segundo | 371,73 |
-| Tempo médio | 0,70 ms |
-| Mediana | 0,60 ms |
-| Percentil 90 (p90) | 1,31 ms |
-| Percentil 95 (p95) | 1,55 ms |
-| Tempo máximo | 9,54 ms |
+| Total de requisições | 200.871 |
+| Requisições por segundo | 371,59 |
+| Tempo médio | 1,05 ms |
+| Mediana | 1,03 ms |
+| Percentil 90 (p90) | 1,87 ms |
+| Percentil 95 (p95) | 2,32 ms |
 | Falhas HTTP | 0,00% |
-| Checks aprovados | 602.955 |
+| Checks aprovados | 602.613 |
 | Checks reprovados | 0 |
 
 #### Thresholds configurados
@@ -193,27 +194,19 @@ Configuração de estágios:
 - Percentil 95 inferior a 1.000 ms.
 - Taxa de checks superior a 99%.
 
-#### Validação dos thresholds
-
-| Critério | Resultado | Status |
-|---|---:|---|
-| Falhas HTTP abaixo de 1% | 0,00% | **ATENDIDO** |
-| p95 abaixo de 1.000 ms | 1,55 ms | **ATENDIDO** |
-| Checks acima de 99% | 100,00% | **ATENDIDO** |
+**Resultado:** todos os thresholds apresentados no relatório foram atendidos.
 
 #### Análise dos resultados
 
-O teste registrou 500 usuários virtuais máximos e 200.985 requisições, alcançando uma vazão de 371,73 requisições por segundo.
+O teste registrou 500 usuários virtuais máximos e 200.871 requisições, alcançando uma vazão de 371,59 requisições por segundo.
 
-O tempo médio de resposta foi de 0,70 ms, enquanto o percentil 95 (p95) foi de 1,55 ms. A taxa de falhas HTTP foi de 0,00%, e os 602.955 checks executados foram aprovados, sem reprovações.
+O tempo médio de resposta foi de 1,05 ms, enquanto o percentil 95 (p95) foi de 2,32 ms. A taxa de falhas HTTP foi de 0,00%, e os 602.613 checks executados foram aprovados.
 
-Os resultados demonstram desempenho positivo da API mock no ambiente avaliado, com baixa latência e atendimento a todos os thresholds configurados.
+Os resultados demonstram desempenho positivo da API mock no ambiente avaliado, com baixa latência e atendimento aos thresholds configurados.
 
-**Limitação do ambiente:** a API mock e o K6 foram executados no mesmo runner do GitHub Actions. Portanto, os resultados representam uma validação técnica do ambiente de teste e não uma medição isolada da capacidade de uma infraestrutura de produção.
+**Limitação do ambiente:** os resultados representam uma validação técnica da API mock no ambiente de teste e não devem ser interpretados como benchmark de produção.
 
-Para uma análise mais completa de possíveis gargalos, recomenda-se monitorar CPU, memória, rede e logs da API durante a execução, além de realizar testes com o gerador de carga separado do servidor.
-
-> Observação: a duração média da iteração inclui o `sleep(1)` configurado no script K6. Portanto, não representa exclusivamente o tempo de resposta da API.
+> Observação: a duração média da iteração pode incluir o `sleep(1)` configurado no script K6. Portanto, não representa exclusivamente o tempo de resposta da API.
 
 ## 6. Integração contínua — GitHub Actions
 
@@ -252,27 +245,24 @@ O Dashboard é gerado pelo arquivo `dashboard.js` e integrado ao job de consolid
 
 **Artefato final:** `qa-automation-final-report`.
 
-Os relatórios e evidências podem ser baixados na página da execução do workflow. A retenção configurada dos artefatos é de 15 dias.
+Os relatórios e evidências podem ser baixados na página da execução do workflow.
 
-### Histórico da última execução validada no documento original
+### Histórico da última execução validada
 
-- Pipeline: #12.
+- Pipeline: #17.
 - Branch: `main`.
-- Commit: `fcc399b`.
+- Commit: `5f6357b`.
 - Status: **Success**.
-- Jobs aprovados: 5 de 5.
+- Duração: aproximadamente 9 minutos e 41 segundos.
+- Artefatos gerados: 5.
 
-*Esse resultado corresponde à execução #12, anterior à validação da nova integração do Dashboard.*
-
-### Artefatos gerados na execução #12
+**Artefatos disponibilizados:**
 
 - `web-results`
 - `api-results`
 - `playwright-results`
 - `performance-results`
 - `qa-automation-final-report`
-
-A nova integração do Dashboard deverá ser validada em uma execução posterior do workflow.
 
 ## 7. Como executar o projeto
 
@@ -302,6 +292,12 @@ cd outsera-qa-automation
 npm install
 ```
 
+No Windows PowerShell, caso a política de execução bloqueie `npm.ps1`, utilize `npm.cmd`:
+
+```powershell
+npm.cmd install
+```
+
 ### 7.4. Instalar os navegadores do Playwright
 
 ```bash
@@ -310,16 +306,10 @@ npx playwright install
 
 ### 7.5. Executar os testes
 
-**Testes BDD:**
+**Testes BDD completos:**
 
 ```bash
 npm run test:bdd
-```
-
-**Testes de API:**
-
-```bash
-npm run test:api
 ```
 
 **Testes Web:**
@@ -328,35 +318,63 @@ npm run test:api
 npm run test:web
 ```
 
+**Testes de API BDD:**
+
+```bash
+npm run test:api
+```
+
 **Testes Playwright:**
 
 ```bash
-npx playwright test
+npm run test:playwright
 ```
 
-**Rotina consolidada de testes e relatório:**
+**Teste de performance Smoke:**
 
 ```bash
-npm run test:report
+npm run test:k6:smoke
 ```
 
-**Performance — Smoke Test:**
+**Teste de carga K6:**
 
 ```bash
-npm run test:performance:smoke
+npm run test:k6:load
 ```
 
-**Performance — Teste de Carga:**
+**Gerar relatório Cucumber:**
 
 ```bash
-npm run test:performance:load
+npm run report
 ```
 
-Para executar os testes de performance, configure a variável `BASE_URL` para apontar para uma API autorizada.
+**Gerar Dashboard:**
 
-No ambiente Windows utilizado no desenvolvimento, o arquivo `performance/run-k6.js` utiliza o caminho local de instalação do K6. Em outros ambientes, esse caminho deve ser adaptado.
+```bash
+npm run dashboard
+```
 
-> Importante: os comandos `test:report`, `test:performance:smoke` e `test:performance:load` devem estar cadastrados no `package.json` para funcionar. Caso não estejam, será necessário ajustar os scripts antes de executar esses comandos.
+**Executar testes funcionais e gerar os relatórios:**
+
+```bash
+npm run test:all:report
+```
+
+Esse comando executa os testes Web, API BDD e Playwright, gera o relatório Cucumber e atualiza o Dashboard. Os testes K6 são executados separadamente.
+
+### 7.6. Visualizar o Dashboard
+
+No Windows PowerShell:
+
+```powershell
+start .\reports\consolidated\index.html
+```
+
+### 7.7. Visualizar o relatório Playwright
+
+```bash
+npx playwright show-report
+```
 
 ## 8. Relatórios e evidências
 
@@ -373,13 +391,7 @@ O projeto gera relatórios de execução para facilitar a análise dos resultado
 - Dashboard de Qualidade.
 - Artefatos disponibilizados pela pipeline do GitHub Actions.
 
-**Visualizar o relatório HTML do Playwright:**
-
-```bash
-npx playwright show-report
-```
-
-**Relatórios de performance:**
+**Principais arquivos de performance:**
 
 - `reports/performance/smoke-summary.json`
 - `reports/performance/load-summary.json`
@@ -390,8 +402,6 @@ O Dashboard consolidado é gerado por:
 ```bash
 node dashboard.js
 ```
-
-Os artefatos gerados pelo GitHub Actions podem ser baixados diretamente na página de execução da pipeline.
 
 > Observação: a geração local do Dashboard depende da existência dos relatórios de entrada esperados pelo arquivo `dashboard.js`.
 
@@ -414,8 +424,25 @@ Os artefatos gerados pelo GitHub Actions podem ser baixados diretamente na pági
 |---|---:|
 | Web BDD | 8 cenários aprovados |
 | API BDD | 5 cenários aprovados |
-| Playwright API | 24 execuções |
+| Playwright API | 24 testes aprovados |
 | Performance K6 | Até 500 usuários virtuais |
-| GitHub Actions | 5 jobs aprovados na execução #12 |
+| GitHub Actions | Pipeline #17 com status Success |
 
-**Total de cenários BDD:** 13 aprovados, com 104
+**Resultado da última execução local dos testes funcionais:**
+
+- 13 cenários BDD aprovados.
+- 104 steps BDD aprovados.
+- 24 testes Playwright aprovados.
+- 0 falhas nos resultados apresentados.
+
+**Total: 37 cenários/testes aprovados**, considerando 13 cenários BDD e 24 testes Playwright.
+
+Os testes de performance K6 possuem execução e métricas próprias, não sendo somados ao total de testes funcionais.
+
+## 11. Repositório
+
+**GitHub:** https://github.com/diasmoura/outsera-qa-automation
+
+---
+
+**Projeto desenvolvido para demonstrar conhecimentos em Qualidade de Software, automação de testes, testes de API, BDD, Playwright, performance, organização de código, geração de relatórios e integração contínua.**

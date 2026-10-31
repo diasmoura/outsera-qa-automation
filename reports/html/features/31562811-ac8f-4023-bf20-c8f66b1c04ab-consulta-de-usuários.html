@@ -81,14 +81,8 @@
       <div class="p-4 md:p-6 flex flex-col lg:flex-row lg:items-start justify-between gap-6">
         <div class="space-y-4 flex-1">
           <div class="space-y-2">
-            <h2 class="text-xl md:text-2xl font-bold text-foreground leading-tight">Checkout do e-commerce</h2>
+            <h2 class="text-xl md:text-2xl font-bold text-foreground leading-tight">Consulta de usuários</h2>
             
-            
-              <div class="mt-4 text-sm text-muted-foreground whitespace-pre-line bg-muted/20 p-3 rounded-lg border border-border/50">
-                Como usuário do e-commerce
-  Quero adicionar produtos ao carrinho e finalizar uma compra
-  Para validar o fluxo de compra e suas regras de negócio
-              </div>
             
           </div>
 
@@ -157,9 +151,9 @@
 
   <div class="w-full my-2"></div>
   
-    <span class="flex items-center gap-1.5 min-w-0 max-w-full" title="features\WEB\ecommerce-checkout.feature">
+    <span class="flex items-center gap-1.5 min-w-0 max-w-full" title="features\API\api-consulta-users.feature">
       <i class="fa-solid fa-file-code text-primary text-base shrink-0"></i>
-      <span class="text-xs font-mono text-muted-foreground truncate">features\WEB\ecommerce-checkout.feature</span>
+      <span class="text-xs font-mono text-muted-foreground truncate">features\API\api-consulta-users.feature</span>
     </span>
   
   
@@ -191,7 +185,7 @@
         <div class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-6 gap-3 md:gap-4 shrink-0 lg:ml-6 w-full sm:w-auto">
           <div class="flex flex-col items-center justify-center bg-status-passed/10 rounded-xl py-3 px-3 border border-status-passed/20 w-full">
             <div class="text-xl md:text-2xl font-bold text-status-passed leading-none">
-              4
+              2
             </div>
             <div class="text-[9px] md:text-[10px] uppercase font-bold text-status-passed/70 dark:text-status-passed/30 mt-1 tracking-wider">
               Passed
@@ -380,18 +374,10 @@
 
 
 
-  
-    
-  
-
-  
-    
-  
-
 <div
   class="rounded-xl border bg-card text-card-foreground shadow overflow-hidden scenario-card"
   data-status="passed"
-  data-tags="@positivo,@carrinho"
+  data-tags=""
 >
   <button
     class="w-full text-left px-4 md:px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
@@ -403,21 +389,13 @@
       
 
       <div class="truncate">
-        <h4 class="font-bold text-sm md:text-base truncate">Adicionar produto ao carrinho</h4>
-        
-          <div class="flex flex-wrap gap-1 mt-0.5">
-            
-              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@positivo</span>
-            
-              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@carrinho</span>
-            
-          </div>
+        <h4 class="font-bold text-sm md:text-base truncate">Consultar um usuário existente</h4>
         
         
       </div>
     </div>
     <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:06.199</span>
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.217</span>
       <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
       </svg>
@@ -469,11 +447,11 @@
             
             <div class="w-full">
               <p class="text-sm">
-                <span class="font-bold text-foreground">Dado </span>
-                <span>que acesso a página inicial do e-commerce</span>
+                <span class="font-bold text-foreground">Quando </span>
+                <span>consultar o usuário de ID 1</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:01.520</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.214</p>
 
               
 
@@ -505,11 +483,11 @@
             
             <div class="w-full">
               <p class="text-sm">
-                <span class="font-bold text-foreground">Quando </span>
-                <span>acesso a lista de produtos</span>
+                <span class="font-bold text-foreground">Então </span>
+                <span>a resposta da API deve ter status 200</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:02.445</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.001</p>
 
               
 
@@ -542,10 +520,10 @@
             <div class="w-full">
               <p class="text-sm">
                 <span class="font-bold text-foreground">E </span>
-                <span>adiciono o primeiro produto ao carrinho</span>
+                <span>o header Content-Type da consulta deve indicar JSON</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.744</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.000</p>
 
               
 
@@ -577,83 +555,11 @@
             
             <div class="w-full">
               <p class="text-sm">
-                <span class="font-bold text-foreground">Então </span>
-                <span>devo visualizar a confirmação de inclusão do produto</span>
+                <span class="font-bold text-foreground">E </span>
+                <span>o nome do usuário deve estar preenchido</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.014</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Quando </span>
-                <span>acesso o carrinho</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:01.450</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Então </span>
-                <span>devo visualizar o produto adicionado</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.024</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.000</p>
 
               
 
@@ -788,18 +694,10 @@
 
 
 
-  
-    
-  
-
-  
-    
-  
-
 <div
   class="rounded-xl border bg-card text-card-foreground shadow overflow-hidden scenario-card"
   data-status="passed"
-  data-tags="@positivo,@checkout"
+  data-tags=""
 >
   <button
     class="w-full text-left px-4 md:px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
@@ -811,21 +709,13 @@
       
 
       <div class="truncate">
-        <h4 class="font-bold text-sm md:text-base truncate">Realizar compra completa com dados válidos</h4>
-        
-          <div class="flex flex-wrap gap-1 mt-0.5">
-            
-              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@positivo</span>
-            
-              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@checkout</span>
-            
-          </div>
+        <h4 class="font-bold text-sm md:text-base truncate">Consultar um usuário inexistente</h4>
         
         
       </div>
     </div>
     <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:11.236</span>
+      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:05.093</span>
       <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
       </svg>
@@ -851,78 +741,6 @@
 
               
 
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Dado </span>
-                <span>que tenho um produto no carrinho</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:06.149</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">E </span>
-                <span>acesso o checkout</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.832</p>
-
-              
-
-              
-                
               
 
               
@@ -950,82 +768,10 @@
             <div class="w-full">
               <p class="text-sm">
                 <span class="font-bold text-foreground">Quando </span>
-                <span>preencho os dados pessoais e o endereço de entrega</span>
+                <span>consultar o usuário de ID 999</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.099</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">E </span>
-                <span>preencho o formulário de pagamento com dados válidos</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:01.897</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">E </span>
-                <span>confirmo o pedido</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:02.097</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:05.092</p>
 
               
 
@@ -1058,646 +804,10 @@
             <div class="w-full">
               <p class="text-sm">
                 <span class="font-bold text-foreground">Então </span>
-                <span>devo visualizar a confirmação da compra</span>
+                <span>a resposta da API deve ter status 404</span>
                 
               </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.161</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">After</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">After</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">After</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-  </div>
-</div>
-
-        
-          
-
-
-
-
-  
-    
-  
-
-  
-    
-  
-
-<div
-  class="rounded-xl border bg-card text-card-foreground shadow overflow-hidden scenario-card"
-  data-status="passed"
-  data-tags="@positivo,@endereco"
->
-  <button
-    class="w-full text-left px-4 md:px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
-    onclick="this.nextElementSibling.classList.toggle('hidden')"
-  >
-    <div class="flex items-center gap-3 overflow-hidden">
-      
-        <i class="fa-solid fa-circle-check text-xl md:text-2xl shrink-0 text-status-passed"></i>
-      
-
-      <div class="truncate">
-        <h4 class="font-bold text-sm md:text-base truncate">Validar endereço de entrega exibido no checkout</h4>
-        
-          <div class="flex flex-wrap gap-1 mt-0.5">
-            
-              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@positivo</span>
-            
-              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@endereco</span>
-            
-          </div>
-        
-        
-      </div>
-    </div>
-    <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:09.503</span>
-      <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-      </svg>
-    </div>
-  </button>
-  <div class="hidden border-t divide-y divide-border">
-    
-
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Before</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Dado </span>
-                <span>que tenho um produto no carrinho</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:08.655</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">E </span>
-                <span>acesso o checkout</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.768</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Então </span>
-                <span>devo visualizar o endereço de entrega cadastrado</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.079</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">After</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">After</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">After</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-  </div>
-</div>
-
-        
-          
-
-
-
-
-  
-    
-  
-
-  
-    
-  
-
-<div
-  class="rounded-xl border bg-card text-card-foreground shadow overflow-hidden scenario-card"
-  data-status="passed"
-  data-tags="@negativo,@carrinho"
->
-  <button
-    class="w-full text-left px-4 md:px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
-    onclick="this.nextElementSibling.classList.toggle('hidden')"
-  >
-    <div class="flex items-center gap-3 overflow-hidden">
-      
-        <i class="fa-solid fa-circle-check text-xl md:text-2xl shrink-0 text-status-passed"></i>
-      
-
-      <div class="truncate">
-        <h4 class="font-bold text-sm md:text-base truncate">Tentar acessar o checkout com o carrinho vazio</h4>
-        
-          <div class="flex flex-wrap gap-1 mt-0.5">
-            
-              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@negativo</span>
-            
-              <span class="text-[9px] md:text-[10px] font-medium text-muted-foreground">@carrinho</span>
-            
-          </div>
-        
-        
-      </div>
-    </div>
-    <div class="flex items-center gap-2 md:gap-4 shrink-0 ml-2">
-      <span class="font-mono text-[10px] md:text-xs text-muted-foreground">00:00:01.221</span>
-      <svg class="h-4 w-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-      </svg>
-    </div>
-  </button>
-  <div class="hidden border-t divide-y divide-border">
-    
-
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Before</span>
-                <span></span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono"></p>
-
-              
-
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Dado </span>
-                <span>que acesso a página inicial do e-commerce</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.798</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Quando </span>
-                <span>acesso o carrinho</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.374</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">Então </span>
-                <span>devo visualizar a mensagem de carrinho vazio</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.019</p>
-
-              
-
-              
-                
-              
-
-              
-
-              
-
-              
-              
-
-              
-              
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="px-6 py-4 bg-muted/20">
-        <div class="flex items-start justify-between">
-          <div class="flex items-start gap-3 w-full">
-            
-              <i class="fa-solid fa-circle-check mt-0.5 shrink-0 text-status-passed"></i>
-            
-            <div class="w-full">
-              <p class="text-sm">
-                <span class="font-bold text-foreground">E </span>
-                <span>não devo conseguir prosseguir para o checkout</span>
-                
-              </p>
-              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.029</p>
+              <p class="text-[10px] text-muted-foreground mt-1 font-mono">00:00:00.000</p>
 
               
 
@@ -1846,7 +956,7 @@
 
     // Embedded data for charts (status/duration/tags only — never embeddings,
     // which would make this inline blob scale with attachment size)
-    const featureData = {"description":"  Como usuário do e-commerce\n  Quero adicionar produtos ao carrinho e finalizar uma compra\n  Para validar o fluxo de compra e suas regras de negócio","elements":[{"description":"","id":"checkout-do-e-commerce;adicionar-produto-ao-carrinho","keyword":"Cenário","line":11,"name":"Adicionar produto ao carrinho","steps":[{"result":{"status":"passed","duration":180963700},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":1520048599},"arguments":[],"keyword":"Dado ","line":12,"name":"que acesso a página inicial do e-commerce","match":{"location":"step-definitions\\WEB\\checkout.steps.js:152"},"time":"00:00:01.520"},{"result":{"status":"passed","duration":2445686900},"arguments":[],"keyword":"Quando ","line":13,"name":"acesso a lista de produtos","match":{"location":"step-definitions\\WEB\\checkout.steps.js:181"},"time":"00:00:02.445"},{"result":{"status":"passed","duration":744719799},"arguments":[],"keyword":"E ","line":14,"name":"adiciono o primeiro produto ao carrinho","match":{"location":"step-definitions\\WEB\\checkout.steps.js:194"},"time":"00:00:00.744"},{"result":{"status":"passed","duration":14712099},"arguments":[],"keyword":"Então ","line":15,"name":"devo visualizar a confirmação de inclusão do produto","match":{"location":"step-definitions\\WEB\\checkout.steps.js:202"},"time":"00:00:00.014"},{"result":{"status":"passed","duration":1450244000},"arguments":[],"keyword":"Quando ","line":16,"name":"acesso o carrinho","match":{"location":"step-definitions\\WEB\\checkout.steps.js:236"},"time":"00:00:01.450"},{"result":{"status":"passed","duration":24205200},"arguments":[],"keyword":"Então ","line":17,"name":"devo visualizar o produto adicionado","match":{"location":"step-definitions\\WEB\\checkout.steps.js:256"},"time":"00:00:00.024"},{"result":{"status":"passed","duration":195402200},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":397100},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":474000},"keyword":"After","hidden":true}],"tags":[{"name":"@positivo","line":10},{"name":"@carrinho","line":10}],"type":"scenario","duration":6.199616597,"time":"00:00:06.199","passed":6,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"checkout-do-e-commerce;realizar-compra-completa-com-dados-válidos","keyword":"Cenário","line":20,"name":"Realizar compra completa com dados válidos","steps":[{"result":{"status":"passed","duration":272718300},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":6149357099},"arguments":[],"keyword":"Dado ","line":21,"name":"que tenho um produto no carrinho","match":{"location":"step-definitions\\WEB\\checkout.steps.js:286"},"time":"00:00:06.149"},{"result":{"status":"passed","duration":832102499},"arguments":[],"keyword":"E ","line":22,"name":"acesso o checkout","match":{"location":"step-definitions\\WEB\\checkout.steps.js:290"},"time":"00:00:00.832"},{"result":{"status":"passed","duration":99269700},"arguments":[],"keyword":"Quando ","line":23,"name":"preencho os dados pessoais e o endereço de entrega","match":{"location":"step-definitions\\WEB\\checkout.steps.js:306"},"time":"00:00:00.099"},{"result":{"status":"passed","duration":1897877000},"arguments":[],"keyword":"E ","line":24,"name":"preencho o formulário de pagamento com dados válidos","match":{"location":"step-definitions\\WEB\\checkout.steps.js:379"},"time":"00:00:01.897"},{"result":{"status":"passed","duration":2097250400},"arguments":[],"keyword":"E ","line":25,"name":"confirmo o pedido","match":{"location":"step-definitions\\WEB\\checkout.steps.js:427"},"time":"00:00:02.097"},{"result":{"status":"passed","duration":161127500},"arguments":[],"keyword":"Então ","line":26,"name":"devo visualizar a confirmação da compra","match":{"location":"step-definitions\\WEB\\checkout.steps.js:447"},"time":"00:00:00.161"},{"result":{"status":"passed","duration":176984599},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":173299},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":165299},"keyword":"After","hidden":true}],"tags":[{"name":"@positivo","line":19},{"name":"@checkout","line":19}],"type":"scenario","duration":11.236984198,"time":"00:00:11.236","passed":6,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"checkout-do-e-commerce;validar-endereço-de-entrega-exibido-no-checkout","keyword":"Cenário","line":29,"name":"Validar endereço de entrega exibido no checkout","steps":[{"result":{"status":"passed","duration":212602800},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":8655709400},"arguments":[],"keyword":"Dado ","line":30,"name":"que tenho um produto no carrinho","match":{"location":"step-definitions\\WEB\\checkout.steps.js:286"},"time":"00:00:08.655"},{"result":{"status":"passed","duration":768290900},"arguments":[],"keyword":"E ","line":31,"name":"acesso o checkout","match":{"location":"step-definitions\\WEB\\checkout.steps.js:290"},"time":"00:00:00.768"},{"result":{"status":"passed","duration":79535400},"arguments":[],"keyword":"Então ","line":32,"name":"devo visualizar o endereço de entrega cadastrado","match":{"location":"step-definitions\\WEB\\checkout.steps.js:329"},"time":"00:00:00.079"},{"result":{"status":"passed","duration":159082699},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":124599},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":56099},"keyword":"After","hidden":true}],"tags":[{"name":"@positivo","line":28},{"name":"@endereco","line":28}],"type":"scenario","duration":9.5035357,"time":"00:00:09.503","passed":3,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"checkout-do-e-commerce;tentar-acessar-o-checkout-com-o-carrinho-vazio","keyword":"Cenário","line":35,"name":"Tentar acessar o checkout com o carrinho vazio","steps":[{"result":{"status":"passed","duration":242185700},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":798682899},"arguments":[],"keyword":"Dado ","line":36,"name":"que acesso a página inicial do e-commerce","match":{"location":"step-definitions\\WEB\\checkout.steps.js:152"},"time":"00:00:00.798"},{"result":{"status":"passed","duration":374181000},"arguments":[],"keyword":"Quando ","line":37,"name":"acesso o carrinho","match":{"location":"step-definitions\\WEB\\checkout.steps.js:236"},"time":"00:00:00.374"},{"result":{"status":"passed","duration":19159599},"arguments":[],"keyword":"Então ","line":38,"name":"devo visualizar a mensagem de carrinho vazio","match":{"location":"step-definitions\\WEB\\checkout.steps.js:487"},"time":"00:00:00.019"},{"result":{"status":"passed","duration":29199700},"arguments":[],"keyword":"E ","line":39,"name":"não devo conseguir prosseguir para o checkout","match":{"location":"step-definitions\\WEB\\checkout.steps.js:499"},"time":"00:00:00.029"},{"result":{"status":"passed","duration":105487400},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":106399},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":86299},"keyword":"After","hidden":true}],"tags":[{"name":"@negativo","line":34},{"name":"@carrinho","line":34}],"type":"scenario","duration":1.221223198,"time":"00:00:01.221","passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0}],"id":"181f37c4-f016-4218-91ad-22450874510a-checkout-do-e-commerce","line":4,"keyword":"Funcionalidade","name":"Checkout do e-commerce","tags":[],"uri":"features\\WEB\\ecommerce-checkout.feature","metadata":{"browser":{"name":"Chromium","version":"Playwright"},"executionPlatform":"local","username":"Máquina000088","device":"Automação","platform":{"name":"win32","version":"10.0.26200"},"nodeVersion":"v24.22.1","reportVersion":"4.5.0","hostname":"DESKTOP-V8H127K","architecture":"x64"},"scenarios":{"passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"passedPercentage":"100.00","failedPercentage":"0.00","notDefinedPercentage":"0.00","skippedPercentage":"0.00","pendingPercentage":"0.00","ambiguousPercentage":"0.00","total":4},"duration":28161359693,"time":"00:00:28.161","isFailed":false,"isAmbiguous":false,"isSkipped":false,"isNotdefined":false,"isPending":false,"passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"totalTime":28161359693,"app":"","browser":"Chromium Playwright","device":"Automação","executionPlatform":"local","os":"win32 10.0.26200","username":"Máquina000088"};
+    const featureData = {"description":"","elements":[{"description":"","id":"consulta-de-usuários;consultar-um-usuário-existente","keyword":"Cenário","line":6,"name":"Consultar um usuário existente","steps":[{"result":{"status":"passed","duration":800199},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5214700399},"arguments":[],"keyword":"Quando ","line":7,"name":"consultar o usuário de ID 1","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:05.214"},{"result":{"status":"passed","duration":1419799},"arguments":[],"keyword":"Então ","line":8,"name":"a resposta da API deve ter status 200","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.001"},{"result":{"status":"passed","duration":595199},"arguments":[],"keyword":"E ","line":9,"name":"o header Content-Type da consulta deve indicar JSON","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:42"},"time":"00:00:00.000"},{"result":{"status":"passed","duration":874000},"arguments":[],"keyword":"E ","line":10,"name":"o nome do usuário deve estar preenchido","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:36"},"time":"00:00:00.000"},{"result":{"status":"passed","duration":135000},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":358800},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":1500799},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.217589396999999,"time":"00:00:05.217","passed":4,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0},{"description":"","id":"consulta-de-usuários;consultar-um-usuário-inexistente","keyword":"Cenário","line":12,"name":"Consultar um usuário inexistente","steps":[{"result":{"status":"passed","duration":244700},"keyword":"Before","hidden":true},{"result":{"status":"passed","duration":5092841699},"arguments":[],"keyword":"Quando ","line":13,"name":"consultar o usuário de ID 999","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:17"},"time":"00:00:05.092"},{"result":{"status":"passed","duration":707900},"arguments":[],"keyword":"Então ","line":14,"name":"a resposta da API deve ter status 404","match":{"location":"step-definitions\\API\\api-consulta-users.steps.js:29"},"time":"00:00:00.000"},{"result":{"status":"passed","duration":152200},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":142799},"keyword":"After","hidden":true},{"result":{"status":"passed","duration":1313100},"keyword":"After","hidden":true}],"tags":[],"type":"scenario","duration":5.093549599,"time":"00:00:05.093","passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0}],"id":"31562811-ac8f-4023-bf20-c8f66b1c04ab-consulta-de-usuários","line":4,"keyword":"Funcionalidade","name":"Consulta de usuários","tags":[],"uri":"features\\API\\api-consulta-users.feature","metadata":{"browser":{"name":"Chromium","version":"Playwright"},"executionPlatform":"local","username":"Máquina000088","device":"Automação","platform":{"name":"win32","version":"10.0.26200"},"nodeVersion":"v24.22.1","reportVersion":"4.5.0","hostname":"DESKTOP-V8H127K","architecture":"x64"},"scenarios":{"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"passedPercentage":"100.00","failedPercentage":"0.00","notDefinedPercentage":"0.00","skippedPercentage":"0.00","pendingPercentage":"0.00","ambiguousPercentage":"0.00","total":2},"duration":10311138996,"time":"00:00:10.311","isFailed":false,"isAmbiguous":false,"isSkipped":false,"isNotdefined":false,"isPending":false,"passed":2,"failed":0,"notDefined":0,"skipped":0,"pending":0,"ambiguous":0,"totalTime":10311138996,"app":"","browser":"Chromium Playwright","device":"Automação","executionPlatform":"local","os":"win32 10.0.26200","username":"Máquina000088"};
   </script>
 
         </div>
