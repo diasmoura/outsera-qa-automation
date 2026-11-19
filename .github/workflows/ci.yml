@@ -2,10 +2,12 @@ name: QA Automation - CI/CD Pipeline
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
   workflow_dispatch:
 
@@ -53,6 +55,8 @@ jobs:
     name: Web BDD Tests - Cross Browser
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    needs:
+      - quality-gate
 
     steps:
       - name: Checkout repository
@@ -71,6 +75,36 @@ jobs:
         run: |
           mkdir -p reports/web
           mkdir -p reports/evidences
+
+      - name: Validate required test credentials
+        env:
+          QA_LOGIN_EMAIL: ${{ secrets.QA_LOGIN_EMAIL }}
+          QA_LOGIN_PASSWORD: ${{ secrets.QA_LOGIN_PASSWORD }}
+          QA_CARD_NAME: ${{ secrets.QA_CARD_NAME }}
+          QA_CARD_NUMBER: ${{ secrets.QA_CARD_NUMBER }}
+          QA_CARD_CVC: ${{ secrets.QA_CARD_CVC }}
+          QA_CARD_EXPIRY_MONTH: ${{ vars.QA_CARD_EXPIRY_MONTH }}
+          QA_CARD_EXPIRY_YEAR: ${{ vars.QA_CARD_EXPIRY_YEAR }}
+        shell: bash
+        run: |
+          required_vars=(
+            QA_LOGIN_EMAIL
+            QA_LOGIN_PASSWORD
+            QA_CARD_NAME
+            QA_CARD_NUMBER
+            QA_CARD_CVC
+            QA_CARD_EXPIRY_MONTH
+            QA_CARD_EXPIRY_YEAR
+          )
+
+          for variable in "${required_vars[@]}"; do
+            if [ -z "${!variable}" ]; then
+              echo "::error::A configuração $variable não foi definida no GitHub Secrets/Variables."
+              exit 1
+            fi
+          done
+
+          echo "Configurações de teste validadas."
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium firefox webkit
@@ -107,6 +141,8 @@ jobs:
     name: API BDD Tests
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    needs:
+      - quality-gate
 
     steps:
       - name: Checkout repository
@@ -144,6 +180,8 @@ jobs:
     name: Playwright Tests
     runs-on: ubuntu-24.04
     timeout-minutes: 30
+    needs:
+      - quality-gate
 
     steps:
       - name: Checkout repository
@@ -188,6 +226,8 @@ jobs:
     name: Performance Smoke Test (K6)
     runs-on: ubuntu-24.04
     timeout-minutes: 10
+    needs:
+      - quality-gate
 
     steps:
       - name: Checkout repository
@@ -301,6 +341,7 @@ jobs:
       # --------------------------------------
 
       - name: Download Web results
+        if: always()
         uses: actions/download-artifact@v7
         with:
           name: web-results
@@ -308,6 +349,7 @@ jobs:
         continue-on-error: true
 
       - name: Download API results
+        if: always()
         uses: actions/download-artifact@v7
         with:
           name: api-results
@@ -315,6 +357,7 @@ jobs:
         continue-on-error: true
 
       - name: Download Playwright results
+        if: always()
         uses: actions/download-artifact@v7
         with:
           name: playwright-results
@@ -322,6 +365,7 @@ jobs:
         continue-on-error: true
 
       - name: Download Performance results
+        if: always()
         uses: actions/download-artifact@v7
         with:
           name: performance-results
@@ -333,6 +377,7 @@ jobs:
       # --------------------------------------
 
       - name: Prepare dashboard inputs
+        if: always()
         shell: bash
         run: |
           mkdir -p reports test-results playwright-report
@@ -361,6 +406,7 @@ jobs:
       # --------------------------------------
 
       - name: Generate consolidated Web and API report
+        if: always()
         shell: bash
         run: |
           if [ -f reports/web/chromium-report.json ] && \
