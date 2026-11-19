@@ -148,6 +148,31 @@ function obterUrlDocumentacao(url) {
 }
 
 // ======================================================
+// BASELINE
+// ======================================================
+
+function obterComparacaoBaseline(analise) {
+  return (
+    analise.comparacaoBaseline ||
+    analise.resumo?.comparacaoBaseline ||
+    {}
+  );
+}
+
+function obterStatusBaseline(baseline, quantidadeViolacoes) {
+  if (baseline.baselineAplicado !== true) {
+    return quantidadeViolacoes === 0 ? 'APROVADO' : 'PENDENTE';
+  }
+
+  const status = String(baseline.status || '').toUpperCase();
+
+  if (status === 'APROVADO') return 'APROVADO';
+  if (status === 'REPROVADO') return 'REPROVADO';
+
+  return 'PENDENTE';
+}
+
+// ======================================================
 // RECOMENDAÇÕES DE ACESSIBILIDADE
 // ======================================================
 
@@ -288,12 +313,28 @@ function consolidarAnalises(analises) {
 
   for (const analise of analisesRecentes) {
     const url = normalizarUrl(analise.url || analise.resumo?.url);
+    const baseline = obterComparacaoBaseline(analise);
 
     const pagina = {
       url,
       nome: obterNomePagina(url),
       violacoes: new Map(),
-      datas: []
+      datas: [],
+      baselineAplicado: baseline.baselineAplicado === true,
+      statusBaseline: String(baseline.status || '').toUpperCase(),
+      criterioBaseline: baseline.criterio || '',
+      novasViolacoesBaseline: Array.isArray(baseline.novasViolacoes)
+        ? baseline.novasViolacoes
+        : [],
+      violacoesConhecidasBaseline: Array.isArray(baseline.violacoesConhecidas)
+        ? baseline.violacoesConhecidas
+        : [],
+      totalElementosExternosExcluidos:
+        Number(baseline.totalElementosExternosExcluidos) ||
+        Number(analise.totalElementosExternosExcluidos) ||
+        (Array.isArray(analise.elementosExternosExcluidos)
+          ? analise.elementosExternosExcluidos.length
+          : 0)
     };
 
     const data = obterDataAnalise(analise);
@@ -304,7 +345,9 @@ function consolidarAnalises(analises) {
       const id = String(violacao.id || 'regra-desconhecida');
       const chave = id.toLowerCase();
 
-      const grupo = {
+      const grupoExistente = pagina.violacoes.get(chave);
+
+      const grupo = grupoExistente || {
         url,
         id,
         impacto: obterImpacto(violacao.impacto),
@@ -312,6 +355,19 @@ function consolidarAnalises(analises) {
         documentacao: violacao.documentacao || violacao.help || '',
         elementos: new Map()
       };
+
+      grupo.impacto = impactoMaisGrave(
+        grupo.impacto,
+        obterImpacto(violacao.impacto)
+      );
+
+      if (!grupo.descricao) {
+        grupo.descricao = violacao.descricao || violacao.description || '';
+      }
+
+      if (!grupo.documentacao) {
+        grupo.documentacao = violacao.documentacao || violacao.help || '';
+      }
 
       for (const elemento of obterElementos(violacao)) {
         const evidencia = obterEvidencia(elemento);
@@ -330,6 +386,11 @@ function consolidarAnalises(analises) {
       pagina.violacoes.set(chave, grupo);
     }
 
+    pagina.status = obterStatusBaseline(
+      baseline,
+      pagina.violacoes.size
+    );
+
     paginas.set(url, pagina);
   }
 
@@ -340,7 +401,15 @@ function consolidarAnalises(analises) {
       ...violacao,
       elementos: Array.from(violacao.elementos.values())
     })),
-    datas: pagina.datas
+    datas: pagina.datas,
+    baselineAplicado: pagina.baselineAplicado,
+    statusBaseline: pagina.statusBaseline,
+    status: pagina.status,
+    criterioBaseline: pagina.criterioBaseline,
+    novasViolacoesBaseline: pagina.novasViolacoesBaseline,
+    violacoesConhecidasBaseline: pagina.violacoesConhecidasBaseline,
+    totalElementosExternosExcluidos:
+      pagina.totalElementosExternosExcluidos
   }));
 }
 
@@ -355,22 +424,34 @@ function calcularResumo(analises) {
     paginas: paginas.length,
     aprovadas: 0,
     reprovadas: 0,
+    pendentes: 0,
     criticas: 0,
     serias: 0,
     moderadas: 0,
     leves: 0,
     desconhecidas: 0,
     regras: 0,
-    elementosAfetados: 0
+    elementosAfetados: 0,
+    novasViolacoesBaseline: 0,
+    elementosExternosExcluidos: 0
   };
 
   for (const pagina of paginas) {
-    if (pagina.violacoes.length === 0) {
+    if (pagina.status === 'APROVADO') {
       resumo.aprovadas++;
-    } else {
+    } else if (pagina.status === 'REPROVADO') {
       resumo.reprovadas++;
+    } else {
+      resumo.pendentes++;
     }
 
+    resumo.novasViolacoesBaseline +=
+      pagina.novasViolacoesBaseline.length;
+
+    resumo.elementosExternosExcluidos +=
+      pagina.totalElementosExternosExcluidos;
+
+    // Mantém as violações Axe conhecidas nos indicadores.
     for (const violacao of pagina.violacoes) {
       resumo.regras++;
       resumo.elementosAfetados += violacao.elementos.length;
@@ -636,7 +717,6 @@ function gerarListaAchados(lista, status) {
         </div>
 
         <p>${esc(item.descricao)}</p>
-
         <p><strong>Impacto:</strong> ${esc(item.impacto)}</p>
         <p><strong>Página:</strong> ${esc(item.url)}</p>
 
@@ -679,10 +759,13 @@ const corrigidasHtml = gerarListaAchados(corrigidas, 'Não encontrada');
 const cards = [
   ['Execuções registradas', historico.length, ''],
   ['Páginas analisadas', resumoAtual.paginas, ''],
-  ['Páginas aprovadas', resumoAtual.aprovadas, ''],
-  ['Páginas reprovadas', resumoAtual.reprovadas, ''],
-  ['Regras com violações', resumoAtual.regras, ''],
+  ['Páginas aprovadas', resumoAtual.aprovadas, 'fixed'],
+  ['Páginas reprovadas', resumoAtual.reprovadas, 'critical'],
+  ['Páginas pendentes', resumoAtual.pendentes, 'moderate'],
+  ['Regras com violações Axe', resumoAtual.regras, ''],
   ['Elementos afetados', resumoAtual.elementosAfetados, ''],
+  ['Novas violações no baseline', resumoAtual.novasViolacoesBaseline, 'critical'],
+  ['Elementos externos excluídos', resumoAtual.elementosExternosExcluidos, ''],
   ['Violações críticas', resumoAtual.criticas, 'critical'],
   ['Violações sérias', resumoAtual.serias, 'serious'],
   ['Violações moderadas', resumoAtual.moderadas, 'moderate'],
@@ -732,13 +815,16 @@ const rankingPaginas = ultimaExecucao.analisesConsolidadas
   .map(pagina => ({
     url: pagina.url,
     nome: pagina.nome,
+    status: pagina.status,
     regras: pagina.violacoes.length,
+    novas: pagina.novasViolacoesBaseline.length,
     elementos: pagina.violacoes.reduce(
       (total, violacao) => total + violacao.elementos.length,
       0
     )
   }))
   .sort((a, b) => {
+    if (b.novas !== a.novas) return b.novas - a.novas;
     if (b.regras !== a.regras) return b.regras - a.regras;
     return a.nome.localeCompare(b.nome);
   });
@@ -752,7 +838,12 @@ const rankingPaginasHtml = rankingPaginas.map((pagina, indice) => `
   <article class="ranking-item">
     <div class="ranking-info">
       <strong>${indice + 1}º - ${esc(pagina.nome)}</strong>
-      <span>${pagina.regras} regras | ${pagina.elementos} elementos afetados</span>
+      <span>
+        ${esc(pagina.status)} |
+        ${pagina.regras} regras |
+        ${pagina.novas} novas |
+        ${pagina.elementos} elementos afetados
+      </span>
     </div>
 
     <div class="ranking-bar-bg">
@@ -815,19 +906,31 @@ const comparacaoHtml = execucaoAnterior
 
 const achadosAtuais = obterAchados(ultimaExecucao.analisesConsolidadas);
 
+const statusPorUrl = new Map(
+  ultimaExecucao.analisesConsolidadas.map(pagina => [
+    pagina.url,
+    pagina
+  ])
+);
+
 const detalhesHtml = achadosAtuais.map(item => {
   const recomendacao = obterRecomendacaoAcessibilidade(item.id);
   const documentacao = obterUrlDocumentacao(item.documentacao);
+  const pagina = statusPorUrl.get(item.url);
 
   return `
     <article class="violation">
       <div class="violation-head">
         <strong>${esc(item.id)}</strong>
-        <span class="impact ${esc(item.impacto)}">${esc(item.impacto)}</span>
+        <span class="impact ${esc(item.impacto)}">
+          ${esc(item.impacto)}
+        </span>
       </div>
 
       <p>${esc(item.descricao)}</p>
       <p><strong>Página:</strong> ${esc(item.url)}</p>
+      <p><strong>Status da página:</strong> ${esc(pagina?.status || 'PENDENTE')}</p>
+      <p><strong>Baseline aplicado:</strong> ${pagina?.baselineAplicado ? 'Sim' : 'Não'}</p>
       <p><strong>Elementos afetados:</strong> ${item.evidencias.length}</p>
 
       <div class="recommendation">
@@ -882,6 +985,7 @@ const linhasHistorico = historico.map((execucao, indice) => {
       <td>${execucao.resumo.serias}</td>
       <td>${execucao.resumo.aprovadas}</td>
       <td>${execucao.resumo.reprovadas}</td>
+      <td>${execucao.resumo.pendentes}</td>
       <td>${esc(variacao)}</td>
     </tr>
   `;
@@ -1010,7 +1114,7 @@ h2 { margin-top: 32px; }
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 850px;
+  min-width: 900px;
 }
 
 th, td {
@@ -1156,7 +1260,7 @@ footer {
 
   <h2>Ranking de páginas com mais violações</h2>
   <section class="panel">
-    <p>Páginas ordenadas pela quantidade de regras violadas.</p>
+    <p>Páginas ordenadas primeiro pelas novas violações do baseline e depois pela quantidade de regras encontradas.</p>
     ${rankingPaginasHtml || '<p>Nenhuma página analisada.</p>'}
   </section>
 
@@ -1182,6 +1286,7 @@ footer {
           <th>Sérias</th>
           <th>Aprovadas</th>
           <th>Reprovadas</th>
+          <th>Pendentes</th>
           <th>Variação</th>
         </tr>
       </thead>
@@ -1197,6 +1302,10 @@ footer {
   Relatório gerado automaticamente pelo Outsera QA Automation.
   <br>
   Histórico consultado em reports/a11y/history.
+  <br>
+  O status aprovado indica ausência de regressões em relação ao baseline aplicado.
+  <br>
+  Violações conhecidas continuam visíveis nos indicadores e evidências.
   <br>
   As ocorrências não encontradas na execução atual devem ser revalidadas
   antes de serem consideradas efetivamente corrigidas.
@@ -1218,8 +1327,11 @@ console.log(`[DASHBOARD] Execuções registradas: ${historico.length}`);
 console.log(`[DASHBOARD] Páginas analisadas: ${resumoAtual.paginas}`);
 console.log(`[DASHBOARD] Páginas aprovadas: ${resumoAtual.aprovadas}`);
 console.log(`[DASHBOARD] Páginas reprovadas: ${resumoAtual.reprovadas}`);
-console.log(`[DASHBOARD] Regras com violações: ${resumoAtual.regras}`);
+console.log(`[DASHBOARD] Páginas pendentes: ${resumoAtual.pendentes}`);
+console.log(`[DASHBOARD] Regras com violações Axe: ${resumoAtual.regras}`);
 console.log(`[DASHBOARD] Elementos afetados: ${resumoAtual.elementosAfetados}`);
+console.log(`[DASHBOARD] Novas violações no baseline: ${resumoAtual.novasViolacoesBaseline}`);
+console.log(`[DASHBOARD] Elementos externos excluídos: ${resumoAtual.elementosExternosExcluidos}`);
 console.log(`[DASHBOARD] Violações críticas: ${resumoAtual.criticas}`);
 console.log(`[DASHBOARD] Violações sérias: ${resumoAtual.serias}`);
 console.log(`[DASHBOARD] Violações moderadas: ${resumoAtual.moderadas}`);

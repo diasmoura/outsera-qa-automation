@@ -77,25 +77,18 @@ class ProductsPage {
           `[PRODUTOS] Tentativa ${tentativa} de carregamento.`
         );
 
-        if (!this.isProductsPage()) {
-          const response = await this.page.goto(
-            `${this.baseUrl}/products`,
-            {
-              waitUntil: 'domcontentloaded',
-              timeout: this.timeout
-            }
-          );
-
-          if (response && !response.ok()) {
-            throw new Error(
-              `A página retornou HTTP ${response.status()}.`
-            );
-          }
-        } else if (tentativa > 1) {
-          await this.page.reload({
+        const response = await this.page.goto(
+          `${this.baseUrl}/products`,
+          {
             waitUntil: 'domcontentloaded',
             timeout: this.timeout
-          });
+          }
+        );
+
+        if (response && !response.ok()) {
+          throw new Error(
+            `A página retornou HTTP ${response.status()}.`
+          );
         }
 
         if (!this.isProductsPage()) {
@@ -104,13 +97,11 @@ class ProductsPage {
           );
         }
 
-        // Aguarda a área principal dos produtos.
         await this.featuresItems.waitFor({
           state: 'visible',
           timeout: this.timeout
         });
 
-        // Aguarda o primeiro card efetivamente visível.
         await this.firstProduct.waitFor({
           state: 'visible',
           timeout: this.timeout
@@ -143,7 +134,9 @@ class ProductsPage {
       }
     }
 
-    const titulo = await this.page.title().catch(() => 'Indisponível');
+    const titulo = await this.page.title().catch(
+      () => 'Indisponível'
+    );
 
     throw new Error(
       '[PRODUTOS] Falha ao carregar a lista de produtos. ' +
@@ -162,7 +155,7 @@ class ProductsPage {
   }
 
   /**
-   * Adiciona o primeiro produto ao carrinho.
+   * Adiciona o primeiro produto ao carrinho via AJAX.
    */
   async addFirstProductToCart() {
     await this.ensureProductsPage();
@@ -174,7 +167,55 @@ class ProductsPage {
       timeout: this.timeout
     });
 
+    const productId = await this.addToCartButton.getAttribute(
+      'data-product-id'
+    );
+
+    if (!productId) {
+      throw new Error(
+        '[CARRINHO] Não foi possível identificar o ID do produto.'
+      );
+    }
+
+    // Registra a espera antes do clique para não perder a resposta AJAX.
+    const responsePromise = this.page.waitForResponse(
+      response => {
+        const url = new URL(response.url());
+
+        return (
+          url.origin === this.baseUrl &&
+          url.pathname === `/add_to_cart/${productId}` &&
+          response.request().method() === 'GET'
+        );
+      },
+      { timeout: this.timeout }
+    );
+
     await this.addToCartButton.click();
+
+    let response;
+
+    try {
+      response = await responsePromise;
+    } catch (error) {
+      throw new Error(
+        `[CARRINHO] A requisição de inclusão do produto ${productId} não foi identificada. ` +
+        `Detalhe: ${error.message}`,
+        { cause: error }
+      );
+    }
+
+    if (!response.ok()) {
+      throw new Error(
+        `[CARRINHO] Falha HTTP ${response.status()} ao adicionar o produto ${productId}.`
+      );
+    }
+
+    // O JavaScript do site adiciona a classe show no callback AJAX.
+    await this.cartModal.waitFor({
+      state: 'visible',
+      timeout: this.timeout
+    });
 
     await this.addedConfirmation.waitFor({
       state: 'visible',
@@ -182,7 +223,7 @@ class ProductsPage {
     });
 
     console.log(
-      '[CARRINHO] Produto adicionado com sucesso.'
+      `[CARRINHO] Produto ${productId} adicionado. HTTP ${response.status()} e modal confirmado.`
     );
 
     return true;
@@ -326,7 +367,6 @@ class ProductsPage {
 
   /**
    * Prossegue para o checkout.
-   * Aguarda a navegação e a renderização do endereço de entrega.
    */
   async proceedToCheckout() {
     await this.waitForCartPage();
@@ -341,8 +381,6 @@ class ProductsPage {
     }
 
     try {
-      // Registra a espera antes do clique para não perder
-      // o evento de navegação no WebKit.
       const navegacao = this.page.waitForURL(
         url => (
           url.pathname.replace(/\/+$/, '').endsWith('/checkout')
@@ -357,7 +395,6 @@ class ProductsPage {
 
       await navegacao;
 
-      // Aguarda o conteúdo real do checkout.
       await this.deliveryAddress.waitFor({
         state: 'visible',
         timeout: this.timeout
