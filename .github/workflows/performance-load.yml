@@ -1,0 +1,95 @@
+
+name: Performance - Load Test
+
+on:
+  schedule:
+    # Todo domingo às 03:00 UTC (00:00 no horário de Brasília)
+    - cron: '0 3 * * 0'
+
+  workflow_dispatch:
+    inputs:
+      confirm_load:
+        description: "Confirmar execução do teste de carga?"
+        required: true
+        type: choice
+        options:
+          - "no"
+          - "yes"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: performance-load
+  cancel-in-progress: false
+
+jobs:
+  load:
+    name: Controlled Load Test (K6)
+    if: ${{ github.event_name == 'schedule' || inputs.confirm_load == 'yes' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+
+    env:
+      BASE_URL: http://localhost:3000
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install K6
+        uses: grafana/setup-k6-action@v1
+
+      - name: Create report directories
+        run: |
+          mkdir -p reports/performance/history/load
+
+      - name: Start local test API
+        run: |
+          node performance/server.js > server.log 2>&1 &
+
+          for i in {1..30}; do
+            if curl -fsS http://localhost:3000/health; then
+              echo "API de teste iniciada com sucesso."
+              exit 0
+            fi
+
+            sleep 2
+          done
+
+          echo "Erro: API de teste não iniciou."
+          cat server.log
+          exit 1
+
+      - name: Run K6 Load Test
+        run: |
+          k6 run \
+            -e BASE_URL="$BASE_URL" \
+            performance/load-test.js
+
+      - name: Generate K6 HTML report
+        if: always()
+        run: |
+          if [ -f reports/performance/load-summary.json ]; then
+            node performance/load-report.js
+          else
+            echo "Resumo Load K6 não encontrado."
+          fi
+
+      - name: Upload K6 Load results
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: performance-load-${{ github.run_number }}
+          path: reports/performance/
+          if-no-files-found: warn
+          retention-days: 30

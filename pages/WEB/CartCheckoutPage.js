@@ -150,23 +150,56 @@ class CartCheckoutPage {
    * Abre a tela de pagamento.
    */
   async openPaymentForm() {
-    await this.placeOrderLink.waitFor({
-      state: 'visible',
-      timeout: this.timeout
-    });
+    try {
+      await this.placeOrderLink.waitFor({
+        state: 'visible',
+        timeout: this.timeout
+      });
 
-    await this.placeOrderLink.click();
+      console.log('[CHECKOUT] Aguardando acesso à página de pagamento.');
 
-    await this.page.waitForURL('**/payment', {
-      timeout: this.timeout
-    });
+      const urlAtual = this.page.url();
 
-    await this.cardNumber.waitFor({
-      state: 'visible',
-      timeout: this.timeout
-    });
+      if (urlAtual.includes('/payment')) {
+        console.log('[CHECKOUT] Página de pagamento já está aberta.');
+      } else {
+        await Promise.all([
+          this.page.waitForURL(
+            url => url.pathname.replace(/\/+$/, '').endsWith('/payment'),
+            {
+              waitUntil: 'domcontentloaded',
+              timeout: this.timeout
+            }
+          ),
+          this.placeOrderLink.click()
+        ]);
+      }
 
-    return true;
+      await this.cardNumber.waitFor({
+        state: 'visible',
+        timeout: this.timeout
+      });
+
+      const urlFinal = this.page.url();
+
+      if (!urlFinal.includes('/payment')) {
+        throw new Error(
+          `URL inesperada após acesso ao pagamento: ${urlFinal}`
+        );
+      }
+
+      console.log('[CHECKOUT] Página de pagamento carregada.');
+
+      return true;
+
+    } catch (error) {
+      throw new Error(
+        '[CHECKOUT] Não foi possível acessar o formulário de pagamento. ' +
+        `URL atual: ${this.page.url()}. ` +
+        `Detalhe: ${error.message}`,
+        { cause: error }
+      );
+    }
   }
 
   /**

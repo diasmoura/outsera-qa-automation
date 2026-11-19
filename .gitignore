@@ -1,7 +1,29 @@
+# Variáveis de ambiente e informações sensíveis
+.env
+.env.*
+!.env.example
+
+# Dependências
 node_modules/
+
+# Relatórios e evidências geradas
+reports/*
+!reports/
+!reports/generate-accessibility-dashboard.js
+!reports/generate-accessibility-jira-csv.js
+!reports/generate-accessibility-report.js
+
+# Documentação das análises de performance
+!reports/performance/
+reports/performance/*
+!reports/performance/*-analysis.md
+
 playwright-report/
 test-results/
-reports/evidences/
 
+# Arquivos do sistema
 .DS_Store
 Thumbs.db
+
+# Configurações locais da IDE
+.idea/

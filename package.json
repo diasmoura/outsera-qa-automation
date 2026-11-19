@@ -1,26 +1,39 @@
-
 {
   "name": "outsera-qa-automation",
   "version": "1.0.0",
-  "description": "Automação de testes Web, API e Performance com Cucumber, Playwright, BDD e K6",
+  "description": "Automação de testes Web, API, Performance e Acessibilidade com Cucumber, Playwright, Axe-core e K6",
   "main": "index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "test:bdd": "cucumber-js --format progress --format json:reports/bdd/cucumber-report.json features",
     "test:login": "cucumber-js --format progress features/WEB/login.feature",
     "test:checkout": "cucumber-js --format progress features/WEB/ecommerce-checkout.feature",
     "test:cart:add": "cucumber-js --name \"Adicionar produto ao carrinho\" features/WEB",
-    "test:web": "cucumber-js --format progress --format json:reports/cucumber-web-report.json features/WEB",
-    "test:api": "cucumber-js --format progress --format json:reports/cucumber-api-report.json features/API",
+    "test:web": "npm run test:web:chromium",
+    "test:web:chromium": "cross-env BROWSER=chromium cucumber-js --require \"./step-definitions/**/*.js\" --format progress --format json:reports/web/chromium-report.json features/WEB",
+    "test:web:firefox": "cross-env BROWSER=firefox cucumber-js --require \"./step-definitions/**/*.js\" --format progress --format json:reports/web/firefox-report.json features/WEB",
+    "test:web:webkit": "cross-env BROWSER=webkit cucumber-js --require \"./step-definitions/**/*.js\" --format progress --format json:reports/web/webkit-report.json features/WEB",
+    "test:web:cross": "npm run test:web:chromium && npm run test:web:firefox && npm run test:web:webkit",
+    "test:api": "cucumber-js --require \"./step-definitions/**/*.js\" --format progress --format json:reports/api/cucumber-api-report.json features/API",
     "test:playwright": "playwright test",
     "test:playwright:report": "playwright show-report",
+    "test:a11y": "cross-env BROWSER=chromium cucumber-js --require \"./step-definitions/**/*.js\" --format progress --format json:reports/a11y/cucumber-a11y-report.json features/WEB --tags @a11y",
+    "test:a11y:dashboard": "node reports/generate-accessibility-dashboard.js",
+    "test:a11y:report": "npm run test:a11y && npm run test:a11y:dashboard",
     "test:k6:smoke": "k6 run performance/smoke-test.js",
     "test:k6:load": "k6 run performance/load-test.js",
     "report": "node cucumber-report.js",
     "dashboard": "node dashboard.js",
-    "test:report": "npm run test:web && npm run test:api && npm run report",
-    "test:all": "npm run test:web && npm run test:api && npm run test:playwright",
+    "test:report": "npm run test:api && npm run test:web:chromium && npm run report && npm run dashboard",
+    "test:all": "npm run test:api && npm run test:web:cross",
     "test:all:report": "npm run test:all && npm run report && npm run dashboard",
-    "test:dashboard": "npm run dashboard"
+    "test:dashboard": "npm run dashboard",
+    "lint": "eslint .",
+    "audit": "npm audit --audit-level=high",
+    "test:quality": "npm run lint && npm run audit && npm run test:api && npm run test:web:chromium"
   },
   "keywords": [
     "qa",
@@ -32,20 +45,26 @@
     "cucumber",
     "bdd",
     "performance",
-    "k6"
+    "k6",
+    "acessibilidade",
+    "axe"
   ],
   "author": "Lucas Dias",
   "license": "ISC",
-  "type": "commonjs",
-  "devDependencies": {
-    "@cucumber/cucumber": "^13.3.0",
-    "@playwright/test": "^1.64.1",
-    "@types/node": "^26.6.5",
-    "multiple-cucumber-html-reporter": "^4.5.0",
-    "playwright": "^1.64.1"
-  },
   "dependencies": {
     "dotenv": "^18.0.9",
     "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@cucumber/cucumber": "^13.3.0",
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.65.1",
+    "@types/node": "^26.6.5",
+    "cross-env": "^10.1.0",
+    "eslint": "^10.15.0",
+    "globals": "^17.14.0",
+    "multiple-cucumber-html-reporter": "^4.5.0",
+    "playwright": "^1.64.1"
   }
 }

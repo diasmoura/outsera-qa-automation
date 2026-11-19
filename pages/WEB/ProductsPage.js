@@ -6,14 +6,15 @@ class ProductsPage {
     this.baseUrl = 'https://automationexercise.com';
 
     // Lista de produtos
+    this.featuresItems = this.page.locator('.features_items');
+
     this.productCards = this.page.locator(
-      '.features_items .product-image-wrapper'
+      '.features_items .product-image-wrapper:visible'
     );
 
     this.firstProduct = this.productCards.first();
 
-    // O site apresenta dois botões Add to cart no primeiro card.
-    // Utilizamos o primeiro para evitar strict mode violation.
+    // Primeiro botão Add to cart do primeiro produto
     this.addToCartButton = this.firstProduct
       .locator('.add-to-cart')
       .first();
@@ -43,23 +44,53 @@ class ProductsPage {
     this.checkoutButton = this.page.locator(
       '.btn.btn-default.check_out'
     );
+
+    // Endereço de entrega no checkout
+    this.deliveryAddress = this.page.locator('#address_delivery');
   }
 
   /**
-   * Acessa a página de produtos e valida o carregamento.
+   * Verifica se a URL atual corresponde à página de produtos.
+   */
+  isProductsPage() {
+    try {
+      const url = new URL(this.page.url());
+
+      return (
+        url.hostname === 'automationexercise.com' &&
+        url.pathname.replace(/\/+$/, '') === '/products'
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Acessa a página de produtos e valida seu carregamento.
    */
   async ensureProductsPage() {
+    let ultimoErro;
+
     for (let tentativa = 1; tentativa <= 2; tentativa++) {
       try {
         console.log(
           `[PRODUTOS] Tentativa ${tentativa} de carregamento.`
         );
 
-        if (!this.page.url().includes('/products')) {
-          await this.page.goto(`${this.baseUrl}/products`, {
-            waitUntil: 'domcontentloaded',
-            timeout: this.timeout
-          });
+        if (!this.isProductsPage()) {
+          const response = await this.page.goto(
+            `${this.baseUrl}/products`,
+            {
+              waitUntil: 'domcontentloaded',
+              timeout: this.timeout
+            }
+          );
+
+          if (response && !response.ok()) {
+            throw new Error(
+              `A página retornou HTTP ${response.status()}.`
+            );
+          }
         } else if (tentativa > 1) {
           await this.page.reload({
             waitUntil: 'domcontentloaded',
@@ -67,6 +98,19 @@ class ProductsPage {
           });
         }
 
+        if (!this.isProductsPage()) {
+          throw new Error(
+            `URL inesperada: ${this.page.url()}`
+          );
+        }
+
+        // Aguarda a área principal dos produtos.
+        await this.featuresItems.waitFor({
+          state: 'visible',
+          timeout: this.timeout
+        });
+
+        // Aguarda o primeiro card efetivamente visível.
         await this.firstProduct.waitFor({
           state: 'visible',
           timeout: this.timeout
@@ -75,27 +119,39 @@ class ProductsPage {
         const quantidade = await this.productCards.count();
 
         if (quantidade === 0) {
-          throw new Error('Nenhum produto foi encontrado.');
+          throw new Error(
+            'A área de produtos foi carregada, mas nenhum card visível foi encontrado.'
+          );
         }
 
         console.log(
-          `[PRODUTOS] ${quantidade} produtos carregados.`
+          `[PRODUTOS] ${quantidade} produtos visíveis carregados.`
         );
 
         return true;
 
       } catch (error) {
+        ultimoErro = error;
+
         console.warn(
           `[PRODUTOS] Tentativa ${tentativa} falhou: ${error.message}`
         );
 
         if (tentativa === 2) {
-          throw new Error(
-            `Falha ao carregar produtos: ${error.message}`
-          );
+          break;
         }
       }
     }
+
+    const titulo = await this.page.title().catch(() => 'Indisponível');
+
+    throw new Error(
+      '[PRODUTOS] Falha ao carregar a lista de produtos. ' +
+      `URL atual: ${this.page.url()}. ` +
+      `Título: ${titulo}. ` +
+      `Detalhe: ${ultimoErro ? ultimoErro.message : 'Erro não identificado'}.`,
+      { cause: ultimoErro }
+    );
   }
 
   /**
@@ -150,10 +206,8 @@ class ProductsPage {
 
   /**
    * Abre o carrinho.
-   *
-   * Se o modal estiver visível, utiliza o botão View Cart.
-   * Se não estiver visível, acessa diretamente o carrinho.
-   * Isso permite testar também o cenário de carrinho vazio.
+   * Utiliza o modal quando disponível.
+   * Caso contrário, navega diretamente para o carrinho.
    */
   async openCartFromConfirmation() {
     const modalVisivel = await this.cartModal.isVisible()
@@ -167,9 +221,10 @@ class ProductsPage {
 
       await this.viewCartButton.click();
 
-      await this.page.waitForURL(/view_cart/, {
-        timeout: this.timeout
-      });
+      await this.page.waitForURL(
+        /\/view_cart(?:[/?#]|$)/,
+        { timeout: this.timeout }
+      );
 
     } else {
       console.log(
@@ -184,7 +239,9 @@ class ProductsPage {
 
     await this.waitForCartPage();
 
-    console.log('[CARRINHO] Página do carrinho acessada.');
+    console.log(
+      '[CARRINHO] Página do carrinho acessada.'
+    );
 
     return true;
   }
@@ -205,21 +262,27 @@ class ProductsPage {
       timeout: this.timeout
     });
 
-    // Aguarda a tabela ou a mensagem de carrinho vazio.
-    await Promise.race([
-      this.cartTable.waitFor({
-        state: 'visible',
-        timeout: this.timeout
-      }),
-      this.emptyCartMessage.waitFor({
-        state: 'visible',
-        timeout: this.timeout
-      })
-    ]).catch(async () => {
+    try {
+      await Promise.any([
+        this.cartTable.waitFor({
+          state: 'visible',
+          timeout: this.timeout
+        }),
+
+        this.emptyCartMessage.waitFor({
+          state: 'visible',
+          timeout: this.timeout
+        })
+      ]);
+    } catch (error) {
       throw new Error(
-        'A página do carrinho carregou, mas não foi possível identificar a tabela ou o estado vazio.'
+        '[CARRINHO] A página foi carregada, mas não foi possível ' +
+        'identificar a tabela de produtos ou a mensagem de carrinho vazio. ' +
+        `URL: ${this.page.url()}. ` +
+        `Detalhe: ${error.message}`,
+        { cause: error }
       );
-    });
+    }
 
     return true;
   }
@@ -230,9 +293,7 @@ class ProductsPage {
   async getCartProductCount() {
     await this.waitForCartPage();
 
-    const quantidade = await this.cartRows.count();
-
-    return quantidade;
+    return this.cartRows.count();
   }
 
   /**
@@ -265,6 +326,7 @@ class ProductsPage {
 
   /**
    * Prossegue para o checkout.
+   * Aguarda a navegação e a renderização do endereço de entrega.
    */
   async proceedToCheckout() {
     await this.waitForCartPage();
@@ -273,17 +335,48 @@ class ProductsPage {
 
     if (!disponivel) {
       throw new Error(
-        'Botão de checkout indisponível. Verifique se o carrinho possui produtos.'
+        '[CHECKOUT] Botão indisponível. ' +
+        'Verifique se o carrinho possui produtos.'
       );
     }
 
-    await this.checkoutButton.click();
+    try {
+      // Registra a espera antes do clique para não perder
+      // o evento de navegação no WebKit.
+      const navegacao = this.page.waitForURL(
+        url => (
+          url.pathname.replace(/\/+$/, '').endsWith('/checkout')
+        ),
+        {
+          waitUntil: 'domcontentloaded',
+          timeout: this.timeout
+        }
+      );
 
-    await this.page.waitForLoadState('domcontentloaded');
+      await this.checkoutButton.click();
 
-    console.log('[CHECKOUT] Acessando checkout.');
+      await navegacao;
 
-    return true;
+      // Aguarda o conteúdo real do checkout.
+      await this.deliveryAddress.waitFor({
+        state: 'visible',
+        timeout: this.timeout
+      });
+
+      console.log(
+        `[CHECKOUT] Página carregada e estabilizada. URL atual: ${this.page.url()}`
+      );
+
+      return true;
+
+    } catch (error) {
+      throw new Error(
+        '[CHECKOUT] Falha ao acessar ou estabilizar a página. ' +
+        `URL atual: ${this.page.url()}. ` +
+        `Detalhe: ${error.message}`,
+        { cause: error }
+      );
+    }
   }
 }
 

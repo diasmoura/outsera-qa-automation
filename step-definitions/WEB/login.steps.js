@@ -4,8 +4,6 @@ require('dotenv').config();
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { AuthPage } = require('../../pages/WEB/AuthPage');
 
-const TIMEOUT = 15000;
-
 // ==================================================
 // INICIALIZAÇÃO
 // ==================================================
@@ -36,23 +34,26 @@ const validarCredenciais = () => {
     );
   }
 
-  return { email, senha };
+  return {
+    email: email.trim(),
+    senha
+  };
 };
 
 // ==================================================
-// VALIDAÇÃO DE E-MAIL
+// VALIDAÇÃO DE E-MAIL CADASTRADO
 // ==================================================
 
 const validarEmailCadastrado = () => {
   const email = process.env.QA_LOGIN_EMAIL;
 
-  if (!email) {
+  if (!email || !email.trim()) {
     throw new Error(
       '[CONFIGURAÇÃO] Configure QA_LOGIN_EMAIL no arquivo .env.'
     );
   }
 
-  return email;
+  return email.trim();
 };
 
 // ==================================================
@@ -90,7 +91,7 @@ When('informo um e-mail cadastrado', async function () {
 
   const email = validarEmailCadastrado();
 
-  await this.authPage.emailInput.fill(email);
+  await this.authPage.preencherEmail(email);
 
   console.log('[LOGIN] E-mail cadastrado informado.');
 });
@@ -102,7 +103,7 @@ When('informo um e-mail cadastrado', async function () {
 When('informo uma senha incorreta', async function () {
   inicializarAuthPage.call(this);
 
-  await this.authPage.passwordInput.fill('SenhaIncorreta123!');
+  await this.authPage.preencherSenha('SenhaIncorreta123!');
 
   console.log('[LOGIN] Senha incorreta informada.');
 });
@@ -114,7 +115,7 @@ When('informo uma senha incorreta', async function () {
 When('informo uma senha qualquer', async function () {
   inicializarAuthPage.call(this);
 
-  await this.authPage.passwordInput.fill('SenhaQualquer123!');
+  await this.authPage.preencherSenha('SenhaQualquer123!');
 
   console.log('[LOGIN] Senha inválida informada.');
 });
@@ -129,7 +130,7 @@ When('informo um e-mail não cadastrado', async function () {
   const emailInexistente =
     `qa-inexistente-${Date.now()}@example.com`;
 
-  await this.authPage.emailInput.fill(emailInexistente);
+  await this.authPage.preencherEmail(emailInexistente);
 
   console.log('[LOGIN] E-mail não cadastrado informado.');
 });
@@ -153,8 +154,8 @@ When('solicito o login', async function () {
 When('deixo o e-mail e a senha em branco', async function () {
   inicializarAuthPage.call(this);
 
-  await this.authPage.emailInput.fill('');
-  await this.authPage.passwordInput.fill('');
+  await this.authPage.preencherEmail('');
+  await this.authPage.preencherSenha('');
 
   console.log('[LOGIN] Campos de e-mail e senha deixados em branco.');
 });
@@ -188,7 +189,8 @@ const validarMensagemErroLogin = async function (tipoMensagem) {
 
   if (!mensagem || !mensagem.trim()) {
     throw new Error(
-      `[LOGIN] Nenhuma mensagem de erro foi exibida para o cenário: ${tipoMensagem}.`
+      `[LOGIN] Nenhuma mensagem de erro foi exibida para o cenário: ${tipoMensagem}. ` +
+      `URL atual: ${this.page.url()}.`
     );
   }
 

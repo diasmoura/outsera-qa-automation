@@ -3,15 +3,12 @@ class AuthPage {
   constructor(page) {
     this.page = page;
 
-    // Título da página de login
     this.loginHeading = page.getByRole('heading', {
       name: /login to your account/i
     });
 
-    // Formulário de autenticação
     this.loginForm = page.locator('form[action="/login"]');
 
-    // Campos de autenticação
     this.emailInput = this.loginForm.locator(
       'input[data-qa="login-email"]'
     );
@@ -20,19 +17,18 @@ class AuthPage {
       'input[data-qa="login-password"]'
     );
 
-    // Botão de login
     this.loginButton = this.loginForm.locator(
       'button[data-qa="login-button"]'
     );
 
-    // Mensagem de erro
-    this.errorMessage = this.loginForm.locator('p');
+    // A mensagem pode aparecer em diferentes posições do formulário.
+    this.errorMessage = page.locator(
+      '.login-form form p, form[action="/login"] p, .login-form p'
+    );
 
-    // Usuário autenticado
     this.loggedInAs = page.getByText(/logged in as/i);
   }
 
-  // Acessar página de login
   async acessarPagina() {
     const response = await this.page.goto(
       'https://automationexercise.com/login',
@@ -57,52 +53,57 @@ class AuthPage {
       state: 'visible',
       timeout: 10000
     });
+
+    await this.passwordInput.waitFor({
+      state: 'visible',
+      timeout: 10000
+    });
   }
 
-  // Realizar login
   async login(email, password) {
     await this.emailInput.fill(email);
     await this.passwordInput.fill(password);
     await this.loginButton.click();
   }
 
-  // Preencher e-mail
   async preencherEmail(email) {
     await this.emailInput.fill(email);
   }
 
-  // Preencher senha
   async preencherSenha(password) {
     await this.passwordInput.fill(password);
   }
 
-  // Clicar no botão de login
   async clicarLogin() {
     await this.loginButton.click();
   }
 
-  // Verificar visibilidade da página
   async isLoginVisible() {
     return this.loginHeading.isVisible();
   }
 
-  // Capturar mensagem de erro
   async getErrorMessage() {
-    const mensagem = this.errorMessage.first();
+    const mensagemEsperada = this.errorMessage.filter({
+      hasText: /incorrect|invalid|incorreto|incorreta|inválido|inválida/i
+    });
 
-    await mensagem.waitFor({
-      state: 'visible',
-      timeout: 10000
-    }).catch(() => {});
+    try {
+      await mensagemEsperada.first().waitFor({
+        state: 'visible',
+        timeout: 10000
+      });
 
-    if (!(await mensagem.isVisible().catch(() => false))) {
+      const mensagens = await mensagemEsperada.allInnerTexts();
+
+      return mensagens
+        .map(mensagem => mensagem.trim())
+        .filter(Boolean)
+        .join(' | ');
+    } catch (_error) {
       return '';
     }
-
-    return (await mensagem.innerText()).trim();
   }
 
-  // Validar usuário autenticado
   async validarUsuarioAutenticado() {
     await this.loggedInAs.waitFor({
       state: 'visible',

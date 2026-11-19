@@ -70,6 +70,33 @@ const inicializarPaginas = function () {
 };
 
 // ==================================================
+// ACESSAR LISTA DE PRODUTOS
+// ==================================================
+
+const acessarListaProdutos = async function () {
+  inicializarPaginas.call(this);
+
+  try {
+    console.log(
+      '[PRODUTOS] Validando carregamento da lista de produtos.'
+    );
+
+    // Centraliza a navegação e validação no Page Object.
+    await this.productsPage.waitForProducts();
+
+    console.log('[PRODUTOS] Lista de produtos carregada.');
+
+  } catch (error) {
+    throw new Error(
+      '[PRODUTOS] Não foi possível acessar a lista de produtos. ' +
+      `URL atual: ${this.page.url()}. ` +
+      `Detalhe: ${error.message}`,
+      { cause: error }
+    );
+  }
+};
+
+// ==================================================
 // LOGIN
 // ==================================================
 
@@ -82,23 +109,61 @@ const realizarLogin = async function () {
     .catch(() => false);
 
   if (usuarioAutenticado) {
-    console.log('[LOGIN] Usuário já está autenticado.');
+    console.log('[LOGIN] Usuário já autenticado.');
     return;
   }
 
   const { email, senha } = validarCredenciais();
+
+  console.log('[LOGIN] Acessando formulário de autenticação.');
 
   await this.page.goto(`${BASE_URL}/login`, {
     waitUntil: 'domcontentloaded',
     timeout: TIMEOUT
   });
 
-  await this.authPage.login(email, senha);
+  const campoEmail = this.page.locator(
+    'form[action="/login"] input[data-qa="login-email"]'
+  );
 
-  await this.page.getByText(/logged in as/i).waitFor({
+  const campoSenha = this.page.locator(
+    'form[action="/login"] input[data-qa="login-password"]'
+  );
+
+  const botaoLogin = this.page.locator(
+    'form[action="/login"] button[data-qa="login-button"]'
+  );
+
+  await campoEmail.waitFor({
     state: 'visible',
     timeout: TIMEOUT
   });
+
+  await campoEmail.fill(email);
+  await campoSenha.fill(senha);
+
+  await botaoLogin.click();
+
+  try {
+    await this.page.getByText(/logged in as/i).waitFor({
+      state: 'visible',
+      timeout: TIMEOUT
+    });
+  } catch (error) {
+    const mensagem = await this.page
+      .locator('form[action="/login"] p')
+      .allInnerTexts()
+      .catch(() => []);
+
+    throw new Error(
+      '[LOGIN] Falha na autenticação. ' +
+      `URL: ${this.page.url()}. ` +
+      `Mensagem: ${mensagem.join(' | ') || 'Não identificada'}. ` +
+      'Verifique as credenciais QA_LOGIN_EMAIL e QA_LOGIN_PASSWORD. ' +
+      `Detalhe técnico: ${error.message}`,
+      { cause: error }
+    );
+  }
 
   console.log('[LOGIN] Usuário autenticado com sucesso.');
 };
@@ -111,18 +176,19 @@ const prepararProdutoNoCarrinho = async function () {
   try {
     inicializarPaginas.call(this);
 
+    // Garante autenticação antes de preparar o carrinho.
     await realizarLogin.call(this);
 
-    await this.homePage.openProducts();
+    // Centraliza a validação da lista de produtos.
+    await acessarListaProdutos.call(this);
 
-    await this.productsPage.ensureProductsPage();
-
-    console.log('[PRODUTOS] Lista de produtos acessada.');
-
+    // Adiciona o primeiro produto.
     await this.productsPage.addFirstProductToCart();
 
+    // Abre o carrinho.
     await this.productsPage.openCartFromConfirmation();
 
+    // Valida se o produto foi efetivamente adicionado.
     const produtoAdicionado =
       await this.productsPage.isProductVisibleInCart();
 
@@ -138,9 +204,10 @@ const prepararProdutoNoCarrinho = async function () {
 
   } catch (error) {
     throw new Error(
-      `[PREPARAÇÃO DO CARRINHO] Falha ao preparar produto para checkout. ` +
+      '[PREPARAÇÃO DO CARRINHO] Falha ao preparar produto para checkout. ' +
       `URL: ${this.page ? this.page.url() : 'indisponível'}. ` +
-      `Detalhe: ${error.message}`
+      `Detalhe: ${error.message}`,
+      { cause: error }
     );
   }
 };
@@ -170,21 +237,11 @@ Given('que acesso a página inicial', async function () {
 // ==================================================
 
 Given('que acesso a lista de produtos', async function () {
-  inicializarPaginas.call(this);
-
-  await this.homePage.openProducts();
-  await this.productsPage.ensureProductsPage();
-
-  console.log('[PRODUTOS] Lista de produtos acessada.');
+  await acessarListaProdutos.call(this);
 });
 
 When('acesso a lista de produtos', async function () {
-  inicializarPaginas.call(this);
-
-  await this.homePage.openProducts();
-  await this.productsPage.ensureProductsPage();
-
-  console.log('[PRODUTOS] Lista de produtos acessada.');
+  await acessarListaProdutos.call(this);
 });
 
 // ==================================================
@@ -390,10 +447,8 @@ When('preencho o formulário de pagamento com dados válidos', async function ()
     );
   }
 
-  // Abre a página de pagamento.
   await this.cartCheckoutPage.openPaymentForm();
 
-  // Preenche os dados do cartão.
   await this.cartCheckoutPage.fillPaymentForm(dados);
 
   console.log('[PAGAMENTO] Formulário preenchido com sucesso.');

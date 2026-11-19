@@ -1,4 +1,3 @@
-
 name: QA Automation - CI/CD Pipeline
 
 on:
@@ -13,11 +12,19 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: qa-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  web-tests:
-    name: Web BDD Tests
+  # ==========================================
+  # STATIC QUALITY GATE
+  # ==========================================
+
+  quality-gate:
+    name: Static Quality Gate
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
@@ -32,13 +39,52 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright Chromium
-        run: npx playwright install --with-deps chromium
+      - name: Run ESLint
+        run: npm run lint
 
-      - name: Run Web tests
+      - name: Run NPM Audit
+        run: npm run audit
+
+  # ==========================================
+  # WEB BDD TESTS - CROSS BROWSER
+  # ==========================================
+
+  web-tests:
+    name: Web BDD Tests - Cross Browser
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create report directories
         run: |
-          mkdir -p reports
-          npm run test:web
+          mkdir -p reports/web
+          mkdir -p reports/evidences
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Run Web BDD tests
+        env:
+          QA_LOGIN_EMAIL: ${{ secrets.QA_LOGIN_EMAIL }}
+          QA_LOGIN_PASSWORD: ${{ secrets.QA_LOGIN_PASSWORD }}
+          QA_CARD_NAME: ${{ secrets.QA_CARD_NAME }}
+          QA_CARD_NUMBER: ${{ secrets.QA_CARD_NUMBER }}
+          QA_CARD_CVC: ${{ secrets.QA_CARD_CVC }}
+          QA_CARD_EXPIRY_MONTH: ${{ vars.QA_CARD_EXPIRY_MONTH }}
+          QA_CARD_EXPIRY_YEAR: ${{ vars.QA_CARD_EXPIRY_YEAR }}
+        run: npm run test:web:cross
 
       - name: Upload Web results
         if: always()
@@ -46,10 +92,16 @@ jobs:
         with:
           name: web-results
           path: |
-            reports/cucumber-web-report.json
+            reports/web/chromium-report.json
+            reports/web/firefox-report.json
+            reports/web/webkit-report.json
             reports/evidences/
           if-no-files-found: warn
           retention-days: 15
+
+  # ==========================================
+  # API BDD TESTS
+  # ==========================================
 
   api-tests:
     name: API BDD Tests
@@ -69,19 +121,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run API tests
-        run: |
-          mkdir -p reports
-          npm run test:api
+      - name: Create report directories
+        run: mkdir -p reports/api
+
+      - name: Run API BDD tests
+        run: npm run test:api
 
       - name: Upload API results
         if: always()
         uses: actions/upload-artifact@v7
         with:
           name: api-results
-          path: reports/cucumber-api-report.json
+          path: reports/api/cucumber-api-report.json
           if-no-files-found: warn
           retention-days: 15
+
+  # ==========================================
+  # PLAYWRIGHT TESTS
+  # ==========================================
 
   playwright-tests:
     name: Playwright Tests
@@ -101,8 +158,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Create report directories
+        run: |
+          mkdir -p playwright-report
+          mkdir -p test-results
+
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium firefox webkit
 
       - name: Run Playwright tests
         run: npm run test:playwright
@@ -118,10 +180,14 @@ jobs:
           if-no-files-found: warn
           retention-days: 15
 
+  # ==========================================
+  # PERFORMANCE TESTS - K6 SMOKE
+  # ==========================================
+
   performance-tests:
-    name: Performance Tests (K6)
+    name: Performance Smoke Test (K6)
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
@@ -139,12 +205,16 @@ jobs:
       - name: Install K6
         uses: grafana/setup-k6-action@v1
 
+      - name: Create performance report directories
+        run: |
+          mkdir -p reports/performance/history/smoke
+
       - name: Start local API
         run: |
-          mkdir -p reports/performance
           nohup node performance/server.js > /tmp/qa-api.log 2>&1 &
 
       - name: Wait for API
+        shell: bash
         run: |
           for attempt in {1..30}; do
             if curl --silent --fail http://localhost:3000/health; then
@@ -160,18 +230,21 @@ jobs:
           cat /tmp/qa-api.log
           exit 1
 
-      - name: Run K6 load test
+      - name: Run K6 Smoke Test
         env:
           BASE_URL: http://localhost:3000
-        run: k6 run performance/load-test.js
+        run: |
+          k6 run \
+            -e BASE_URL="$BASE_URL" \
+            performance/smoke-test.js
 
       - name: Generate K6 HTML report
         if: always()
         run: |
-          if [ -f reports/performance/load-summary.json ]; then
-            node performance/load-report.js
+          if [ -f reports/performance/smoke-summary.json ]; then
+            node performance/report.js
           else
-            echo "Resumo K6 não encontrado."
+            echo "Resumo Smoke K6 não encontrado."
           fi
 
       - name: Upload K6 results
@@ -183,12 +256,17 @@ jobs:
           if-no-files-found: warn
           retention-days: 15
 
+  # ==========================================
+  # CONSOLIDATED REPORT
+  # ==========================================
+
   report:
     name: Generate Consolidated Report
     runs-on: ubuntu-24.04
     timeout-minutes: 15
 
     needs:
+      - quality-gate
       - web-tests
       - api-tests
       - playwright-tests
@@ -209,11 +287,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Create report directories
+        run: |
+          mkdir -p reports/web
+          mkdir -p reports/api
+          mkdir -p reports/performance
+          mkdir -p reports/consolidated
+          mkdir -p test-results
+          mkdir -p playwright-report
+
+      # --------------------------------------
+      # DOWNLOAD ARTIFACTS
+      # --------------------------------------
+
       - name: Download Web results
         uses: actions/download-artifact@v7
         with:
           name: web-results
-          path: reports/web
+          path: reports
         continue-on-error: true
 
       - name: Download API results
@@ -237,39 +328,61 @@ jobs:
           path: reports/performance
         continue-on-error: true
 
+      # --------------------------------------
+      # PREPARE DASHBOARD INPUTS
+      # --------------------------------------
+
       - name: Prepare dashboard inputs
         shell: bash
         run: |
-          mkdir -p reports test-results
+          mkdir -p reports test-results playwright-report
 
-          if [ -f reports/web/cucumber-web-report.json ]; then
-            cp reports/web/cucumber-web-report.json reports/cucumber-web-report.json
-          fi
-
-          if [ -f reports/api/cucumber-api-report.json ]; then
-            cp reports/api/cucumber-api-report.json reports/cucumber-api-report.json
+          if [ -f reports/playwright/test-results/playwright-results.json ]; then
+            cp reports/playwright/test-results/playwright-results.json \
+              test-results/playwright-results.json
           fi
 
           if [ -f reports/playwright/test-results/.last-run.json ]; then
-            cp reports/playwright/test-results/.last-run.json test-results/.last-run.json
+            cp reports/playwright/test-results/.last-run.json \
+              test-results/.last-run.json
           fi
 
           if [ -d reports/playwright/playwright-report ]; then
-            cp -R reports/playwright/playwright-report ./playwright-report
+            cp -R reports/playwright/playwright-report/. \
+              playwright-report/
           fi
+
+          echo "Arquivos preparados para o dashboard:"
+          find reports test-results playwright-report \
+            -maxdepth 5 -type f 2>/dev/null || true
+
+      # --------------------------------------
+      # GENERATE CUCUMBER REPORT
+      # --------------------------------------
 
       - name: Generate consolidated Web and API report
         shell: bash
         run: |
-          if [ -f reports/cucumber-web-report.json ] || [ -f reports/cucumber-api-report.json ]; then
+          if [ -f reports/web/chromium-report.json ] && \
+             [ -f reports/web/firefox-report.json ] && \
+             [ -f reports/web/webkit-report.json ] && \
+             [ -f reports/api/cucumber-api-report.json ]; then
             node cucumber-report.js
           else
-            echo "Nenhum relatório Cucumber disponível para consolidação."
+            echo "Relatórios Web e API incompletos. Consolidação ignorada."
           fi
+
+      # --------------------------------------
+      # GENERATE QA DASHBOARD
+      # --------------------------------------
 
       - name: Generate QA dashboard
         if: always()
         run: node dashboard.js
+
+      # --------------------------------------
+      # UPLOAD FINAL REPORTS
+      # --------------------------------------
 
       - name: Upload final reports
         if: always()
@@ -279,5 +392,6 @@ jobs:
           path: |
             reports/
             playwright-report/
+            test-results/
           if-no-files-found: warn
           retention-days: 15

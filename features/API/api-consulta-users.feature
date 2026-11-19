@@ -1,14 +1,18 @@
-
 # language: pt
 
-Funcionalidade: Consulta de usuários
+Funcionalidade: Consulta de usuários na API
 
   Cenário: Consultar um usuário existente
     Quando consultar o usuário de ID 1
     Então a resposta da API deve ter status 200
     E o header Content-Type da consulta deve indicar JSON
     E o nome do usuário deve estar preenchido
+    E a resposta da consulta deve conter os dados obrigatórios do usuário
 
   Cenário: Consultar um usuário inexistente
     Quando consultar o usuário de ID 999
+    Então a resposta da API deve ter status 404
+
+  Cenário: Consultar uma rota inexistente
+    Quando consultar a rota inexistente de usuários
     Então a resposta da API deve ter status 404
