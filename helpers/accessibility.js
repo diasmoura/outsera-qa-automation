@@ -46,18 +46,9 @@ function salvarHistorico(analise) {
   );
 
   console.log('\n[A11Y] Histórico atualizado.');
-
-  console.log(
-    `[A11Y] Execução: ${identificadorExecucao}`
-  );
-
-  console.log(
-    `[A11Y] Páginas registradas: ${analisesExecucao.length}`
-  );
-
-  console.log(
-    `[A11Y] Arquivo: ${arquivoHistorico}`
-  );
+  console.log(`[A11Y] Execução: ${identificadorExecucao}`);
+  console.log(`[A11Y] Páginas registradas: ${analisesExecucao.length}`);
+  console.log(`[A11Y] Arquivo: ${arquivoHistorico}`);
 }
 
 // ==========================================
@@ -66,8 +57,7 @@ function salvarHistorico(analise) {
 
 function contarElementos(violacoes) {
   return violacoes.reduce(
-    (total, violacao) =>
-      total + (violacao.nodes || []).length,
+    (total, violacao) => total + (violacao.nodes || []).length,
     0
   );
 }
@@ -134,11 +124,9 @@ async function obterFramesPublicidade(page) {
         continue;
       }
 
-      const publicidadeGoogle = dominiosPublicidade.some(
-        regex => regex.test(hostname)
-      );
-
-      if (publicidadeGoogle) {
+      if (
+        dominiosPublicidade.some(regex => regex.test(hostname))
+      ) {
         framesPublicidade.push({
           url,
           hostname,
@@ -158,6 +146,14 @@ async function obterFramesPublicidade(page) {
 // ==========================================
 
 async function verificarAnotacaoGoogle(page, seletores) {
+  const classesGoogle = [
+    'google-anno-skip',
+    'google-anno-sc',
+    'google-anno',
+    'goog-rentries',
+    'goog-rentry'
+  ];
+
   for (const seletor of seletores) {
     if (!seletor || typeof seletor !== 'string') {
       continue;
@@ -165,53 +161,66 @@ async function verificarAnotacaoGoogle(page, seletores) {
 
     try {
       const locator = page.locator(seletor).first();
-
       const existe = await locator.count();
 
       if (!existe) {
         continue;
       }
 
-      const identificacao = await locator.evaluate(elemento => {
-        let atual = elemento;
+      const identificacao = await locator.evaluate(
+        (elemento, marcadores) => {
+          let atual = elemento;
 
-        while (atual && atual.nodeType === 1) {
-          const classes = atual.classList;
+          while (atual && atual.nodeType === 1) {
+            const classes = atual.classList;
 
-          const possuiClasseGoogle =
-            classes?.contains('google-anno-skip') ||
-            classes?.contains('google-anno-sc') ||
-            classes?.contains('google-anno');
+            const classesEncontradas = marcadores.filter(
+              classe => classes?.contains(classe)
+            );
 
-          const atributoVignette =
-            atual.getAttribute('data-google-vignette');
+            const atributoVignette =
+              atual.getAttribute('data-google-vignette');
 
-          const atributoInterstitial =
-            atual.getAttribute('data-google-interstitial');
+            const atributoInterstitial =
+              atual.getAttribute('data-google-interstitial');
 
-          const possuiAtributoGoogle =
-            atributoVignette === 'false' ||
-            atributoInterstitial === 'false';
+            const possuiAtributoGoogle =
+              atributoVignette === 'false' ||
+              atributoInterstitial === 'false';
 
-          if (possuiClasseGoogle && possuiAtributoGoogle) {
-            return {
-              identificada: true,
-              tag: atual.tagName,
-              id: atual.id || null,
-              classes: atual.className,
-              dataGoogleVignette: atributoVignette,
-              dataGoogleInterstitial: atributoInterstitial,
-              html: atual.outerHTML
-            };
+            const possuiMarcadorGoogle =
+              classesEncontradas.length > 0;
+
+            const possuiEstruturaGoogle =
+              classes?.contains('goog-rentries') ||
+              classes?.contains('goog-rentry');
+
+            const anotacaoIdentificada =
+              (possuiMarcadorGoogle && possuiAtributoGoogle) ||
+              possuiEstruturaGoogle;
+
+            if (anotacaoIdentificada) {
+              return {
+                identificada: true,
+                tag: atual.tagName,
+                id: atual.id || null,
+                classes: atual.className,
+                classesEncontradas,
+                dataGoogleVignette: atributoVignette,
+                dataGoogleInterstitial: atributoInterstitial,
+                html: atual.outerHTML
+              };
+            }
+
+            atual = atual.parentElement;
           }
 
-          atual = atual.parentElement;
-        }
-
-        return {
-          identificada: false
-        };
-      });
+          return {
+            identificada: false
+          };
+        },
+        classesGoogle
+      );
 
       if (identificacao.identificada) {
         return identificacao;
@@ -230,10 +239,7 @@ async function verificarAnotacaoGoogle(page, seletores) {
 // IDENTIFICAÇÃO DE ANÚNCIOS GOOGLE
 // ==========================================
 
-function identificarGoogleAdsPeloContexto(
-  seletores,
-  html
-) {
+function identificarGoogleAdsPeloContexto(seletores, html) {
   const caminhoSeletores = (seletores || []).join(' ');
   const htmlElemento = html || '';
 
@@ -257,11 +263,8 @@ function identificarGoogleAdsPeloContexto(
     };
   }
 
-  const possuiAswift =
-    /#aswift_\d+/i.test(caminhoSeletores);
-
-  const possuiAdIframe =
-    /#ad_iframe\b/i.test(caminhoSeletores);
+  const possuiAswift = /#aswift_\d+/i.test(caminhoSeletores);
+  const possuiAdIframe = /#ad_iframe\b/i.test(caminhoSeletores);
 
   if (possuiAswift && possuiAdIframe) {
     return {
@@ -280,11 +283,7 @@ function identificarGoogleAdsPeloContexto(
     /aswift_\d+/i
   ];
 
-  const identificadoPeloHTML = marcadoresHTML.some(
-    regex => regex.test(htmlElemento)
-  );
-
-  if (identificadoPeloHTML) {
+  if (marcadoresHTML.some(regex => regex.test(htmlElemento))) {
     return {
       identificada: true,
       motivo:
@@ -302,10 +301,7 @@ function identificarGoogleAdsPeloContexto(
 // IDENTIFICAÇÃO DE ANÚNCIO PELO CONTEXTO DOM
 // ==========================================
 
-async function verificarContextoAnuncioGoogle(
-  page,
-  seletores
-) {
+async function verificarContextoAnuncioGoogle(page, seletores) {
   for (const seletor of seletores) {
     if (!seletor || typeof seletor !== 'string') {
       continue;
@@ -313,7 +309,6 @@ async function verificarContextoAnuncioGoogle(
 
     try {
       const locator = page.locator(seletor).first();
-
       const existe = await locator.count();
 
       if (!existe) {
@@ -341,13 +336,9 @@ async function verificarContextoAnuncioGoogle(
               : '';
 
           const src = atual.getAttribute('src') || '';
-
           const href = atual.getAttribute('href') || '';
 
-          const identificadorContainer =
-            regexContainer.test(id);
-
-          if (identificadorContainer) {
+          if (regexContainer.test(id)) {
             evidencias.push({
               tipo: 'CONTAINER_GOOGLE',
               tag: atual.tagName,
@@ -409,10 +400,7 @@ async function verificarContextoAnuncioGoogle(
 // IDENTIFICAÇÃO DE ELEMENTOS EXTERNOS
 // ==========================================
 
-async function identificarElementosExternos(
-  page,
-  violacoes
-) {
+async function identificarElementosExternos(page, violacoes) {
   const violacoesElegiveis = [];
   const elementosExternosExcluidos = [];
 
@@ -425,11 +413,10 @@ async function identificarElementosExternos(
 
       // 1. IDENTIFICAÇÃO DIRETA DE ANÚNCIOS
 
-      const anuncioGoogle =
-        identificarGoogleAdsPeloContexto(
-          seletores,
-          html
-        );
+      const anuncioGoogle = identificarGoogleAdsPeloContexto(
+        seletores,
+        html
+      );
 
       if (anuncioGoogle.identificada) {
         elementosExternosExcluidos.push({
@@ -468,11 +455,10 @@ async function identificarElementosExternos(
 
       // 3. IDENTIFICAÇÃO DE ANOTAÇÕES GOOGLE
 
-      const resultadoDOM =
-        await verificarAnotacaoGoogle(
-          page,
-          seletores
-        );
+      const resultadoDOM = await verificarAnotacaoGoogle(
+        page,
+        seletores
+      );
 
       const identificacaoPeloHTML =
         (
@@ -488,8 +474,7 @@ async function identificarElementosExternos(
         );
 
       const anotacaoGoogle =
-        resultadoDOM.identificada ||
-        identificacaoPeloHTML;
+        resultadoDOM.identificada || identificacaoPeloHTML;
 
       if (anotacaoGoogle) {
         elementosExternosExcluidos.push({
@@ -498,13 +483,12 @@ async function identificarElementosExternos(
           html,
           tipo: 'ANOTACAO_GOOGLE',
 
-          elementoGoogle:
-            resultadoDOM.identificada
-              ? resultadoDOM
-              : null,
+          elementoGoogle: resultadoDOM.identificada
+            ? resultadoDOM
+            : null,
 
           motivo: resultadoDOM.identificada
-            ? 'Elemento ou ancestral identificado no DOM como anotação Google, por classe específica e atributo Google.'
+            ? 'Elemento ou ancestral identificado no DOM como anotação Google, por classe específica ou estrutura Google.'
             : 'Elemento identificado pelo HTML como anotação Google, com classe específica e atributo Google.'
         });
 
@@ -565,9 +549,7 @@ function obterBaseline(url) {
   }
 
   const host = endereco.hostname.toLowerCase();
-
-  const caminho =
-    endereco.pathname.replace(/\/+$/, '') || '/';
+  const caminho = endereco.pathname.replace(/\/+$/, '') || '/';
 
   if (host !== 'automationexercise.com') {
     return null;
@@ -614,9 +596,7 @@ function obterBaseline(url) {
     return null;
   }
 
-  console.log(
-    `[A11Y] Baseline identificado: ${caminho}`
-  );
+  console.log(`[A11Y] Baseline identificado: ${caminho}`);
 
   return { ...baseline };
 }
@@ -625,10 +605,7 @@ function obterBaseline(url) {
 // COMPARAÇÃO COM BASELINE
 // ==========================================
 
-function compararComBaseline(
-  url,
-  violacoesPorRegra
-) {
+function compararComBaseline(url, violacoesPorRegra) {
   const baseline = obterBaseline(url);
 
   const novasViolacoes = [];
@@ -658,15 +635,11 @@ function compararComBaseline(
   }
 
   const status =
-    novasViolacoes.length > 0
-      ? 'REPROVADO'
-      : 'APROVADO';
+    novasViolacoes.length > 0 ? 'REPROVADO' : 'APROVADO';
 
   return {
     baselineAplicado: Boolean(baseline),
-
     baseline: baseline || {},
-
     status,
 
     criterio: baseline
@@ -674,7 +647,6 @@ function compararComBaseline(
       : 'Validação estrita: nenhuma violação elegível é permitida.',
 
     novasViolacoes,
-
     violacoesConhecidas
   };
 }
@@ -686,22 +658,15 @@ function compararComBaseline(
 function formatarChecks(checks = []) {
   return checks.map(check => ({
     id: check.id || 'verificacao-nao-identificada',
-
     mensagem: check.message || '',
-
     impacto: check.impact || 'unknown',
-
     ajuda: check.help || '',
-
     documentacao: check.helpUrl || '',
-
     dados: serializarDados(check.data),
 
     nosRelacionados: (check.relatedNodes || []).map(node => ({
       seletor: obterSeletor(node.target),
-
       html: node.html || '',
-
       detalhes: node.failureSummary || ''
     }))
   }));
@@ -714,18 +679,13 @@ function formatarChecks(checks = []) {
 function formatarElemento(node, violacao) {
   return {
     impacto: node.impact || violacao.impact || 'unknown',
-
     seletor: obterSeletor(node.target),
-
     html: node.html || '',
-
     detalhes: node.failureSummary || '',
 
     verificacoes: {
       any: formatarChecks(node.any),
-
       all: formatarChecks(node.all),
-
       none: formatarChecks(node.none)
     }
   };
@@ -738,15 +698,10 @@ function formatarElemento(node, violacao) {
 function formatarViolacoes(violacoes) {
   return violacoes.map(violacao => ({
     id: violacao.id || 'regra-desconhecida',
-
     impacto: violacao.impact || 'unknown',
-
     severidade: formatarSeveridade(violacao.impact),
-
     descricao: violacao.help || '',
-
     documentacao: violacao.helpUrl || '',
-
     tags: violacao.tags || [],
 
     elementos: (violacao.nodes || []).map(node =>
@@ -764,35 +719,22 @@ function exibirChecks(tipo, checks) {
     return;
   }
 
-  console.log(
-    `\n  Verificações ${tipo.toUpperCase()}:`
-  );
+  console.log(`\n  Verificações ${tipo.toUpperCase()}:`);
 
   for (const check of checks) {
-    console.log(
-      `    ID: ${check.id || 'Não identificado'}`
-    );
-
-    console.log(
-      `    Mensagem: ${check.message || 'Não informada'}`
-    );
+    console.log(`    ID: ${check.id || 'Não identificado'}`);
+    console.log(`    Mensagem: ${check.message || 'Não informada'}`);
 
     if (check.impact) {
-      console.log(
-        `    Impacto: ${check.impact}`
-      );
+      console.log(`    Impacto: ${check.impact}`);
     }
 
     if (check.data !== undefined && check.data !== null) {
-      console.log(
-        `    Dados: ${JSON.stringify(check.data)}`
-      );
+      console.log(`    Dados: ${JSON.stringify(check.data)}`);
     }
 
     if (check.relatedNodes?.length) {
-      console.log(
-        '    Elementos relacionados:'
-      );
+      console.log('    Elementos relacionados:');
 
       for (const related of check.relatedNodes) {
         console.log(
@@ -817,10 +759,7 @@ function exibirDiagnostico(violacoes) {
   );
 
   if (violacoes.length === 0) {
-    console.log(
-      '[A11Y] Nenhuma regra violada.'
-    );
-
+    console.log('[A11Y] Nenhuma regra violada.');
     return;
   }
 
@@ -831,67 +770,46 @@ function exibirDiagnostico(violacoes) {
       '\n----------------------------------------------------'
     );
 
-    console.log(
-      `[A11Y] VIOLAÇÃO ${index + 1}`
-    );
+    console.log(`[A11Y] VIOLAÇÃO ${index + 1}`);
 
     console.log(
       '----------------------------------------------------'
     );
 
-    console.log(
-      `Regra: ${violacao.id || 'Não identificada'}`
-    );
+    console.log(`Regra: ${violacao.id || 'Não identificada'}`);
 
     console.log(
       `Severidade: ${formatarSeveridade(violacao.impact)}`
     );
 
-    console.log(
-      `Descrição: ${violacao.help || 'Não informada'}`
-    );
-
-    console.log(
-      `Elementos afetados: ${elementos.length}`
-    );
+    console.log(`Descrição: ${violacao.help || 'Não informada'}`);
+    console.log(`Elementos afetados: ${elementos.length}`);
 
     console.log(
       `Documentação: ${violacao.helpUrl || 'Não disponível'}`
     );
 
     for (const [nodeIndex, node] of elementos.entries()) {
-      console.log(
-        `\n  ELEMENTO ${nodeIndex + 1}`
-      );
-
-      console.log(
-        '  ------------------------------------------'
-      );
+      console.log(`\n  ELEMENTO ${nodeIndex + 1}`);
+      console.log('  ------------------------------------------');
 
       console.log(
         `  Seletor: ${obterSeletor(node.target).join(', ') || 'Não identificado'}`
       );
 
-      console.log(
-        `  HTML: ${node.html || 'Não disponível'}`
-      );
+      console.log(`  HTML: ${node.html || 'Não disponível'}`);
 
       console.log(
         `  Severidade: ${formatarSeveridade(node.impact || violacao.impact)}`
       );
 
       if (node.failureSummary) {
-        console.log(
-          '\n  RESUMO DO PROBLEMA:'
-        );
-
+        console.log('\n  RESUMO DO PROBLEMA:');
         console.log(node.failureSummary);
       }
 
       exibirChecks('any', node.any);
-
       exibirChecks('all', node.all);
-
       exibirChecks('none', node.none);
     }
   }
@@ -944,15 +862,12 @@ async function validarAcessibilidade(page) {
         'wcag22aa'
       ])
       .analyze();
-
   } catch (erro) {
     console.error(
       '\n[A11Y] FALHA TÉCNICA DURANTE A ANÁLISE.'
     );
 
-    console.error(
-      `[A11Y] Motivo: ${erro.message}`
-    );
+    console.error(`[A11Y] Motivo: ${erro.message}`);
 
     throw new Error(
       '[A11Y] Não foi possível concluir a análise. ' +
@@ -966,28 +881,22 @@ async function validarAcessibilidade(page) {
   // ==========================================
 
   const violacoes = resultado.violations || [];
-
   const aprovadas = resultado.passes || [];
-
   const incompletas = resultado.incomplete || [];
-
   const naoAplicaveis = resultado.inapplicable || [];
 
   // ==========================================
   // CONTEXTO DOS FRAMES DE PUBLICIDADE
   // ==========================================
 
-  const framesPublicidade =
-    await obterFramesPublicidade(page);
+  const framesPublicidade = await obterFramesPublicidade(page);
 
   console.log(
     `[A11Y] Frames de publicidade Google identificados: ${framesPublicidade.length}`
   );
 
   for (const frame of framesPublicidade) {
-    console.log(
-      `[A11Y] Frame externo: ${frame.hostname}`
-    );
+    console.log(`[A11Y] Frame externo: ${frame.hostname}`);
   }
 
   // ==========================================
@@ -1009,8 +918,7 @@ async function validarAcessibilidade(page) {
       (impactos[impacto] || 0) + 1;
   }
 
-  const totalElementosAfetados =
-    contarElementos(violacoes);
+  const totalElementosAfetados = contarElementos(violacoes);
 
   // ==========================================
   // IDENTIFICAÇÃO DE ELEMENTOS EXTERNOS
@@ -1031,9 +939,7 @@ async function validarAcessibilidade(page) {
     obterViolacoesPorRegra(violacoesElegiveis);
 
   const statusAxe =
-    violacoes.length > 0
-      ? 'REPROVADO'
-      : 'APROVADO';
+    violacoes.length > 0 ? 'REPROVADO' : 'APROVADO';
 
   // ==========================================
   // COMPARAÇÃO COM BASELINE
@@ -1056,44 +962,30 @@ async function validarAcessibilidade(page) {
 
   const resumo = {
     url: page.url(),
-
     dataAnalise: new Date().toISOString(),
-
     status: comparacaoBaseline.status,
-
     statusAxe,
-
     comparacaoBaseline,
 
     indicadores: {
       regrasAprovadas: aprovadas.length,
-
       regrasComViolacoes: violacoes.length,
-
       elementosAfetados: totalElementosAfetados,
-
       elementosElegiveis: totalElementosElegiveis,
 
       elementosExternosExcluidos:
         elementosExternosExcluidos.length,
 
-      framesPublicidadeGoogle:
-        framesPublicidade.length,
-
+      framesPublicidadeGoogle: framesPublicidade.length,
       violacoesPorRegra,
 
       critical: impactos.critical,
-
       serious: impactos.serious,
-
       moderate: impactos.moderate,
-
       minor: impactos.minor,
-
       semImpactoInformado: impactos.unknown,
 
       analisesIncompletas: incompletas.length,
-
       naoAplicaveis: naoAplicaveis.length
     }
   };
@@ -1104,53 +996,36 @@ async function validarAcessibilidade(page) {
 
   const registro = {
     dataHora: resumo.dataAnalise,
-
     identificadorExecucao,
-
     url: resumo.url,
 
     resumo: {
       totalViolacoes: violacoes.length,
-
       criticas: impactos.critical,
-
       serias: impactos.serious,
-
       moderadas: impactos.moderate,
-
       leves: impactos.minor,
-
       semImpactoInformado: impactos.unknown,
 
       regrasAprovadas: aprovadas.length,
-
       elementosAfetados: totalElementosAfetados,
-
       elementosElegiveis: totalElementosElegiveis,
 
       elementosExternosExcluidos:
         elementosExternosExcluidos.length,
 
-      framesPublicidadeGoogle:
-        framesPublicidade.length,
-
+      framesPublicidadeGoogle: framesPublicidade.length,
       analisesIncompletas: incompletas.length,
-
       naoAplicaveis: naoAplicaveis.length,
 
       resultado: resumo.status,
-
       resultadoAxe: resumo.statusAxe,
-
       comparacaoBaseline: resumo.comparacaoBaseline
     },
 
     indicadores: resumo.indicadores,
-
     comparacaoBaseline: resumo.comparacaoBaseline,
-
     elementosExternosExcluidos,
-
     framesPublicidadeGoogle: framesPublicidade,
 
     violacoes: formatarViolacoes(violacoes),
@@ -1168,25 +1043,16 @@ async function validarAcessibilidade(page) {
     '\n========== INDICADORES DE ACESSIBILIDADE =========='
   );
 
-  console.log(
-    `Página analisada: ${resumo.url}`
-  );
+  console.log(`Página analisada: ${resumo.url}`);
 
   console.log(
     `Data da análise: ${new Date(resumo.dataAnalise).toLocaleString('pt-BR')}`
   );
 
-  console.log(
-    '\n---------- RESULTADOS ----------'
-  );
+  console.log('\n---------- RESULTADOS ----------');
 
-  console.log(
-    `Regras aprovadas: ${aprovadas.length}`
-  );
-
-  console.log(
-    `Regras com violações: ${violacoes.length}`
-  );
+  console.log(`Regras aprovadas: ${aprovadas.length}`);
+  console.log(`Regras com violações: ${violacoes.length}`);
 
   console.log(
     `Elementos afetados pelo Axe: ${totalElementosAfetados}`
@@ -1204,25 +1070,12 @@ async function validarAcessibilidade(page) {
   // SEVERIDADE
   // ==========================================
 
-  console.log(
-    '\n---------- SEVERIDADE ----------'
-  );
+  console.log('\n---------- SEVERIDADE ----------');
 
-  console.log(
-    `[A11Y] Violações críticas: ${impactos.critical}`
-  );
-
-  console.log(
-    `[A11Y] Violações sérias: ${impactos.serious}`
-  );
-
-  console.log(
-    `[A11Y] Violações moderadas: ${impactos.moderate}`
-  );
-
-  console.log(
-    `[A11Y] Violações leves: ${impactos.minor}`
-  );
+  console.log(`[A11Y] Violações críticas: ${impactos.critical}`);
+  console.log(`[A11Y] Violações sérias: ${impactos.serious}`);
+  console.log(`[A11Y] Violações moderadas: ${impactos.moderate}`);
+  console.log(`[A11Y] Violações leves: ${impactos.minor}`);
 
   if (impactos.unknown > 0) {
     console.log(
@@ -1238,13 +1091,8 @@ async function validarAcessibilidade(page) {
     '\n---------- ANÁLISES COMPLEMENTARES ----------'
   );
 
-  console.log(
-    `Análises incompletas: ${incompletas.length}`
-  );
-
-  console.log(
-    `Regras não aplicáveis: ${naoAplicaveis.length}`
-  );
+  console.log(`Análises incompletas: ${incompletas.length}`);
+  console.log(`Regras não aplicáveis: ${naoAplicaveis.length}`);
 
   if (incompletas.length > 0) {
     console.log(
@@ -1262,9 +1110,7 @@ async function validarAcessibilidade(page) {
   // RESULTADO AXE
   // ==========================================
 
-  console.log(
-    '\n========== RESULTADO AXE =========='
-  );
+  console.log('\n========== RESULTADO AXE ==========');
 
   console.log(
     `[A11Y] Resultado bruto do Axe: ${statusAxe}.`
@@ -1282,9 +1128,7 @@ async function validarAcessibilidade(page) {
   // ELEMENTOS EXTERNOS IDENTIFICADOS
   // ==========================================
 
-  console.log(
-    '\n========== ELEMENTOS EXTERNOS =========='
-  );
+  console.log('\n========== ELEMENTOS EXTERNOS ==========');
 
   console.log(
     `[A11Y] Elementos excluídos somente da comparação: ${elementosExternosExcluidos.length}.`
@@ -1295,26 +1139,20 @@ async function validarAcessibilidade(page) {
       `[A11Y] Tipo: ${elemento.tipo || 'ELEMENTO EXTERNO'}`
     );
 
-    console.log(
-      `[A11Y] Regra: ${elemento.regra}`
-    );
+    console.log(`[A11Y] Regra: ${elemento.regra}`);
 
     console.log(
       `[A11Y] Seletor: ${elemento.seletor.join(', ')}`
     );
 
-    console.log(
-      `[A11Y] Motivo: ${elemento.motivo}`
-    );
+    console.log(`[A11Y] Motivo: ${elemento.motivo}`);
   }
 
   // ==========================================
   // COMPARAÇÃO COM BASELINE
   // ==========================================
 
-  console.log(
-    '\n========== COMPARAÇÃO COM BASELINE =========='
-  );
+  console.log('\n========== COMPARAÇÃO COM BASELINE ==========');
 
   console.log(
     `[A11Y] Baseline aplicado: ${comparacaoBaseline.baselineAplicado ? 'SIM' : 'NÃO'}`
@@ -1341,7 +1179,6 @@ async function validarAcessibilidade(page) {
         `diferença=+${item.diferenca}`
       );
     }
-
   } else if (
     comparacaoBaseline.violacoesConhecidas.length > 0
   ) {
@@ -1349,7 +1186,6 @@ async function validarAcessibilidade(page) {
       '[A11Y] Violações conhecidas permanecem registradas; ' +
       'nenhuma regressão foi identificada.'
     );
-
   } else {
     console.log(
       '[A11Y] Nenhuma violação elegível foi identificada pelo Axe.'
